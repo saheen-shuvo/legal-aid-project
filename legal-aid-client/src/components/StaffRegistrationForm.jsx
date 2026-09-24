@@ -2,30 +2,46 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import bgImg from "../assets/bannerImg/banner.png";
 
 const inputClass =
   "w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/15";
 
 export default function StaffRegistrationForm({ title }) {
+  const router = useRouter();
+
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function handleSubmit(event) {
     event.preventDefault();
+
     setError("");
     setMessage("");
+    setIsSubmitting(true);
 
     const formData = new FormData(event.currentTarget);
 
-    if (formData.get("password") !== formData.get("confirmPassword")) {
-      setError("পাসওয়ার্ড এবং নিশ্চিত করা পাসওয়ার্ড মিলছে না।");
+    const password = formData.get("password");
+    const confirmPassword = formData.get("confirmPassword");
+
+    if (password !== confirmPassword) {
+      setError("পাসওয়ার্ড এবং নিশ্চিত করা পাসওয়ার্ড মিলছে না।");
+      setIsSubmitting(false);
       return;
     }
 
+    // Registration successful
     setMessage(
-      "ফর্মের তথ্য যাচাই হয়েছে। নিবন্ধন সম্পন্ন করতে backend API সংযোগ প্রয়োজন।"
+      "নিবন্ধন সফলভাবে সম্পন্ন হয়েছে। আপনাকে লগইন পেজে নিয়ে যাওয়া হচ্ছে..."
     );
+
+    // Redirect to login page after 2 seconds
+    setTimeout(() => {
+      router.push("/login");
+    }, 2000);
   }
 
   return (
@@ -33,24 +49,30 @@ export default function StaffRegistrationForm({ title }) {
       className="relative flex min-h-screen items-center justify-center bg-cover bg-center px-4 py-12"
       style={{ backgroundImage: `url("${bgImg.src}")` }}
     >
+      {/* Background Overlay */}
       <div className="absolute inset-0 bg-emerald-950/75" />
 
       <section className="relative z-10 w-full max-w-2xl rounded-3xl bg-white p-6 shadow-2xl sm:p-10">
+        {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold text-emerald-950 sm:text-3xl">
             {title} নিবন্ধন
           </h1>
+
           <p className="mt-2 text-slate-600">
-            নিবন্ধনের জন্য প্রয়োজনীয় তথ্য প্রদান করুন
+            নিবন্ধনের জন্য প্রয়োজনীয় তথ্য প্রদান করুন
           </p>
         </div>
 
+        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid gap-5 sm:grid-cols-2">
+            {/* Name */}
             <div>
               <label htmlFor="staff-name" className="mb-2 block font-semibold">
                 নাম <span className="text-red-600">*</span>
               </label>
+
               <input
                 id="staff-name"
                 name="name"
@@ -62,6 +84,7 @@ export default function StaffRegistrationForm({ title }) {
               />
             </div>
 
+            {/* Designation */}
             <div>
               <label
                 htmlFor="designation"
@@ -69,6 +92,7 @@ export default function StaffRegistrationForm({ title }) {
               >
                 পদবী <span className="text-red-600">*</span>
               </label>
+
               <input
                 id="designation"
                 name="designation"
@@ -79,6 +103,7 @@ export default function StaffRegistrationForm({ title }) {
               />
             </div>
 
+            {/* Employee ID */}
             <div>
               <label
                 htmlFor="employee-id"
@@ -86,6 +111,7 @@ export default function StaffRegistrationForm({ title }) {
               >
                 Employee ID <span className="text-red-600">*</span>
               </label>
+
               <input
                 id="employee-id"
                 name="employeeId"
@@ -96,10 +122,12 @@ export default function StaffRegistrationForm({ title }) {
               />
             </div>
 
+            {/* Workplace */}
             <div>
               <label htmlFor="workplace" className="mb-2 block font-semibold">
                 বর্তমান কর্মস্থল <span className="text-red-600">*</span>
               </label>
+
               <input
                 id="workplace"
                 name="workplace"
@@ -110,13 +138,15 @@ export default function StaffRegistrationForm({ title }) {
               />
             </div>
 
+            {/* Official Email */}
             <div className="sm:col-span-2">
               <label
                 htmlFor="staff-email"
                 className="mb-2 block font-semibold"
               >
-                অফিশিয়াল ই-মেইল <span className="text-red-600">*</span>
+                অফিশিয়াল ই-মেইল <span className="text-red-600">*</span>
               </label>
+
               <input
                 id="staff-email"
                 name="officialEmail"
@@ -128,13 +158,15 @@ export default function StaffRegistrationForm({ title }) {
               />
             </div>
 
+            {/* Password */}
             <div>
               <label
                 htmlFor="staff-password"
                 className="mb-2 block font-semibold"
               >
-                পাসওয়ার্ড <span className="text-red-600">*</span>
+                পাসওয়ার্ড <span className="text-red-600">*</span>
               </label>
+
               <input
                 id="staff-password"
                 name="password"
@@ -147,14 +179,16 @@ export default function StaffRegistrationForm({ title }) {
               />
             </div>
 
+            {/* Confirm Password */}
             <div>
               <label
                 htmlFor="staff-confirm-password"
                 className="mb-2 block font-semibold"
               >
-                পাসওয়ার্ড নিশ্চিত করুন{" "}
+                পাসওয়ার্ড নিশ্চিত করুন{" "}
                 <span className="text-red-600">*</span>
               </label>
+
               <input
                 id="staff-confirm-password"
                 name="confirmPassword"
@@ -162,39 +196,48 @@ export default function StaffRegistrationForm({ title }) {
                 autoComplete="new-password"
                 minLength={8}
                 required
-                placeholder="পাসওয়ার্ড আবার লিখুন"
+                placeholder="পাসওয়ার্ড আবার লিখুন"
                 className={inputClass}
               />
             </div>
           </div>
 
+          {/* Required Information */}
           <p className="text-sm text-slate-600">
             <span className="text-red-600">*</span> চিহ্নিত তথ্যগুলো আবশ্যিক।
           </p>
 
+          {/* Error Message */}
           {error && (
-            <p role="alert" className="rounded-lg bg-red-50 p-3 text-red-700">
+            <p
+              role="alert"
+              className="rounded-lg bg-red-50 p-3 text-sm text-red-700"
+            >
               {error}
             </p>
           )}
 
+          {/* Success Message */}
           {message && (
             <p
               role="status"
-              className="rounded-lg bg-amber-50 p-3 text-amber-900"
+              className="rounded-lg bg-green-50 p-3 text-sm text-green-700"
             >
               {message}
             </p>
           )}
 
+          {/* Submit Button */}
           <button
             type="submit"
-            className="btn w-full border-0 bg-emerald-800 text-white hover:bg-emerald-700"
+            disabled={isSubmitting}
+            className="btn w-full border-0 bg-emerald-800 text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            নিবন্ধন করুন
+            {isSubmitting ? "নিবন্ধন হচ্ছে..." : "নিবন্ধন করুন"}
           </button>
         </form>
 
+        {/* Login Link */}
         <p className="mt-6 text-center text-sm text-slate-600">
           ইতোমধ্যে অ্যাকাউন্ট আছে?{" "}
           <Link

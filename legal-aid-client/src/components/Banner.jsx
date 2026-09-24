@@ -4,7 +4,7 @@ export default function Banner() {
   return (
     <section
       aria-labelledby="banner-title"
-      className="relative flex min-h-[520px] items-center justify-center bg-cover bg-center px-5 py-20 text-center text-white sm:min-h-[620px]"
+      className="relative flex min-h-130 items-center justify-center bg-cover bg-center px-5 py-20 text-center text-white sm:min-h-[620px]"
       style={{ backgroundImage: `url("${bgImg.src}")` }}
     >
       <div className="absolute inset-0 bg-emerald-950/75" />

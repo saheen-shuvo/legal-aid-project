@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -23,11 +23,15 @@ const registrationRoles = [
   { label: "লিগ্যাল এইড অফিসার/মেডিয়েটর", slug: "legal-aid-officer-mediator" },
   { label: "ইউডিসি অন্ট্রাপ্রেনার", slug: "udc-entrepreneur" },
   { label: "প্যানাল আইনজীবী", slug: "panel-lawyer" },
-  { label: "ডিএলও অ্যাডমিনিস্ট্রেশন/ কেস সাপোর্ট", slug: "dlo-administration-case-support" },
+  {
+    label: "ডিএলও অ্যাডমিনিস্ট্রেশন/ কেস সাপোর্ট",
+    slug: "dlo-administration-case-support",
+  },
   { label: "এনএলএএসও (NLASO)", slug: "nlaso" },
 ];
 
 export default function Navbar() {
+  const registrationRef = useRef(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
@@ -40,6 +44,24 @@ export default function Navbar() {
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
   }, [drawerOpen]);
+
+  // Close registration dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        registrationRef.current &&
+        !registrationRef.current.contains(event.target)
+      ) {
+        registrationRef.current.removeAttribute("open");
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -94,7 +116,7 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop registration dropdown */}
-            <details className="dropdown dropdown-end">
+            <details ref={registrationRef} className="dropdown dropdown-end">
               <summary className="btn btn-sm list-none whitespace-nowrap rounded-full border-emerald-900 bg-emerald-900 text-white hover:bg-emerald-800">
                 <FiUserPlus aria-hidden="true" />
                 রেজিস্ট্রেশন

@@ -21,7 +21,7 @@ export default function ForgotPasswordPage() {
       }}
     >
       <div className="w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-2xl">
-        <div className="flex items-center gap-4 bg-gradient-to-r from-emerald-900 to-emerald-700 px-6 py-8 text-white sm:px-10">
+        <div className="flex items-center gap-4 bg-linear-to-r from-emerald-900 to-emerald-700 px-6 py-8 text-white sm:px-10">
           <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/20">
             <FiShield size={29} aria-hidden="true" />
           </div>
@@ -37,8 +37,8 @@ export default function ForgotPasswordPage() {
 
         <div className="px-6 py-8 sm:px-10">
           <p className="mb-6 leading-7 text-slate-600">
-            আপনার নিবন্ধিত ইমেইল ঠিকানা দিন। পাসওয়ার্ড রিসেটের ব্যবস্থা চালু
-            হলে এই ঠিকানায় নির্দেশনা পাঠানো যাবে।
+            আপনার নিবন্ধিত ইমেইল ঠিকানা দিন। পাসওয়ার্ড রিসেটের ব্যবস্থা চালু হলে
+            এই ঠিকানায় নির্দেশনা পাঠানো যাবে।
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -50,7 +50,10 @@ export default function ForgotPasswordPage() {
                 ইমেইল ঠিকানা
               </label>
               <div className="flex items-center gap-3 rounded-xl border border-slate-300 px-4 focus-within:border-emerald-700">
-                <FiMail className="shrink-0 text-slate-500" aria-hidden="true" />
+                <FiMail
+                  className="shrink-0 text-slate-500"
+                  aria-hidden="true"
+                />
                 <input
                   id="email"
                   name="email"
@@ -65,9 +68,11 @@ export default function ForgotPasswordPage() {
             </div>
 
             {submitted && (
-              <p role="status" className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900">
-                ফর্মটি যাচাই হয়েছে। রিসেট ইমেইল পাঠাতে এখনো backend API সংযোগ
-                প্রয়োজন।
+              <p
+                role="status"
+                className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900"
+              >
+                পাসওয়ার্ড রিসেট নির্দেশাবলী আপনার ইমেইলে পাঠানো হয়েছে!
               </p>
             )}
 

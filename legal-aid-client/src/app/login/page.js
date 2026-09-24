@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   FiEye,
@@ -13,15 +14,40 @@ import {
 import bgImg from "../../assets/bannerImg/banner.png";
 
 export default function LoginPage() {
+  const router = useRouter();
+
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
 
   function handleSubmit(event) {
     event.preventDefault();
-    setMessage(
-      "লগইন ফর্ম প্রস্তুত। অ্যাকাউন্ট যাচাইয়ের জন্য API সংযোগ প্রয়োজন।",
-    );
+    if (isSuccess) return;
+
+    const formData = new FormData(event.currentTarget);
+    const identifier = String(formData.get("identifier") || "")
+      .trim()
+      .toLowerCase();
+    const password = String(formData.get("password") || "");
+
+    if (identifier === "dlao@gmail.com" && password === "12345678") {
+      setIsSuccess(true);
+      setMessage("লগইন সফল হয়েছে! ড্যাশবোর্ডে নিয়ে যাওয়া হচ্ছে...");
+    } else {
+      setIsSuccess(false);
+      setMessage("ইমেইল অথবা পাসওয়ার্ড সঠিক নয়।");
+    }
   }
+
+  useEffect(() => {
+    if (!isSuccess) return;
+
+    const timer = setTimeout(() => {
+      router.replace("/dashboard/dlao");
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [isSuccess, router]);
 
   return (
     <main
@@ -35,7 +61,7 @@ export default function LoginPage() {
     >
       <div className="w-full max-w-xl">
         <div className="overflow-hidden rounded-3xl bg-white shadow-2xl">
-          <div className="flex items-center gap-4 bg-gradient-to-r from-emerald-900 to-emerald-700 px-6 py-8 text-white sm:px-10">
+          <div className="flex items-center gap-4 bg-linear-to-r from-emerald-900 to-emerald-700 px-6 py-8 text-white sm:px-10">
             <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/20">
               <FiShield size={29} aria-hidden="true" />
             </div>
@@ -132,8 +158,12 @@ export default function LoginPage() {
 
             {message && (
               <p
-                role="status"
-                className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900"
+                role={isSuccess ? "status" : "alert"}
+                className={`rounded-lg p-3 text-sm ${
+                  isSuccess
+                    ? "bg-emerald-50 text-emerald-800"
+                    : "bg-red-50 text-red-700"
+                }`}
               >
                 {message}
               </p>
@@ -141,10 +171,11 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="btn w-full border-0 bg-emerald-800 text-white hover:bg-emerald-700"
+              disabled={isSuccess}
+              className="btn w-full border-0 bg-emerald-800 text-white hover:bg-emerald-700 disabled:opacity-60"
             >
               <FiLogIn aria-hidden="true" />
-              প্রবেশ করুন
+              {isSuccess ? "ড্যাশবোর্ডে যাচ্ছেন..." : "প্রবেশ করুন"}
             </button>
           </form>
 
