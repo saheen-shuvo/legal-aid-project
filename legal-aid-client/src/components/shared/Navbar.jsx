@@ -15,15 +15,16 @@ import {
 const links = [
   { label: "আবেদন করুন", href: "/apply" },
   { label: "আবেদন ট্র্যাক করুন", href: "/track" },
-  { label: "আইনি তথ্য", href: "/legal-information" },
 ];
 
 const registrationRoles = [
-  { label: "আবেদনকারী", slug: "applicant" },
-  { label: "আইনজীবী", slug: "lawyer" },
-  { label: "আইন সহায়তা কর্মকর্তা", slug: "legal-aid-officer" },
-  { label: "মধ্যস্থতাকারী", slug: "mediator" },
-  { label: "স্বেচ্ছাসেবক", slug: "volunteer" },
+  { label: "নাগরিক", slug: "applicant" },
+  { label: "ডিএলও অফিসার", slug: "dlo-officer" },
+  { label: "লিগ্যাল এইড অফিসার/মেডিয়েটর", slug: "legal-aid-officer-mediator" },
+  { label: "ইউডিসি অন্ট্রাপ্রেনার", slug: "udc-entrepreneur" },
+  { label: "প্যানাল আইনজীবী", slug: "panel-lawyer" },
+  { label: "ডিএলও অ্যাডমিনিস্ট্রেশন/ কেস সাপোর্ট", slug: "dlo-administration-case-support" },
+  { label: "এনএলএএসও (NLASO)", slug: "nlaso" },
 ];
 
 export default function Navbar() {
