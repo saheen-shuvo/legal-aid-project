@@ -1,9 +1,9 @@
 export const dashboardRoles = {
-  applicant: {
+  "citizen": {
     title: "নাগরিক ড্যাশবোর্ড",
     description: "আপনার আবেদন ও সেবার তথ্য দেখুন।",
   },
-  dlao: {
+  "dlao": {
     title: "ডিএলএও অফিসার ড্যাশবোর্ড",
     description: "আবেদন ও মামলার কার্যক্রম দেখুন।",
   },
@@ -23,7 +23,7 @@ export const dashboardRoles = {
     title: "ডিএলএও প্রশাসন / কেস সাপোর্ট ড্যাশবোর্ড",
     description: "প্রশাসনিক ও কেস সাপোর্টের কাজ দেখুন।",
   },
-  nlaso: {
+  "nlaso": {
     title: "এনএলএএসও ড্যাশবোর্ড",
     description: "সামগ্রিক কার্যক্রমের তথ্য দেখুন।",
   },
