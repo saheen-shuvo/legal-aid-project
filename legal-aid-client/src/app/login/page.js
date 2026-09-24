@@ -10,6 +10,7 @@ import {
   FiMail,
   FiShield,
 } from "react-icons/fi";
+import bgImg from "../../assets/bannerImg/banner.png";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -17,15 +18,19 @@ export default function LoginPage() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    setMessage("লগইন ফর্ম প্রস্তুত। অ্যাকাউন্ট যাচাইয়ের জন্য API সংযোগ প্রয়োজন।");
+    setMessage(
+      "লগইন ফর্ম প্রস্তুত। অ্যাকাউন্ট যাচাইয়ের জন্য API সংযোগ প্রয়োজন।",
+    );
   }
 
   return (
     <main
       className="flex min-h-screen items-center justify-center bg-cover bg-center px-4 py-12"
       style={{
-        backgroundImage:
-          "linear-gradient(rgba(0, 58, 47, 0.78), rgba(0, 48, 40, 0.82)), url('/legal-bg.jpg')",
+        backgroundImage: `linear-gradient(
+    rgba(0, 58, 47, 0.78),
+    rgba(0, 48, 40, 0.82)
+  ), url("${bgImg.src}")`,
       }}
     >
       <div className="w-full max-w-xl">
@@ -45,7 +50,10 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5 px-6 py-8 sm:px-10">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-5 px-6 py-8 sm:px-10"
+          >
             <div>
               <label
                 htmlFor="identifier"
@@ -54,7 +62,10 @@ export default function LoginPage() {
                 মোবাইল নম্বর বা ইমেইল
               </label>
               <div className="flex items-center gap-3 rounded-xl border border-slate-300 px-4 focus-within:border-emerald-700">
-                <FiMail className="shrink-0 text-slate-500" aria-hidden="true" />
+                <FiMail
+                  className="shrink-0 text-slate-500"
+                  aria-hidden="true"
+                />
                 <input
                   id="identifier"
                   name="identifier"
@@ -75,7 +86,10 @@ export default function LoginPage() {
                 পাসওয়ার্ড
               </label>
               <div className="flex items-center gap-3 rounded-xl border border-slate-300 px-4 focus-within:border-emerald-700">
-                <FiLock className="shrink-0 text-slate-500" aria-hidden="true" />
+                <FiLock
+                  className="shrink-0 text-slate-500"
+                  aria-hidden="true"
+                />
                 <input
                   id="password"
                   name="password"
@@ -117,7 +131,10 @@ export default function LoginPage() {
             </div>
 
             {message && (
-              <p role="status" className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900">
+              <p
+                role="status"
+                className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900"
+              >
                 {message}
               </p>
             )}
