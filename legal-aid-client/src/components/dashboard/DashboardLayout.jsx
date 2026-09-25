@@ -34,7 +34,7 @@ const dlaoItems = [
   },
   { label: "নথিপত্র", icon: FiFileText, href: "#documents" },
   { label: "প্যানেল আইনজীবী", icon: FiUsers, href: "#panel-lawyers" },
-  { label: "রেফারেল", icon: FiRepeat, href: "#referrals" },
+  { label: "রেফারেল গ্রহণকারী DLAO", icon: FiRepeat, href: "#referrals" },
   { label: "সালিশি ও মধ্যস্থতা", icon: FiLayers, href: "#mediation" },
   { label: "অফলাইন ও সিঙ্ক", icon: FiRepeat, href: "#offline-sync" },
   { label: "নিরাপত্তা ও গোপনীয়তা", icon: FiShield, href: "#safety-privacy" },
