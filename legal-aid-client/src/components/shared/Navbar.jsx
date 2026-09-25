@@ -20,7 +20,7 @@ const links = [
 const registrationRoles = [
   { label: "নাগরিক", slug: "applicant" },
   { label: "ডিএলও অফিসার", slug: "dlo-officer" },
-  { label: "লিগ্যাল এইড অফিসার/মেডিয়েটর", slug: "legal-aid-officer-mediator" },
+  { label: "চেয়ারম্যান পোর্টাল", slug: "chairman-portal" },
   { label: "ইউডিসি অন্ট্রাপ্রেনার", slug: "udc-entrepreneur" },
   { label: "প্যানাল আইনজীবী", slug: "panel-lawyer" },
   {

@@ -7,8 +7,8 @@ export const dashboardRoles = {
     title: "ডিএলএও অফিসার ড্যাশবোর্ড",
     description: "আবেদন ও মামলার কার্যক্রম দেখুন।",
   },
-  "legal-aid-officer-mediator": {
-    title: "লিগ্যাল এইড অফিসার / মেডিয়েটর ড্যাশবোর্ড",
+  "chairman-portal": {
+    title: "চেয়ারম্যান পোর্টাল",
     description: "আইনি সহায়তা ও মধ্যস্থতার কার্যক্রম দেখুন।",
   },
   "udc-entrepreneur": {

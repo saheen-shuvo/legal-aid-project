@@ -21,6 +21,7 @@ const demoAccounts = {
   "udc@gmail.com": "/udc-portal.html",
   "citizen@gmail.com": "/citizen-portal-styled.html",
   "lawyer@gmail.com": "/lawyer-portal.html",
+  "chairman@gmail.com": "/chairman-portal.html",
 };
 
 export default function LoginPage() {

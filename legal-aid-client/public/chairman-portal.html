@@ -1,0 +1,3505 @@
+<!doctype html>
+<html lang="bn" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>চেয়ারম্যান ড্যাশবোর্ড — জেলা লিগ্যাল এইড কমিটি, জয়পুরহাট</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts: Hind Siliguri -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                950: "#082c25",
+                900: "#0d392e", // Primary deep forest green matching screenshot
+                850: "#104132",
+                800: "#145542", // Card / hover green
+                750: "#29574a", // Active item green
+                700: "#1a614c",
+                600: "#24765a",
+                500: "#318d69",
+                100: "#d6eae1",
+                50: "#ecf8f2",
+              },
+            },
+            fontFamily: {
+              sans: ['"Noto Sans Bengali"', "system-ui", "sans-serif"],
+              mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        font-family: "Noto Sans Bengali", system-ui, sans-serif;
+        background-color: #f6f9ff;
+        color: #0f172a;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(15, 51, 34, 0.25);
+        border-radius: 4px;
+      }
+      .high-contrast {
+        background-color: #000 !important;
+        color: #fff !important;
+      }
+      .high-contrast .bg-white {
+        background-color: #121212 !important;
+        color: #fff !important;
+        border-color: #333 !important;
+      }
+      .high-contrast .text-slate-900,
+      .high-contrast .text-slate-800,
+      .high-contrast .text-slate-700 {
+        color: #f8fafc !important;
+      }
+      .high-contrast .text-slate-500,
+      .high-contrast .text-slate-600 {
+        color: #cbd5e1 !important;
+      }
+      .high-contrast .bg-slate-50 {
+        background-color: #1e1e1e !important;
+        border-color: #333 !important;
+      }
+      /* The same quiet card and navigation treatment used across dashboards. */
+      body:not(.high-contrast) #sidebar .bg-brand-750 {
+        box-shadow: inset 3px 0 0 #f97316;
+      }
+      body:not(.high-contrast) #viewMountPoint [class~="border-slate-200/90"],
+      body:not(.high-contrast) #viewMountPoint [class~="border-slate-200"] {
+        border-color: #d6e0f2;
+      }
+      body:not(.high-contrast) #viewMountPoint .bg-white.rounded-2xl {
+        box-shadow: 0 8px 30px rgba(19, 48, 92, 0.055);
+      }
+      body:not(.high-contrast)
+        :is(button, a, input, select, textarea):focus-visible {
+        outline: 2px solid #f97316;
+        outline-offset: 2px;
+      }
+
+      /* Unified content palette: white surfaces, slate text and legal green. */
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-amber-100"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-amber-50"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-amber-50/20"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-amber-50/80"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-amber-500/20"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-blue-50"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-emerald-100"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-emerald-50"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-emerald-50/20"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-emerald-50/70"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-purple-100"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-purple-50"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-rose-100"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-rose-50"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-rose-50/20"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-rose-50/30"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-rose-50/40"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-rose-50/50"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-sky-50"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-teal-100"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-teal-50"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-teal-50/20"] {
+        background-color: #eef5f1 !important;
+      }
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-amber-500"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-amber-600"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-amber-700"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-blue-600"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-emerald-600"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-emerald-700"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-emerald-900"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-orange-500"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-purple-600"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-rose-600"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-rose-700"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-teal-600"] {
+        background-color: #145542 !important;
+        color: #fff !important;
+      }
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-amber-100"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-amber-200"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-amber-300"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-amber-500"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-blue-200"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-emerald-100"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-emerald-200"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-emerald-300"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-emerald-400"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-emerald-500/30"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-emerald-600"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-emerald-700"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-purple-100"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-purple-200"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-rose-100"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-rose-200"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-rose-400"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-rose-600"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-sky-100"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="border-teal-200"] {
+        border-color: #d6e0f2 !important;
+      }
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-amber-300"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-amber-600"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-amber-700"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-amber-800"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-amber-900"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-amber-950"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-blue-700"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-blue-800"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-blue-900"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-emerald-100/90"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-emerald-200/90"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-emerald-300"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-emerald-700"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-emerald-800"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-emerald-900"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-emerald-950"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-purple-600"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-purple-800"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-purple-900"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-red-500"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-rose-400"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-rose-600"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-rose-700"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-rose-800"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-rose-900"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-rose-950"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-sky-600"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-teal-800"],
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="text-teal-900"] {
+        color: #145542 !important;
+      }
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-amber-500"]
+        *,
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-amber-600"]
+        *,
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-amber-700"]
+        *,
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-blue-600"]
+        *,
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-emerald-600"]
+        *,
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-emerald-700"]
+        *,
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-emerald-900"]
+        *,
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-orange-500"]
+        *,
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-purple-600"]
+        *,
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-rose-600"]
+        *,
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-rose-700"]
+        *,
+      body:not(.high-contrast)
+        :is(#viewMountPoint, #modalCard, #printArea)
+        [class~="bg-teal-600"]
+        * {
+        color: #fff !important;
+      }
+      body:not(.high-contrast) #viewMountPoint .bg-white,
+      body:not(.high-contrast) #modalCard {
+        border-color: #d6e0f2;
+      }
+      body:not(.high-contrast) #viewMountPoint [class*="hover:bg-rose-"]:hover,
+      body:not(.high-contrast) #viewMountPoint [class*="hover:bg-amber-"]:hover,
+      body:not(.high-contrast)
+        #viewMountPoint
+        [class*="hover:bg-purple-"]:hover,
+      body:not(.high-contrast) #modalCard [class*="hover:bg-rose-"]:hover,
+      body:not(.high-contrast) #modalCard [class*="hover:bg-amber-"]:hover {
+        background-color: #e2eee8 !important;
+        color: #0d392e !important;
+      }
+      body:not(.high-contrast) header button[onclick="openDemoFlowModal()"],
+      body:not(.high-contrast) header button[onclick="openDemoFlowModal()"] i {
+        color: #145542 !important;
+      }
+      @media print {
+        body * {
+          visibility: hidden;
+        }
+        #printArea,
+        #printArea * {
+          visibility: visible;
+        }
+        #printArea {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          background: #fff;
+          padding: 20px;
+        }
+        .no-print {
+          display: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body
+    id="appBody"
+    class="h-full flex flex-col custom-scrollbar text-slate-800 antialiased selection:bg-brand-900 selection:text-white text-[14.5px]"
+  >
+    <!-- Toast Notification Container -->
+    <div
+      id="toastContainer"
+      class="fixed top-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"
+    ></div>
+
+    <!-- Main Application Wrapper -->
+    <div class="flex h-screen overflow-hidden bg-[#f6f9ff]">
+      <!-- SIDEBAR (Dark Forest Green #0f3322) -->
+      <aside
+        id="sidebar"
+        class="fixed inset-y-0 left-0 z-40 w-72 bg-brand-900 text-white transform -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out flex flex-col justify-between shadow-xl"
+      >
+        <!-- Top Brand Header -->
+        <div class="flex flex-col flex-1 overflow-y-auto custom-scrollbar">
+          <div
+            class="min-h-[76px] px-5 border-b border-brand-800/80 flex items-center space-x-3"
+          >
+            <div
+              class="w-9 h-9 rounded-lg bg-orange-500 flex items-center justify-center text-white text-lg"
+            >
+              <i class="fa-solid fa-scale-balanced"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+              <h1 class="text-sm font-bold text-white tracking-wide truncate">
+                চেয়ারম্যান পোর্টাল
+              </h1>
+              <p class="text-[10px] text-emerald-200/90 truncate">
+                বাংলাদেশ আইনগত সহায়তা অধিদপ্তর
+              </p>
+            </div>
+            <button
+              onclick="toggleMobileSidebar()"
+              class="md:hidden text-white/70 hover:text-white p-1"
+            >
+              <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+          </div>
+
+          <!-- Navigation Menu -->
+          <nav class="p-4 space-y-1 text-sm font-medium">
+            <button
+              onclick="switchView('dashboard')"
+              id="nav-dashboard"
+              class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition text-emerald-100/90 hover:bg-brand-800/70 hover:text-white"
+            >
+              <i class="fa-solid fa-chart-pie w-4 text-center text-sm"></i
+              ><span>জেলা চিত্র (Overview)</span
+              ><span
+                id="badge-total-cases"
+                class="hidden"
+                aria-hidden="true"
+              ></span>
+            </button>
+
+            <button
+              onclick="switchView('officers')"
+              id="nav-officers"
+              class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition text-emerald-100/90 hover:bg-brand-800/70 hover:text-white"
+            >
+              <i class="fa-solid fa-user-shield w-4 text-center text-sm"></i
+              ><span>কর্মকর্তা তদারকি (DLAO)</span
+              ><span
+                id="badge-officer-pending"
+                class="hidden"
+                aria-hidden="true"
+              ></span>
+            </button>
+
+            <button
+              onclick="switchView('exceptions')"
+              id="nav-exceptions"
+              class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition text-emerald-100/90 hover:bg-brand-800/70 hover:text-white"
+            >
+              <i
+                class="fa-solid fa-triangle-exclamation w-4 text-center text-sm text-rose-400"
+              ></i
+              ><span>ব্যতিক্রম ও সতর্কতা</span
+              ><span
+                id="badge-exceptions"
+                class="hidden"
+                aria-hidden="true"
+              ></span>
+            </button>
+
+            <button
+              onclick="switchView('cases')"
+              id="nav-cases"
+              class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition text-emerald-100/90 hover:bg-brand-800/70 hover:text-white"
+            >
+              <i class="fa-solid fa-folder-tree w-4 text-center text-sm"></i
+              ><span>মামলা ও নথিপত্র</span>
+            </button>
+
+            <button
+              onclick="switchView('lawyers')"
+              id="nav-lawyers"
+              class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition text-emerald-100/90 hover:bg-brand-800/70 hover:text-white"
+            >
+              <i class="fa-solid fa-gavel w-4 text-center text-sm"></i
+              ><span>প্যানেল আইনজীবী তদারকি</span>
+            </button>
+
+            <button
+              onclick="switchView('mediation')"
+              id="nav-mediation"
+              class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition text-emerald-100/90 hover:bg-brand-800/70 hover:text-white"
+            >
+              <i
+                class="fa-solid fa-handshake-simple w-4 text-center text-sm"
+              ></i
+              ><span>মধ্যস্থতা ও এডিআর</span>
+            </button>
+
+            <button
+              onclick="switchView('referrals')"
+              id="nav-referrals"
+              class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition text-emerald-100/90 hover:bg-brand-800/70 hover:text-white"
+            >
+              <i
+                class="fa-solid fa-arrow-up-right-from-square w-4 text-center text-sm"
+              ></i
+              ><span>রেফারেল ও সহযোগিতা</span>
+            </button>
+
+            <button
+              onclick="switchView('meetings')"
+              id="nav-meetings"
+              class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition text-emerald-100/90 hover:bg-brand-800/70 hover:text-white"
+            >
+              <i class="fa-solid fa-calendar-days w-4 text-center text-sm"></i
+              ><span>জেলা কমিটির সভা</span>
+            </button>
+
+            <button
+              onclick="switchView('complaints')"
+              id="nav-complaints"
+              class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition text-emerald-100/90 hover:bg-brand-800/70 hover:text-white"
+            >
+              <i class="fa-solid fa-bullhorn w-4 text-center text-sm"></i
+              ><span>অভিযোগ ও তদন্ত</span
+              ><span
+                id="badge-complaints-count"
+                class="hidden"
+                aria-hidden="true"
+              ></span>
+            </button>
+
+            <button
+              onclick="switchView('reports')"
+              id="nav-reports"
+              class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition text-emerald-100/90 hover:bg-brand-800/70 hover:text-white"
+            >
+              <i class="fa-solid fa-file-invoice w-4 text-center text-sm"></i
+              ><span>কেপিআই ও জেলা রিপোর্ট</span>
+            </button>
+
+            <button
+              onclick="switchView('audit')"
+              id="nav-audit"
+              class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition text-emerald-100/90 hover:bg-brand-800/70 hover:text-white"
+            >
+              <i
+                class="fa-solid fa-clock-rotate-left w-4 text-center text-sm"
+              ></i
+              ><span>নিরীক্ষা ও সিদ্ধান্ত লগ</span>
+            </button>
+          </nav>
+        </div>
+
+        <!-- Bottom Principle Card (matching screenshot's "ইউডিসির মূলনীতি" box) -->
+        <div
+          class="p-3 m-3 rounded-2xl bg-brand-800/90 border border-brand-700/80 shadow-md"
+        >
+          <div
+            class="flex items-center space-x-2 text-emerald-300 font-bold text-[11px] mb-1"
+          >
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>চেয়ারম্যানের বিধিবদ্ধ ম্যান্ডেট</span>
+          </div>
+          <p class="text-[11px] text-emerald-100/90 leading-relaxed">
+            তদারকি ও দিকনির্দেশনা প্রদান করুন; দৈনন্দিন কার্যসম্পাদন
+            কর্মকর্তাদের উপর ন্যস্ত রাখুন। ধারা ১০ ও ১১ অনুযায়ী কমিটি পরিচালনা
+            করুন।
+          </p>
+        </div>
+      </aside>
+
+      <!-- Mobile Overlay Backdrop -->
+      <div
+        id="mobileBackdrop"
+        onclick="toggleMobileSidebar()"
+        class="fixed inset-0 bg-slate-950/50 backdrop-blur-xs z-30 hidden md:hidden"
+      ></div>
+
+      <!-- MAIN CONTENT WRAPPER -->
+      <div class="flex-1 flex flex-col md:pl-72 overflow-hidden">
+        <!-- TOP HEADER (Clean White Bar matching screenshot) -->
+        <header
+          class="min-h-[76px] bg-white border-b border-slate-200/90 flex items-center justify-between px-4 sm:px-6 z-20 shrink-0 shadow-xs"
+        >
+          <div class="flex items-center space-x-3">
+            <button
+              onclick="toggleMobileSidebar()"
+              class="md:hidden text-slate-700 hover:text-slate-900 p-2 rounded-lg hover:bg-slate-100"
+            >
+              <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+            <div>
+              <h2
+                id="topPageTitle"
+                class="text-xl sm:text-2xl font-bold text-slate-900 leading-tight"
+              >
+                ড্যাশবোর্ড
+              </h2>
+              <p
+                id="topPageSubtitle"
+                class="text-[11px] text-slate-500 hidden sm:block"
+              >
+                জেলা লিগ্যাল এইড কমিটি, জয়পুরহাট
+              </p>
+            </div>
+          </div>
+
+          <!-- Right Side Utility Toolbar -->
+          <div class="flex items-center space-x-2 sm:space-x-3">
+            <!-- Competition Demo Flow Button -->
+            <button
+              onclick="openDemoFlowModal()"
+              class="hidden sm:inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border border-[#d6e0f2] bg-white hover:bg-slate-50 text-emerald-900 font-semibold text-xs transition"
+            >
+              <i class="fa-solid fa-bolt text-amber-900"></i>
+              <span>কম্পিটিশন ডেমো ফ্লো</span>
+            </button>
+
+            <!-- Quick Action: Export CSV -->
+            <button
+              onclick="exportCurrentViewCSV()"
+              title="CSV রিপোর্ট এক্সপোর্ট"
+              class="p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 text-xs font-semibold hidden lg:flex items-center space-x-1 border border-slate-200"
+            >
+              <i class="fa-solid fa-file-csv text-emerald-700"></i>
+              <span class="text-[11px]">CSV</span>
+            </button>
+
+            <!-- Quick Action: Print -->
+            <button
+              onclick="printCurrentReport()"
+              title="প্রিন্ট বা PDF সংরক্ষণ"
+              class="p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 text-xs font-semibold hidden lg:flex items-center space-x-1 border border-slate-200"
+            >
+              <i class="fa-solid fa-print text-slate-700"></i>
+              <span class="text-[11px]">প্রিন্ট</span>
+            </button>
+
+            <!-- Refresh Data Button -->
+            <button
+              onclick="refreshData()"
+              title="রিফ্রেশ"
+              class="p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 text-xs"
+            >
+              <i class="fa-solid fa-arrows-rotate"></i>
+            </button>
+
+            <!-- Logout Button (matching screenshot's dark green button) -->
+            <button
+              onclick="window.location.href = '/login'"
+              class="px-3 py-1.5 rounded-lg bg-[#0d392e] hover:bg-[#145542] text-white text-xs font-semibold flex items-center space-x-1.5 shadow-sm"
+            >
+              <span>লগ আউট</span>
+            </button>
+
+            <!-- Profile Badge (DJ = District Judge) -->
+            <div
+              class="w-9 h-9 rounded-full bg-brand-900 border-2 border-emerald-400 text-white flex items-center justify-center font-bold text-xs shadow-sm cursor-pointer"
+              title="বিজ্ঞ জেলা ও দায়রা জজ, জয়পুরহাট (চেয়ারম্যান)"
+              onclick="switchView('audit')"
+            >
+              DJ
+            </div>
+          </div>
+        </header>
+
+        <!-- VIEW BODY (Scrollable area) -->
+        <main
+          id="mainContainer"
+          class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 bg-[#f6f9ff] custom-scrollbar"
+        >
+          <!-- Render target for dynamic views -->
+          <div
+            id="viewMountPoint"
+            class="max-w-[1480px] mx-auto space-y-6"
+          ></div>
+        </main>
+      </div>
+    </div>
+
+    <!-- GLOBAL MODALS & DIALOGS -->
+    <div
+      id="modalOverlay"
+      class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4 overflow-y-auto"
+    >
+      <div
+        id="modalCard"
+        class="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto custom-scrollbar p-6"
+      >
+        <div id="modalBody"></div>
+      </div>
+    </div>
+
+    <!-- PRINT REPORT HIDDEN CONTAINER -->
+    <div id="printArea" class="hidden"></div>
+
+    <!-- APPLICATION JAVASCRIPT LOGIC -->
+    <script>
+      // ==========================================
+      // INITIAL SEED DATA & LOCALSTORAGE MGR
+      // ==========================================
+      const DEFAULT_DATA = {
+        district: "জয়পুরহাট",
+        chairman: {
+          title: "বিজ্ঞ জেলা ও দায়রা জজ",
+          court: "জেলা ও দায়রা জজ আদালত, জয়পুরহাট",
+          name: "কে. এম. রাশেদুল হাসান",
+          role: "চেয়ারম্যান, জেলা লিগ্যাল এইড কমিটি",
+        },
+        officers: [
+          {
+            id: "OFF-01",
+            name: "বেগম সেলিনা আক্তার",
+            designation: "সিনিয়র সহকারী জজ ও জেলা লিগ্যাল এইড অফিসার (DLAO)",
+            court: "জেলা লিগ্যাল এইড অফিস, জয়পুরহাট",
+            phone: "০১৭১১-২২৩৩৪৪",
+            totalCases: 76,
+            pendingCount: 11,
+            overdueCount: 2,
+            emergencyPending: 1,
+            legalAdvicePending: 3,
+            mediationPending: 4,
+            referralPending: 1,
+            followUpPending: 2,
+            caseClosurePending: 1,
+            status: "Active",
+            lastActive: "আজ সকাল ১০:১৫",
+          },
+          {
+            id: "OFF-02",
+            name: "এস. এম. কামরুল হাসান",
+            designation: "সহকারী লিগ্যাল এইড অফিসার (অতিরিক্ত দায়িত্ব)",
+            court: "সহকারী জজ আদালত ও ডিএলএও সেল",
+            phone: "০১৭২২-৫৫৬৬৭৭",
+            totalCases: 52,
+            pendingCount: 7,
+            overdueCount: 2,
+            emergencyPending: 1,
+            legalAdvicePending: 2,
+            mediationPending: 2,
+            referralPending: 1,
+            followUpPending: 1,
+            caseClosurePending: 1,
+            status: "Active",
+            lastActive: "আজ সকাল ১১:০৫",
+          },
+        ],
+        panelLawyers: [
+          {
+            id: "PL-001",
+            name: "এডভোকেট মোঃ আতিকুর রহমান",
+            barCouncilNo: "BC-1998-0451",
+            phone: "০১৭৩১-১২২৩৩৩",
+            activeCases: 14,
+            pendingUpdates: 3,
+            complaints: 0,
+            performanceScore: 92,
+            sincerity: "উচ্চমান",
+            status: "Active",
+            assignedMatters: "দেওয়ানী ও পারিবারিক মোকদ্দমা",
+          },
+          {
+            id: "PL-002",
+            name: "এডভোকেট সুলতানা পারভীন",
+            barCouncilNo: "BC-2005-0812",
+            phone: "০১৮১৯-৪৫৫৬৬৭",
+            activeCases: 11,
+            pendingUpdates: 1,
+            complaints: 0,
+            performanceScore: 95,
+            sincerity: "উচ্চমান",
+            status: "Active",
+            assignedMatters: "নারী ও শিশু নির্যাতন দমন, খোরপোশ",
+          },
+          {
+            id: "PL-003",
+            name: "এডভোকেট মোঃ গোলাম মর্তুজা",
+            barCouncilNo: "BC-2010-1123",
+            phone: "০১৯১১-৭৭৮৮৯৯",
+            activeCases: 9,
+            pendingUpdates: 4,
+            complaints: 1,
+            performanceScore: 71,
+            sincerity: "অসন্তোষজনক",
+            status: "Under Review",
+            assignedMatters: "ফৌজদারী রিভিশন ও জামিন",
+          },
+          {
+            id: "PL-004",
+            name: "এডভোকেট রফিকুল ইসলাম",
+            barCouncilNo: "BC-2001-0319",
+            phone: "০১৭৪৫-৯৯৮৮৭৭",
+            activeCases: 8,
+            pendingUpdates: 0,
+            complaints: 1,
+            performanceScore: 84,
+            sincerity: "মধ্যম",
+            status: "Show Cause Issued",
+            assignedMatters: "জমি জমা ও স্বত্ব মোকদ্দমা",
+          },
+          {
+            id: "PL-005",
+            name: "এডভোকেট নাসরিন জাহান",
+            barCouncilNo: "BC-2015-1442",
+            phone: "০১৫৫২-৩৩৪৪৫৫",
+            activeCases: 12,
+            pendingUpdates: 0,
+            complaints: 0,
+            performanceScore: 96,
+            sincerity: "উচ্চমান",
+            status: "Active",
+            assignedMatters: "পারিবারিক ও মধ্যস্থতা বিশেষজ্ঞ",
+          },
+          {
+            id: "PL-006",
+            name: "এডভোকেট জহিরুল হক",
+            barCouncilNo: "BC-1994-0102",
+            phone: "০১৬৭৮-১১২২৩৩",
+            activeCases: 6,
+            pendingUpdates: 1,
+            complaints: 0,
+            performanceScore: 88,
+            sincerity: "সন্তোষজনক",
+            status: "Active",
+            assignedMatters: "শ্রম আদালত ও অর্থঋণ",
+          },
+        ],
+        cases: [
+          {
+            id: "LA-2026-089",
+            applicant: "মোছাঃ ময়ূরী আক্তার",
+            respondent: "মোঃ তারেক মাহমুদ",
+            type: "পারিবারিক খোরপোশ ও দেনমোহর",
+            category: "Mediation",
+            reliefSought:
+              "নাবালক সন্তানের ভরণপোষণ বাবদ মাসিক ১০,০০০/- টাকা ও বকেয়া দেনমোহর আদায়",
+            court: "পারিবারিক আদালত ও মধ্যস্থতা সেল, জয়পুরহাট",
+            officerId: "OFF-01",
+            officerName: "বেগম সেলিনা আক্তার",
+            panelLawyer: "এডভোকেট সুলতানা পারভীন",
+            stage: "Mediation (ADR)",
+            status: "Overdue",
+            isEmergency: false,
+            filedDate: "২০২৬-০৮-১০",
+            daysPending: 46,
+            exceptionType: "Mediation repeatedly adjourned",
+            exceptionDesc:
+              "বিপক্ষ পর পর ৩টি ধার্য তারিখে হাজির না হওয়ায় মধ্যস্থতা ৩ বার মুলতবি। আইনের ধারা অনুযায়ী পরবর্তী পদক্ষেপে সিদ্ধান্তহীন।",
+            lastHearing: "২০২৬-০৯-১৫",
+            nextHearing: "২০২৬-০৯-২৮",
+            chairmanObservations: [
+              "২০২৬-০৯-২০: চেয়ারম্যান নোট: বিপক্ষ হাজির না হলে সময়ক্ষেপণ না করে ধারা ২১(ক) মতে সার্টিফিকেট দিয়ে মূল পারিবারিক আদালতে মামলা দায়েরের আদেশ দিন।",
+            ],
+            documents: [
+              "আবেদনপত্র_স্ক্যান.pdf",
+              "নিকাহনামা_কপি.pdf",
+              "মধ্যস্থতা_কার্যবিবরণী_৩য়_বৈঠক.pdf",
+            ],
+            timeline: [
+              {
+                date: "২০২৬-০৮-১০",
+                title: "আবেদন গ্রহণ",
+                text: "ইউডিসি আটাপুর থেকে আবেদন প্রাপ্তি।",
+              },
+              {
+                date: "২০২৬-০৮-১৮",
+                title: "১ম মধ্যস্থতা সভা",
+                text: "আবেদনকারী উপস্থিত, বিপক্ষ সময়ের আবেদন দাখিল।",
+              },
+              {
+                date: "২০২৬-০৯-০১",
+                title: "২য় মধ্যস্থতা সভা",
+                text: "বিপক্ষ গরহাজির, পুনঃনোটিশ জারি।",
+              },
+              {
+                date: "২০২৬-০৯-১৫",
+                title: "৩য় মধ্যস্থতা সভা",
+                text: "বিপক্ষ গরহাজির। মধ্যস্থতা স্থগিত।",
+              },
+            ],
+          },
+          {
+            id: "LA-2026-092",
+            applicant: "রেনুকা বর্মণ (ভিকটিম)",
+            respondent: "মোঃ আসাদুল হক গং",
+            type: "নারী ও শিশু নির্যাতন দমন (জরুরি)",
+            category: "Emergency",
+            reliefSought:
+              "আদালতে তাৎক্ষণিক আইনি সুরক্ষা, ভিকটিম সাপোর্ট সেন্টারে আশ্রয় ও জামিন শুনানি প্রতিহতকরণ",
+            court: "নারী ও শিশু নির্যাতন দমন ট্রাইব্যুনাল, জয়পুরহাট",
+            officerId: "OFF-01",
+            officerName: "বেগম সেলিনা আক্তার",
+            panelLawyer: "এডভোকেট মোঃ আতিকুর রহমান",
+            stage: "In Trial",
+            status: "Emergency",
+            isEmergency: true,
+            filedDate: "২০২৬-০৯-২২",
+            daysPending: 3,
+            exceptionType: "Emergency response overdue",
+            exceptionDesc:
+              "জরুরি ভিকটিম সাপোর্ট রেফারেল ও আইনি সহায়তার আবেদন ২৪ ঘণ্টার মধ্যে নিষ্পত্তির বিধান থাকলেও ৪৮ ঘণ্টা অতিক্রান্ত হয়েছে।",
+            lastHearing: "২০২৬-০৯-২৩",
+            nextHearing: "২০২৬-০৯-২৬",
+            chairmanObservations: [
+              "২০২৬-০৯-২৩: চেয়ারম্যান নির্দেশ: অবিলম্বে জেলা ও দায়রা জজ আদালতের পক্ষ থেকে বিশেষ ট্রাইব্যুনালে সরকারি প্যানেল আইনজীবী উপস্থিত নিশ্চিত করুন।",
+            ],
+            documents: [
+              "জরুরি_আবেদন.pdf",
+              "মেডিকেল_রিপোর্ট_কপি.pdf",
+              "এফআইআর_নং_১২.pdf",
+            ],
+            timeline: [
+              {
+                date: "২০২৬-০৯-২২",
+                title: "জরুরি আবেদন প্রাপ্তি",
+                text: "ওসি জয়পুরহাট সদর থানার রেফারেল মারফত।",
+              },
+              {
+                date: "২০২৬-০৯-২৩",
+                title: "তদন্ত ও আইনি পর্যালোচনা",
+                text: "প্যানেল আইনজীবী নিয়োগের ফাইল প্রস্তুত।",
+              },
+            ],
+          },
+          {
+            id: "LA-2026-074",
+            applicant: "মোঃ আব্দুল মজিদ",
+            respondent: "মোঃ ফজলুর রহমান গং",
+            type: "জমি জমা ও স্বত্ব ঘোষণা মোকদ্দমা",
+            category: "Court Case",
+            reliefSought:
+              "পৈতৃক ১.২০ একর খতিয়ানভুক্ত জমিতে জবরদখল উচ্ছেদ ও স্থায়ী নিষেধাজ্ঞা",
+            court: "যুগ্ম জেলা জজ ১ম আদালত, জয়পুরহাট",
+            officerId: "OFF-02",
+            officerName: "এস. এম. কামরুল হাসান",
+            panelLawyer: "এডভোকেট রফিকুল ইসলাম",
+            stage: "Hearing Awaiting Report",
+            status: "Overdue",
+            isEmergency: false,
+            filedDate: "২০২৬-০৭-১৫",
+            daysPending: 72,
+            exceptionType: "Lawyer update overdue",
+            exceptionDesc:
+              "আইনজীবী কর্তৃক শুনানির আদেশ ও অগ্রগতি রিপোর্ট দাখিল ২১ দিন যাবত বিলম্বিত। DLAO তাগিদ সত্ত্বেও কোনো আপডেট আসেনি।",
+            lastHearing: "২০২৬-০৯-০২",
+            nextHearing: "২০২৬-১০-০৮",
+            chairmanObservations: [
+              "২০২৬-০৯-১৮: চেয়ারম্যান পর্যবেক্ষণ: এডভোকেট রফিকুল ইসলামকে আগামী ২৪ ঘণ্টার মধ্যে শুনানির প্রত্যয়িত কপি জমা দিতে সতর্কবার্তা পাঠান।",
+            ],
+            documents: [
+              "খতিয়ান_পর্চা.pdf",
+              "মোকদ্দমা_আরজি.pdf",
+              "কমিশন_রিপোর্ট.pdf",
+            ],
+            timeline: [
+              {
+                date: "২০২৬-০৭-১৫",
+                title: "আইনি সহায়তা অনুমোদন",
+                text: "কমিটি কর্তৃক লিগ্যাল এইড মঞ্জুর।",
+              },
+              {
+                date: "২০২৬-০৮-১২",
+                title: "আরজি দাখিল",
+                text: "যুগ্ম জেলা জজ আদালতে মামলা রুজু।",
+              },
+              {
+                date: "২০২৬-০৯-০২",
+                title: "অন্তর্বর্তীকালীন নিষেধাজ্ঞা শুনানি",
+                text: "আদালত আদেশ প্রদান করেছেন, আইনজীবী রিপোর্ট দেননি।",
+              },
+            ],
+          },
+          {
+            id: "LA-2026-061",
+            applicant: "সুলতান আহমেদ",
+            respondent: "আশরাফুল ইসলাম",
+            type: "এনআই এ্যাক্ট ১৩৮ ধারা (চেক ডিজঅনার)",
+            category: "Court Case",
+            reliefSought:
+              "৩,৫০,০০০/- টাকার চেক প্রত্যাখ্যাত হওয়ায় মামলা পরিচালনা",
+            court: "যুগ্ম দায়রা জজ ২য় আদালত, জয়পুরহাট",
+            officerId: "OFF-02",
+            officerName: "এস. এম. কামরুল হাসান",
+            panelLawyer: "এডভোকেট মোঃ গোলাম মর্তুজা",
+            stage: "In Trial",
+            status: "Active",
+            isEmergency: false,
+            filedDate: "২০২৬-০৬-২০",
+            daysPending: 97,
+            exceptionType: "Applicant complaint",
+            exceptionDesc:
+              "বিচারপ্রার্থী অভিযোগ করেছেন প্যানেল আইনজীবী কোর্ট ফির বাইরে ব্যক্তিগত খরচ দাবি করেছেন এবং শুনানিতে উপস্থিত ছিলেন না।",
+            lastHearing: "২০২৬-০৯-১০",
+            nextHearing: "২০২৬-১০-০৫",
+            chairmanObservations: [
+              "২০২৬-০৯-১২: চেয়ারম্যান নোট: অভিযোগটি অত্যন্ত গুরুতর। পরবর্তী জেলা কমিটির মিটিংয়ে শো-কজের জন্য এজেন্ডাভুক্ত করুন।",
+            ],
+            documents: [
+              "ব্যাংক_মেমো.pdf",
+              "লিগ্যাল_নোটিশ.pdf",
+              "বিচারপ্রার্থীর_লিখিত_অভিযোগ.pdf",
+            ],
+            timeline: [
+              {
+                date: "২০২৬-০৬-২০",
+                title: "আবেদন মঞ্জুর",
+                text: "আইনজীবী নিয়োগ সম্পন্ন।",
+              },
+              {
+                date: "২০২৬-০৮-১৮",
+                title: "অভিযোগ দায়ের",
+                text: "আইনজীবীর বিরুদ্ধে আর্থিক লেনদেনের অভিযোগ।",
+              },
+            ],
+          },
+          {
+            id: "LA-2026-105",
+            applicant: "মোছাঃ ফাতেমা বেগম",
+            respondent: "ওসিসি / সমাজসেবা অধিদপ্তর",
+            type: "মহিলা ও শিশু পুনর্বাসন ও জরুরি আশ্রয়",
+            category: "Referral",
+            reliefSought: "জরুরি শেল্টার হোম ও আইনগত কাউন্সেলিং সহায়তা",
+            court: "জেলা লিগ্যাল এইড সেল, জয়পুরহাট",
+            officerId: "OFF-01",
+            officerName: "বেগম সেলিনা আক্তার",
+            panelLawyer: "এডভোকেট নাসরিন জাহান",
+            stage: "Referral",
+            status: "Overdue",
+            isEmergency: false,
+            filedDate: "২০২৬-০৯-১০",
+            daysPending: 15,
+            exceptionType: "Referral not acknowledged",
+            exceptionDesc:
+              "ওসিসি (One Stop Crisis Centre)-তে প্রেরিত রেফারেল ৭ কর্মদিবস পার হলেও তারা কোনো প্রাপ্তিস্বীকার বা অগ্রগতি জানায়নি।",
+            lastHearing: "প্রযোজ্য নয়",
+            nextHearing: "প্রযোজ্য নয়",
+            chairmanObservations: [
+              "২০২৬-০৯-১৬: সিভিল সার্জন ও ওসিসি ইনচার্জের সাথে টেলিফোনে যোগাযোগ করে জবাব তলবের নির্দেশ দেওয়া হলো।",
+            ],
+            documents: ["ওসিসি_রেফারেল_চিঠি.pdf", "মেডিকেল_সার্টিফিকেট.pdf"],
+            timeline: [
+              {
+                date: "২০২৬-০৯-১০",
+                title: "রেফারেল প্রেরণ",
+                text: "জয়পুরহাট আধুনিক জেলা হাসপাতালের ওসিসিতে প্রেরণ।",
+              },
+            ],
+          },
+          {
+            id: "LA-2026-108",
+            applicant: "মোঃ রবিউল ইসলাম",
+            respondent: "জয়পুরহাট সুগার মিলস কর্তৃপক্ষ",
+            type: "শ্রমিক পাওনা ও ক্ষতিপূরণ মোকদ্দমা",
+            category: "Court Case",
+            reliefSought:
+              "অবসরজনিত গ্র্যাচুইটি ও বকেয়া বেতন বাবদ ২,৮০,০০০/- টাকা প্রাপ্তি",
+            court: "শ্রম আদালত, রাজশাহী (জয়পুরহাট সার্কিট)",
+            officerId: "OFF-02",
+            officerName: "এস. এম. কামরুল হাসান",
+            panelLawyer: "এডভোকেট জহিরুল হক",
+            stage: "In Trial",
+            status: "Active",
+            isEmergency: false,
+            filedDate: "২০২৬-০৮-০৫",
+            daysPending: 51,
+            exceptionType: "none",
+            exceptionDesc:
+              "কোনো জটিলতা নেই। নির্ধারিত তারিখে বিচারকার্য চলমান।",
+            lastHearing: "২০২৬-০৯-০৮",
+            nextHearing: "২০২৬-১০-১২",
+            chairmanObservations: ["২০২৬-০৮-১০: অনুমোদন দেওয়া হলো।"],
+            documents: ["চাকরির_আইডি.pdf", "পাওনা_দাবির_হিসাব.pdf"],
+            timeline: [
+              {
+                date: "২০২৬-০৮-০৫",
+                title: "আবেদন প্রাপ্তি",
+                text: "শ্রম আদালতে মামলা দায়েরের অনুমতি।",
+              },
+            ],
+          },
+          {
+            id: "LA-2026-112",
+            applicant: "মোছাঃ খাদিজা খাতুন",
+            respondent: "মোঃ সামিউল করিম",
+            type: "যৌতুক নিরোধ আইন ২০১৮",
+            category: "Mediation",
+            reliefSought: "আদালতের বাইরে দেনমোহর ও খোরপোশের মীমাংসা",
+            court: "জেলা লিগ্যাল এইড কার্যালয় (ADR সেল)",
+            officerId: "OFF-01",
+            officerName: "বেগম সেলিনা আক্তার",
+            panelLawyer: "এডভোকেট নাসরিন জাহান",
+            stage: "Mediation (ADR)",
+            status: "Active",
+            isEmergency: false,
+            filedDate: "২০২৬-০৯-০৫",
+            daysPending: 20,
+            exceptionType: "none",
+            exceptionDesc:
+              "উভয় পক্ষ সমঝোতায় একমত পোষণ করেছে। চূড়ান্ত চুক্তিপত্র ড্রাফট হচ্ছে।",
+            lastHearing: "২০২৬-০৯-১৮",
+            nextHearing: "২০২৬-০৯-৩০",
+            chairmanObservations: [
+              "২০২৬-০৯-২০: সফল মধ্যস্থতা সম্পন্ন হলে সার্টিফিকেট দাখিলের নির্দেশ।",
+            ],
+            documents: ["যৌতুক_অভিযোগ.pdf", "সমঝোতা_খসড়া.pdf"],
+            timeline: [
+              {
+                date: "২০২৬-০৯-০৫",
+                title: "আবেদন গ্রহণ",
+                text: "ডিএলএও কর্তৃক নোটিশ ইস্যু।",
+              },
+              {
+                date: "২০২৬-০৯-১৮",
+                title: "২য় মধ্যস্থতা বৈঠক",
+                text: "উভয় পক্ষের অভিভাবক উপস্থিত থেকে আপস রফা।",
+              },
+            ],
+          },
+        ],
+        complaints: [
+          {
+            id: "CMP-2026-001",
+            complainant: "সুলতান আহমেদ (কেস নং LA-2026-061)",
+            respondent: "এডভোকেট মোঃ গোলাম মর্তুজা (প্যানেল আইনজীবী)",
+            nature: "অন্যায় অর্থ দাবি ও শুনানিতে অনুপস্থিতি",
+            details:
+              "আইনজীবী সরকারি ফি বাদে অতিরিক্ত ১৫,০০০/- টাকা দাবি করেন এবং টাকা না দেওয়ায় ধার্য তারিখে হাজির হননি।",
+            date: "২০২৬-০৮-১৮",
+            status: "Show Cause Issued",
+            officerResponsible: "বেগম সেলিনা আক্তার (DLAO)",
+            committeeAction:
+              "২৭ সেপ্টেম্বর ২০২৬ সভার কার্যসূচিভুক্ত। ব্যাখ্যা চেয়ে চিঠি প্রেরণ।",
+          },
+          {
+            id: "CMP-2026-002",
+            complainant: "মোঃ আব্দুর রহিম",
+            respondent: "এডভোকেট রফিকুল ইসলাম (প্যানেল আইনজীবী)",
+            nature: "দীর্ঘসূত্রিতা ও দায়িত্ব পালনে অবহেলা",
+            details:
+              "আদালত আদেশ দেওয়া সত্ত্বেও গত ১ মাস যাবত ক্লায়েন্টকে আদেশের কপি দেননি এবং ফোনে যোগাযোগ বন্ধ রেখেছেন।",
+            date: "২০২৬-০৯-০৪",
+            status: "Under Investigation",
+            officerResponsible: "এস. এম. কামরুল হাসান",
+            committeeAction: "DLAO তদন্ত প্রতিবেদন চেয়ে নোটিশ জারি।",
+          },
+          {
+            id: "CMP-2026-003",
+            complainant: "মোছাঃ জাহেদা বানু",
+            respondent: "ইউডিসি উদ্যোক্তা, ভাদশা ইউনিয়ন",
+            nature: "আবেদন এন্ট্রিতে অবৈধ সার্ভিস চার্জ দাবি",
+            details:
+              "সরকারি লিগ্যাল এইড আবেদন ফর্ম পূরণে ৫০০ টাকা দাবি করার অভিযোগ।",
+            date: "২০২৬-০৯-১০",
+            status: "Action Taken",
+            officerResponsible: "বেগম সেলিনা আক্তার (DLAO)",
+            committeeAction:
+              "ইউএনও জয়পুরহাট সদরকে তদন্ত ও উদ্যোক্তার বিরুদ্ধে ব্যবস্থা গ্রহণের অনুরোধ প্রেরণ।",
+          },
+        ],
+        meetings: [
+          {
+            id: "MTG-2026-09",
+            meetingNo: "০৯/২০২৬ (সেপ্টেম্বর মাসিক সভা)",
+            date: "২০২৬-০৯-২৭",
+            time: "বিকাল ০৩:৩০ ঘটিকা",
+            venue: "সম্মেলন কক্ষ, জেলা ও দায়রা জজ আদালত, জয়পুরহাট",
+            status: "Scheduled",
+            mandate:
+              "আইনগত সহায়তা প্রদান আইন, ২০০০ এর ধারা ১১ অনুযায়ী বাধ্যতামূলক মাসিক সমন্বয় সভা",
+            agendaItems: [
+              "১. বিগত আগস্ট ২০২৬ মাসের কার্যবিবরণী পর্যালোচনা ও চূড়ান্ত অনুমোদন।",
+              "২. সেপ্টেম্বর ২০২৬ মাসের লিগ্যাল এইড কার্যক্রম, নিষ্পত্তি ও পরিসংখ্যান পর্যালোচনা।",
+              "৩. ২০২৬ সংশোধিত ধারা ১০ অনুযায়ী প্যানেল আইনজীবীদের তালিকা হালনাগাদ ও পারফরম্যান্স মূল্যায়ন।",
+              "৪. প্যানেল আইনজীবী মোঃ গোলাম মর্তুজার বিরুদ্ধে আনীত অসদাচরণ অভিযোগের শুনানি ও সিদ্ধান্ত।",
+              "৫. নারী ও শিশু ট্রাইব্যুনাল ও পারিবারিক আদালতের জন্য ২ জন নতুন বিশেষজ্ঞ প্যানেল আইনজীবী অন্তর্ভুক্তি।",
+              "৬. বিবিধ (চেয়ারম্যান মহোদয়ের অনুমতি সাপেক্ষে)।",
+            ],
+            workingPaperReady: true,
+            attendees: [
+              "বিজ্ঞ জেলা ও দায়রা জজ (চেয়ারম্যান)",
+              "জেলা প্রশাসক, জয়পুরহাট (সদস্য)",
+              "পুলিশ সুপার, জয়পুরহাট (সদস্য)",
+              "সিভিল সার্জন, জয়পুরহাট (সদস্য)",
+              "জেলা লিগ্যাল এইড অফিসার (সদস্য সচিব)",
+              "সভাপতি/সাধারণ সম্পাদক, জয়পুরহাট জেলা বার অ্যাসোসিয়েশন (সদস্য)",
+            ],
+            minutes:
+              "আসন্ন সভা। এজেন্ডা ও ওয়ার্কিং পেপার সদস্যগণের নিকট প্রেরণ করা হয়েছে।",
+            decisions: [],
+          },
+          {
+            id: "MTG-2026-08",
+            meetingNo: "০৮/২০২৬ (আগস্ট মাসিক সভা)",
+            date: "২০২৬-০৮-২৭",
+            time: "বিকাল ০৩:০০ ঘটিকা",
+            venue: "সম্মেলন কক্ষ, জেলা ও দায়রা জজ আদালত",
+            status: "Completed",
+            mandate: "ধারা ১১ বিধান",
+            agendaItems: [
+              "১. জুলাই ২০২৬ মাসের কার্যবিবরণী অনুমোদন।",
+              "২. ইউনিয়ন ডিজিটাল সেন্টারের মাধ্যমে লিগ্যাল এইড সচেতনতা ক্যাম্পেইন।",
+              "৩. ওসিসি ও হাসপাতাল রেফারেল প্রটোকল দ্রুত কার্যকরীকরণ।",
+            ],
+            workingPaperReady: true,
+            minutes:
+              "সর্বসম্মতভাবে কার্যবিবরণী গৃহীত হয় এবং ইউডিসি উদ্যোক্তাদের প্রশিক্ষণের সিদ্ধান্ত হয়।",
+            decisions: [
+              "কমিটি সিদ্ধান্ত নং ০১: ইউডিসি উদ্যোক্তাদের জন্য ৫০ জনকে নিয়ে দিনব্যাপী প্রশিক্ষণ আয়োজন।",
+              "কমিটি সিদ্ধান্ত নং ০২: ৩টি পুরনো কেসে মধ্যস্থতা দ্রুত সম্পন্নের নির্দেশ।",
+            ],
+          },
+        ],
+        auditLog: [
+          {
+            id: "AUD-101",
+            date: "২০২৬-০৯-২৫ ১০:০০",
+            actor: "চেয়ারম্যান (জেলা ও দায়রা জজ)",
+            action: "ড্যাশবোর্ড পর্যবেক্ষণ",
+            details: "কর্মকর্তা তদারকি ও ব্যতিক্রম অ্যালার্ট পেজ পরিদর্শন।",
+          },
+          {
+            id: "AUD-102",
+            date: "২০২৬-০৯-২৩ ১৪:৩০",
+            actor: "চেয়ারম্যান (জেলা ও দায়রা জজ)",
+            action: "বিশেষ জরুরি নির্দেশনা",
+            details:
+              "কেস LA-2026-092 (রেনুকা বর্মণ): বিশেষ ট্রাইব্যুনালে প্যানেল আইনজীবী উপস্থিতি বাধ্যতামূলক করার নোট দাখিল।",
+          },
+          {
+            id: "AUD-103",
+            date: "২০২৬-০৯-২০ ১১:১৫",
+            actor: "চেয়ারম্যান (জেলা ও দায়রা জজ)",
+            action: "মধ্যস্থতা তদারকি পর্যবেক্ষণ",
+            details:
+              "কেস LA-2026-089 (ময়ূরী আক্তার): বিপক্ষ ৩ বার গরহাজির থাকায় ধারা ২১(ক) মতে সার্টিফিকেট দেওয়ার নির্দেশনা।",
+          },
+          {
+            id: "AUD-104",
+            date: "২০২৬-০৯-১৮ ১৬:০০",
+            actor: "জেলা লিগ্যাল এইড কমিটি",
+            action: "সভার নোটিশ জারি",
+            details:
+              "২৭ সেপ্টেম্বর ২০২৬ মাসিক সভার কার্যসূচি ও নোটিশ সকল সদস্যের নিকট প্রেরণ।",
+          },
+        ],
+      };
+
+      // Store in LocalStorage
+      let state = null;
+
+      function initState() {
+        const saved = localStorage.getItem("laod_chairman_data_v1");
+        if (saved) {
+          try {
+            state = JSON.parse(saved);
+          } catch (e) {
+            state = JSON.parse(JSON.stringify(DEFAULT_DATA));
+          }
+        } else {
+          state = JSON.parse(JSON.stringify(DEFAULT_DATA));
+          persistState();
+        }
+      }
+
+      function persistState() {
+        localStorage.setItem("laod_chairman_data_v1", JSON.stringify(state));
+      }
+
+      function resetDemoData() {
+        if (
+          confirm(
+            "আপনি কি নিশ্চিত যে সকল ডেমো ডাটা রিসেট করে ডিফল্ট অবস্থায় ফেরত নিতে চান?",
+          )
+        ) {
+          state = JSON.parse(JSON.stringify(DEFAULT_DATA));
+          persistState();
+          showToast("সকল ডেমো ডাটা সফলভাবে রিসেট করা হয়েছে।", "success");
+          renderCurrentView();
+          updateSidebarBadges();
+        }
+      }
+
+      // ==========================================
+      // ROUTING & NAVIGATION
+      // ==========================================
+      let currentView = "dashboard";
+      let fontSizeDelta = 0;
+      let highContrastActive = false;
+
+      function switchView(viewName) {
+        currentView = viewName;
+
+        // Update sidebar active states (Deep Forest Green theme)
+        document.querySelectorAll(".nav-item").forEach((el) => {
+          el.classList.remove(
+            "bg-brand-750",
+            "text-white",
+            "shadow-sm",
+            "font-bold",
+          );
+          el.classList.add(
+            "text-emerald-100/90",
+            "hover:bg-brand-800/70",
+            "hover:text-white",
+          );
+        });
+
+        const activeNav = document.getElementById(`nav-${viewName}`);
+        if (activeNav) {
+          activeNav.classList.add(
+            "bg-brand-750",
+            "text-white",
+            "shadow-sm",
+            "font-bold",
+          );
+          activeNav.classList.remove(
+            "text-emerald-100/90",
+            "hover:bg-brand-800/70",
+          );
+        }
+
+        // Update Header Titles
+        const titleMap = {
+          dashboard: {
+            title: "ড্যাশবোর্ড",
+            subtitle: "জেলা চিত্র ও সামগ্রিক লিগ্যাল এইড তদারকি",
+          },
+          officers: {
+            title: "কর্মকর্তা তদারকি (DLAO Supervision)",
+            subtitle:
+              "চিফ লিগ্যাল এইড অফিসার ও লিগ্যাল এইড কর্মকর্তাদের কার্যক্রম তদারকি",
+          },
+          exceptions: {
+            title: "ব্যতিক্রম ও সতর্কতা কেন্দ্র (Exception Centre)",
+            subtitle: "বিলম্বিত ও জরুরি হস্তক্ষেপযোগ্য মামলার বিধিবদ্ধ সতর্কতা",
+          },
+          cases: {
+            title: "মামলা তদারকি ও ইউনিফাইড রেকর্ড",
+            subtitle:
+              "জেলায় বিচারাধীন সকল লিগ্যাল এইড মামলার খতিয়ান ও টাইমলাইন",
+          },
+          lawyers: {
+            title: "প্যানেল আইনজীবী তদারকি (ধারা ১০)",
+            subtitle:
+              "প্যানেল তালিকা হালনাগাদ, পারফরম্যান্স ও অসদাচরণ অভিযোগ নিষ্পত্তি",
+          },
+          mediation: {
+            title: "মধ্যস্থতা ও এডিআর (ADR Overview)",
+            subtitle: "আদালতের বাইরে বিরোধ নিষ্পত্তি ও আপস কার্যবিবরণী তদারকি",
+          },
+          referrals: {
+            title: "রেফারেল ও আন্তঃপ্রাতিষ্ঠানিক সহযোগিতা",
+            subtitle: "ওসিসি, সমাজসেবা, পুলিশ ও এনজিও রেফারেল ট্র্যাকিং",
+          },
+          meetings: {
+            title: "জেলা লিগ্যাল এইড কমিটি ও মাসিক সভা (ধারা ১১)",
+            subtitle:
+              "মাসিক সংবিধিবদ্ধ সভা, এজেন্ডা, কার্যবিবরণী ও সিদ্ধান্ত ট্র্যাকিং",
+          },
+          complaints: {
+            title: "অভিযোগ ও সেবা সংক্রান্ত অসন্তোষ",
+            subtitle:
+              "বিচারপ্রার্থী ও আইনজীবীদের অভিযোগ এবং কমিটি তদন্ত খতিয়ান",
+          },
+          reports: {
+            title: "কেপিআই ও সংবিধিবদ্ধ জেলা রিপোর্ট",
+            subtitle:
+              "মাসিক প্রতিবেদন, এডিআর সাফল্য ও বার্ষিক মূল্যায়ন রিপোর্ট",
+          },
+          audit: {
+            title: "নিরীক্ষা ও সিদ্ধান্ত লগ (Audit Trail)",
+            subtitle:
+              "চেয়ারম্যানের নির্দেশনা, প্রশাসনিক আদেশ ও সিস্টেম ইভেন্ট লগ",
+          },
+        };
+
+        const meta = titleMap[viewName] || {
+          title: "ড্যাশবোর্ড",
+          subtitle: "জেলা লিগ্যাল এইড কমিটি",
+        };
+        document.getElementById("topPageTitle").innerText = meta.title;
+        document.getElementById("topPageSubtitle").innerText = meta.subtitle;
+
+        // Close mobile drawer if open
+        const sb = document.getElementById("sidebar");
+        if (
+          !sb.classList.contains("-translate-x-full") &&
+          window.innerWidth < 768
+        ) {
+          toggleMobileSidebar();
+        }
+
+        // Render view
+        renderCurrentView();
+        updateSidebarBadges();
+        window.scrollTo(0, 0);
+      }
+
+      function toggleMobileSidebar() {
+        const sb = document.getElementById("sidebar");
+        const backdrop = document.getElementById("mobileBackdrop");
+        if (sb.classList.contains("-translate-x-full")) {
+          sb.classList.remove("-translate-x-full");
+          backdrop.classList.remove("hidden");
+        } else {
+          sb.classList.add("-translate-x-full");
+          backdrop.classList.add("hidden");
+        }
+      }
+
+      function updateSidebarBadges() {
+        // Dynamic count badges
+        const totalCases = 128; // District total
+        const pendingOfficers = state.officers.reduce(
+          (acc, o) => acc + o.pendingCount,
+          0,
+        );
+        const overdueExceptions = state.cases.filter(
+          (c) => c.exceptionType && c.exceptionType !== "none",
+        ).length;
+        const pendingComplaints = state.complaints.filter(
+          (c) => c.status !== "Resolved",
+        ).length;
+
+        document.getElementById("badge-total-cases").innerText = totalCases;
+        document.getElementById("badge-officer-pending").innerText =
+          `${pendingOfficers} মুলতবি`;
+        document.getElementById("badge-exceptions").innerText =
+          overdueExceptions;
+        document.getElementById("badge-complaints-count").innerText =
+          `${pendingComplaints} বিচারাধীন`;
+      }
+
+      function renderCurrentView() {
+        const mount = document.getElementById("viewMountPoint");
+        switch (currentView) {
+          case "dashboard":
+            mount.innerHTML = viewDashboard();
+            break;
+          case "officers":
+            mount.innerHTML = viewOfficerSupervision();
+            break;
+          case "exceptions":
+            mount.innerHTML = viewExceptions();
+            break;
+          case "cases":
+            mount.innerHTML = viewCaseOversight();
+            break;
+          case "lawyers":
+            mount.innerHTML = viewPanelLawyers();
+            break;
+          case "mediation":
+            mount.innerHTML = viewMediation();
+            break;
+          case "referrals":
+            mount.innerHTML = viewReferrals();
+            break;
+          case "meetings":
+            mount.innerHTML = viewMeetings();
+            break;
+          case "complaints":
+            mount.innerHTML = viewComplaints();
+            break;
+          case "reports":
+            mount.innerHTML = viewReports();
+            break;
+          case "audit":
+            mount.innerHTML = viewAudit();
+            break;
+          default:
+            mount.innerHTML = viewDashboard();
+        }
+      }
+
+      // ==========================================
+      // VIEW 1: DISTRICT OVERVIEW (DASHBOARD HOME)
+      // Layout 1:1 matching screenshot image_fd92e3.jpg
+      // ==========================================
+      function viewDashboard() {
+        const pendingExceptions = state.cases.filter(
+          (c) => c.exceptionType && c.exceptionType !== "none",
+        );
+        const emergencyCases = state.cases.filter((c) => c.isEmergency);
+
+        return `
+        <div class="space-y-6">
+
+          <!-- Top Hero Banner (Matching dark green hero in screenshot) -->
+          <div class="bg-brand-900 text-white rounded-2xl p-6 sm:p-7 shadow-sm border border-brand-800 relative overflow-hidden">
+            <div class="relative z-10 max-w-3xl space-y-2">
+              <span class="inline-block text-[11px] font-bold text-white uppercase tracking-wider bg-brand-950/50 px-3 py-1 rounded-full border border-emerald-500/30">
+                আজ চেয়ারম্যান পোর্টাল — জেলা লিগ্যাল এইড কমিটি, জয়পুরহাট
+              </span>
+              <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-white leading-snug">
+                জেলা লিগ্যাল এইড সুপারভিশন ও কমিটি ওভারসাইট ।
+              </h2>
+              <p class="text-xs sm:text-sm text-white leading-relaxed font-normal">
+                আইনগত সহায়তা প্রদান আইন, ২০০০ (২০২৬ সংশোধিত ধারা ১০ ও ১১ অনুযায়ী) জেলা ও দায়রা জজ কর্তৃক চিফ লিগ্যাল এইড অফিসার, প্যানেল আইনজীবী ও কমিটির বিধিবদ্ধ তদারকি প্ল্যাটফর্ম।
+              </p>
+            </div>
+            <!-- Decorative legal seal watermark -->
+            <div class="absolute right-4 -bottom-6 text-white/5 text-9xl pointer-events-none select-none">
+              <i class="fa-solid fa-landmark"></i>
+            </div>
+          </div>
+
+          <!-- 4 Metric Cards (Matching 4 pastel icon cards in screenshot) -->
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+
+            <!-- Card 1: Total Cases / Applications (Pastel Blue) -->
+            <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs flex items-center justify-between card-hover cursor-pointer" onclick="switchView('cases')">
+              <div class="space-y-1">
+                <span class="text-xs font-semibold text-slate-500 block">মোট আবেদন ও মামলা</span>
+                <span class="text-2xl sm:text-3xl font-bold text-slate-900 font-mono">১২৮</span>
+                <span class="text-[10px] text-emerald-800 font-semibold block">মঞ্জুরকৃত: ৯৪ | নিষ্পত্তি: ২২</span>
+              </div>
+              <div class="w-12 h-12 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600 text-xl shrink-0">
+                <i class="fa-regular fa-folder-open"></i>
+              </div>
+            </div>
+
+            <!-- Card 2: Pending Applications (Pastel Amber) -->
+            <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs flex items-center justify-between card-hover cursor-pointer" onclick="switchView('officers')">
+              <div class="space-y-1">
+                <span class="text-xs font-semibold text-slate-500 block">অপেক্ষমাণ আবেদন</span>
+                <span class="text-2xl sm:text-3xl font-bold text-amber-900 font-mono">১৮</span>
+                <span class="text-[10px] text-amber-800 font-semibold block">কর্মকর্তা পর্যালোচনায়</span>
+              </div>
+              <div class="w-12 h-12 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 text-xl shrink-0">
+                <i class="fa-regular fa-clock"></i>
+              </div>
+            </div>
+
+            <!-- Card 3: Emergency Cases (Pastel Purple) -->
+            <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs flex items-center justify-between card-hover cursor-pointer" onclick="switchView('exceptions')">
+              <div class="space-y-1">
+                <span class="text-xs font-semibold text-slate-500 block">জরুরি আইনি সেবা</span>
+                <span class="text-2xl sm:text-3xl font-bold text-purple-900 font-mono">৫</span>
+                <span class="text-[10px] text-purple-800 font-semibold block">ভিকটিম সাপোর্ট / ট্রাইব্যুনাল</span>
+              </div>
+              <div class="w-12 h-12 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 text-xl shrink-0">
+                <i class="fa-solid fa-bolt"></i>
+              </div>
+            </div>
+
+            <!-- Card 4: Overdue & Exceptions (Pastel Rose) -->
+            <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs flex items-center justify-between card-hover cursor-pointer" onclick="switchView('exceptions')">
+              <div class="space-y-1">
+                <span class="text-xs font-semibold text-slate-500 block">মেয়াদোত্তীর্ণ ও ব্যতিক্রম</span>
+                <span class="text-2xl sm:text-3xl font-bold text-rose-900 font-mono">৪</span>
+                <span class="text-[10px] text-rose-800 font-semibold block">চেয়ারম্যান নোটিশ প্রেরিত</span>
+              </div>
+              <div class="w-12 h-12 rounded-xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 text-xl shrink-0">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Two-Column Section below KPI Cards (Matching screenshot layout) -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            <!-- Left Column: প্রধান কাজগুলো (2x2 Grid of Actions + Active Alert Card) -->
+            <div class="lg:col-span-2 space-y-6">
+              <div class="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-2xs space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-700"></span>
+                    <span>প্রধান তদারকি কাজগুলো (Supervisory Actions)</span>
+                  </h3>
+                  <span class="text-[11px] font-semibold text-slate-500">ধারা ১০ ও ১১ অনুযায়ী</span>
+                </div>
+
+                <!-- 2x2 Grid of Quick Actions (Matching screenshot layout) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+
+                  <!-- Action 1: DLAO Supervision -->
+                  <div onclick="switchView('officers')" class="p-4 rounded-xl border border-slate-200 hover:border-emerald-700 hover:shadow-xs transition cursor-pointer bg-slate-50/50 flex flex-col justify-between">
+                    <div class="flex items-start justify-between mb-2">
+                      <span class="text-xs font-bold text-slate-900">কর্মকর্তা তদারকি (DLAO)</span>
+                      <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs">
+                        <i class="fa-solid fa-user-check"></i>
+                      </div>
+                    </div>
+                    <p class="text-[11px] text-slate-500">চিফ লিগ্যাল এইড অফিসার ও লিগ্যাল এইড অফিসারের দায়িত্ব ও কার্য তদারকি।</p>
+                    <div class="mt-3 text-[11px] text-emerald-800 font-bold flex items-center space-x-1">
+                      <span>মুলতবি ফাইলসমূহ দেখুন</span>
+                      <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </div>
+                  </div>
+
+                  <!-- Action 2: Exception Center -->
+                  <div onclick="switchView('exceptions')" class="p-4 rounded-xl border border-rose-200 hover:border-rose-400 hover:shadow-xs transition cursor-pointer bg-rose-50/30 flex flex-col justify-between">
+                    <div class="flex items-start justify-between mb-2">
+                      <span class="text-xs font-bold text-rose-950">ব্যতিক্রম ও সতর্কতা কেন্দ্র</span>
+                      <div class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center text-xs">
+                        <i class="fa-solid fa-bell"></i>
+                      </div>
+                    </div>
+                    <p class="text-[11px] text-slate-500">বিলম্বিত মধ্যস্থতা, আইনজীবী আপডেট না দেওয়া ও ইমার্জেন্সি কেস ট্র্যাকিং।</p>
+                    <div class="mt-3 text-[11px] text-rose-700 font-bold flex items-center space-x-1">
+                      <span>৪টি জরুরি বিষয় অমীমাংসিত</span>
+                      <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </div>
+                  </div>
+
+                  <!-- Action 3: Panel Lawyer Oversight -->
+                  <div onclick="switchView('lawyers')" class="p-4 rounded-xl border border-slate-200 hover:border-emerald-700 hover:shadow-xs transition cursor-pointer bg-slate-50/50 flex flex-col justify-between">
+                    <div class="flex items-start justify-between mb-2">
+                      <span class="text-xs font-bold text-slate-900">প্যানেল আইনজীবী ওভারসাইট</span>
+                      <div class="w-7 h-7 rounded-lg bg-purple-100 text-purple-800 flex items-center justify-center text-xs">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                      </div>
+                    </div>
+                    <p class="text-[11px] text-slate-500">প্যানেল তালিকা হালনাগাদ, সততা ও আন্তরিকতা যাচাই এবং অভিযোগের শুনানি।</p>
+                    <div class="mt-3 text-[11px] text-purple-800 font-bold flex items-center space-x-1">
+                      <span>আইনজীবী কার্যবিবরণী খুলুন</span>
+                      <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </div>
+                  </div>
+
+                  <!-- Action 4: Committee Meetings -->
+                  <div onclick="switchView('meetings')" class="p-4 rounded-xl border border-slate-200 hover:border-emerald-700 hover:shadow-xs transition cursor-pointer bg-slate-50/50 flex flex-col justify-between">
+                    <div class="flex items-start justify-between mb-2">
+                      <span class="text-xs font-bold text-slate-900">জেলা কমিটির মাসিক সভা</span>
+                      <div class="w-7 h-7 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center text-xs">
+                        <i class="fa-solid fa-calendar-check"></i>
+                      </div>
+                    </div>
+                    <p class="text-[11px] text-slate-500">ধারা ১১ অনুযায়ী প্রতি মাসে ১ বার বাধ্যতামূলক সমন্বয় সভা ও সিদ্ধান্ত গ্রহণ।</p>
+                    <div class="mt-3 text-[11px] text-amber-800 font-bold flex items-center space-x-1">
+                      <span>২৭ সেপ্টেম্বর সভা কার্যসূচি</span>
+                      <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- High-Priority Supervisory Notification Banner -->
+                <div class="p-4 rounded-xl bg-amber-50/80 border border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                  <div class="flex items-start space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-800 flex items-center justify-center text-sm shrink-0 mt-0.5">
+                      <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <div>
+                      <span class="font-bold text-amber-950 block">উচ্চ অগ্রাধিকার তদারকি নোটিশ (Case LA-2026-089)</span>
+                      <p class="text-slate-600 text-[11px]">ময়ূরী আক্তার বনাম তারেক মাহমুদ: মধ্যস্থতা ৩ বার মুলতবি। ধারা ২১(ক) মতে সার্টিফিকেট ইস্যু প্রয়োজন।</p>
+                    </div>
+                  </div>
+                  <div class="flex space-x-2 shrink-0">
+                    <button onclick="openCaseRecordModal('LA-2026-089')" class="px-3 py-1.5 bg-white border border-amber-300 hover:bg-amber-100 text-amber-900 rounded-lg font-bold text-[11px]">
+                      ফাইল দেখুন
+                    </button>
+                    <button onclick="openObservationModal('LA-2026-089')" class="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold text-[11px] shadow-2xs">
+                      পরামর্শ দিন
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: কার্যক্রমের সূচক (Matching right telemetry list in screenshot) -->
+            <div class="space-y-6">
+              <div class="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-2xs space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <h3 class="text-sm font-bold text-slate-900">কার্যক্রমের সূচক (District Vital Indicators)</h3>
+                  <span class="text-[10px] text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full font-bold">লাইভ সিঙ্ক</span>
+                </div>
+
+                <!-- Clean Status Telemetry Rows with Right-Aligned Counts -->
+                <div class="space-y-2.5 text-xs">
+                  <div class="flex items-center justify-between py-1.5 border-b border-slate-100">
+                    <span class="text-slate-600 flex items-center space-x-2">
+                      <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+                      <span>সক্রিয় আইনি সহায়তা কেস</span>
+                    </span>
+                    <span class="font-mono font-bold text-slate-900">৯৪</span>
+                  </div>
+
+                  <div class="flex items-center justify-between py-1.5 border-b border-slate-100">
+                    <span class="text-slate-600 flex items-center space-x-2">
+                      <span class="w-2 h-2 rounded-full bg-purple-600"></span>
+                      <span>চলমান মধ্যস্থতা (ADR)</span>
+                    </span>
+                    <span class="font-mono font-bold text-purple-900">৩৫</span>
+                  </div>
+
+                  <div class="flex items-center justify-between py-1.5 border-b border-slate-100">
+                    <span class="text-slate-600 flex items-center space-x-2">
+                      <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+                      <span>আদালতে বিচারাধীন মামলা</span>
+                    </span>
+                    <span class="font-mono font-bold text-blue-900">৫২</span>
+                  </div>
+
+                  <div class="flex items-center justify-between py-1.5 border-b border-slate-100">
+                    <span class="text-slate-600 flex items-center space-x-2">
+                      <span class="w-2 h-2 rounded-full bg-rose-600"></span>
+                      <span>জরুরি ভিকটিম পদক্ষেপ</span>
+                    </span>
+                    <span class="font-mono font-bold text-rose-900">৫</span>
+                  </div>
+
+                  <div class="flex items-center justify-between py-1.5 border-b border-slate-100">
+                    <span class="text-slate-600 flex items-center space-x-2">
+                      <span class="w-2 h-2 rounded-full bg-amber-600"></span>
+                      <span>আইনজীবী রিপোর্ট অপেক্ষমাণ</span>
+                    </span>
+                    <span class="font-mono font-bold text-amber-900">৭</span>
+                  </div>
+
+                  <div class="flex items-center justify-between py-1.5 border-b border-slate-100">
+                    <span class="text-slate-600 flex items-center space-x-2">
+                      <span class="w-2 h-2 rounded-full bg-teal-600"></span>
+                      <span>রেফারেল ও ওসিসি কেস</span>
+                    </span>
+                    <span class="font-mono font-bold text-teal-900">১২</span>
+                  </div>
+
+                  <div class="flex items-center justify-between py-1.5">
+                    <span class="text-slate-600 flex items-center space-x-2">
+                      <span class="w-2 h-2 rounded-full bg-slate-500"></span>
+                      <span>চলতি মাসে নিষ্পত্তিকৃত</span>
+                    </span>
+                    <span class="font-mono font-bold text-slate-800">২২</span>
+                  </div>
+                </div>
+
+                <!-- Statutory Card: Chairman Special Directive & Ratification -->
+                <div class="p-3.5 rounded-xl bg-brand-50 border border-brand-100 text-xs space-y-2">
+                  <div class="flex items-center justify-between text-brand-900 font-bold">
+                    <span>কমিটির বিশেষ ক্ষমতা</span>
+                    <span class="text-[10px] bg-brand-900 text-white px-2 py-0.5 rounded">ধারা ১০(২)</span>
+                  </div>
+                  <p class="text-slate-600 text-[11px] leading-relaxed">
+                    জরুরি প্রয়োজনে জেলা কমিটির চেয়ারম্যান হিসেবে তাৎক্ষণিক সিদ্ধান্ত প্রদান করতে পারেন, যা পরবর্তী সাধারণ সভায় অনুমোদনের জন্য পেশ করা হবে।
+                  </p>
+                  <button onclick="switchView('meetings')" class="w-full py-1.5 rounded-lg bg-brand-900 hover:bg-brand-800 text-white font-bold text-[11px] shadow-2xs">
+                    আসন্ন সভার প্রস্তুতি দেখুন
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 2: DLAO & OFFICER SUPERVISION (CORE MODULE)
+      // ==========================================
+      function viewOfficerSupervision() {
+        return `
+        <div class="space-y-6">
+          <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-2xs space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 gap-3">
+              <div>
+                <div class="flex items-center space-x-2">
+                  <span class="bg-emerald-100 text-emerald-900 text-xs font-bold px-2.5 py-0.5 rounded">ধারা ১০ সংবিধিবদ্ধ তদারকি</span>
+                  <h3 class="text-xl font-bold text-slate-900">চিফ লিগ্যাল এইড অফিসার ও লিগ্যাল এইড অফিসার তদারকি</h3>
+                </div>
+                <p class="text-xs text-slate-500 mt-1">
+                  আইন অনুযায়ী চেয়ারম্যান সংশ্লিষ্ট কর্মকর্তাদের দায়িত্ব ও কার্যক্রম সময় সময় তদারকি করবেন এবং প্রয়োজনীয় পরামর্শ ও দিকনির্দেশনা প্রদান করবেন।
+                </p>
+              </div>
+              <div class="flex items-center space-x-2">
+                <span class="text-xs bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl font-semibold border border-slate-200">
+                  কর্মকর্তা সংখ্যা: ২ জন
+                </span>
+              </div>
+            </div>
+
+            <!-- Officer Caseload Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              ${state.officers
+                .map(
+                  (off) => `
+                <div class="p-5 rounded-2xl border ${off.overdueCount > 0 ? "border-amber-300 bg-amber-50/20" : "border-slate-200 bg-white"} space-y-4 shadow-2xs">
+                  <div class="flex items-start justify-between">
+                    <div class="space-y-1">
+                      <span class="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded font-mono">${off.id}</span>
+                      <h4 class="text-base font-bold text-slate-900">${off.name}</h4>
+                      <p class="text-xs text-slate-500 font-medium">${off.designation}</p>
+                      <span class="text-[11px] text-slate-400 block">${off.court}</span>
+                    </div>
+                    <span class="text-[11px] font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
+                      ${off.lastActive}
+                    </span>
+                  </div>
+
+                  <!-- Officer Vital Stats Grid -->
+                  <div class="grid grid-cols-3 gap-2.5 text-center text-xs">
+                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200/80">
+                      <span class="text-[10px] text-slate-500 block">মোট ন্যস্ত মামলা</span>
+                      <span class="text-lg font-bold text-slate-900 font-mono">${off.totalCases}</span>
+                    </div>
+                    <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-200">
+                      <span class="text-[10px] text-amber-800 block">মুলতবি ফাইল</span>
+                      <span class="text-lg font-bold text-amber-900 font-mono">${off.pendingCount}</span>
+                    </div>
+                    <div class="bg-rose-50 p-2.5 rounded-xl border border-rose-200">
+                      <span class="text-[10px] text-rose-800 block">বিলম্বিত / ওভারডিউ</span>
+                      <span class="text-lg font-bold text-rose-900 font-mono">${off.overdueCount}</span>
+                    </div>
+                  </div>
+
+                  <!-- Statutory Functional Breakdown (Mandatory items from docx) -->
+                  <div class="bg-white p-3 rounded-xl border border-slate-200 space-y-1.5 text-xs">
+                    <span class="text-[11px] font-bold text-slate-700 block border-b pb-1">কার্যভিত্তিক মুলতবি অবস্থা (Functional Pipeline)</span>
+                    <div class="flex justify-between py-1 border-b border-slate-100 text-slate-600">
+                      <span>জরুরি আবেদন সাড়া (Emergency Response):</span>
+                      <strong class="${off.emergencyPending > 0 ? "text-rose-700" : "text-slate-900"}">${off.emergencyPending} টি</strong>
+                    </div>
+                    <div class="flex justify-between py-1 border-b border-slate-100 text-slate-600">
+                      <span>আইনি পরামর্শ প্রদান মুলতবি (Legal Advice Pending):</span>
+                      <strong class="text-slate-900">${off.legalAdvicePending} টি</strong>
+                    </div>
+                    <div class="flex justify-between py-1 border-b border-slate-100 text-slate-600">
+                      <span>মধ্যস্থতা অধিবেশন মুলতবি (Mediation Pending):</span>
+                      <strong class="text-purple-800">${off.mediationPending} টি</strong>
+                    </div>
+                    <div class="flex justify-between py-1 border-b border-slate-100 text-slate-600">
+                      <span>রেফারেল স্বীকৃতি অপেক্ষমাণ (Referral Pending):</span>
+                      <strong class="text-slate-900">${off.referralPending} টি</strong>
+                    </div>
+                    <div class="flex justify-between py-1 border-b border-slate-100 text-slate-600">
+                      <span>ফলো-আপ মুলতবি (Follow-up Pending):</span>
+                      <strong class="text-slate-900">${off.followUpPending} টি</strong>
+                    </div>
+                    <div class="flex justify-between py-1 text-slate-600">
+                      <span>কেস ক্লোজার রিপোর্ট মুলতবি (Closure Pending):</span>
+                      <strong class="text-slate-900">${off.caseClosurePending} টি</strong>
+                    </div>
+                  </div>
+
+                  <!-- Chairman Actions Toolbar -->
+                  <div class="flex space-x-2 pt-1">
+                    <button onclick="filterCasesByOfficer('${off.id}')" class="flex-1 py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl text-center">
+                      মামলাসমূহ দেখুন
+                    </button>
+                    <button onclick="openOfficerDirectiveModal('${off.id}')" class="flex-1 py-2 px-3 bg-brand-900 hover:bg-brand-800 text-white text-xs font-bold rounded-xl text-center shadow-2xs flex items-center justify-center space-x-1">
+                      <i class="fa-solid fa-pen-nib"></i>
+                      <span>পর্যবেক্ষণ ও পরামর্শ দিন</span>
+                    </button>
+                  </div>
+                </div>
+              `,
+                )
+                .join("")}
+            </div>
+
+            <!-- Chairman Oversight Workflow (View → Review → Observation/Advice → Follow-up) -->
+            <div class="p-4 bg-emerald-50/70 border border-emerald-200 rounded-2xl text-xs space-y-2">
+              <span class="font-bold text-emerald-950 uppercase text-[11px] flex items-center space-x-1.5">
+                <i class="fa-solid fa-circle-check text-emerald-700"></i>
+                <span>চেয়ারম্যান তদারকি কর্মপ্রবাহ (Chairman Supervisory Workflow)</span>
+              </span>
+              <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 pt-1">
+                <div class="p-2.5 bg-white rounded-xl border border-emerald-100 text-center">
+                  <span class="font-bold text-slate-800 block text-xs">১. View (পর্যবেক্ষণ)</span>
+                  <span class="text-[10px] text-slate-500">কর্মকর্তার মুলতবি ও কেসলোড খতিয়ান দেখা</span>
+                </div>
+                <div class="p-2.5 bg-white rounded-xl border border-emerald-100 text-center">
+                  <span class="font-bold text-slate-800 block text-xs">২. Review (পর্যালোচনা)</span>
+                  <span class="text-[10px] text-slate-500">বিলম্ব বা আইনি ত্রুটির কারণ যাচাই</span>
+                </div>
+                <div class="p-2.5 bg-white rounded-xl border border-emerald-100 text-center">
+                  <span class="font-bold text-slate-800 block text-xs">৩. Advice (পরামর্শ ও নোট)</span>
+                  <span class="text-[10px] text-slate-500">ধারা ১০ মতে আইনি দিকনির্দেশনা প্রদান</span>
+                </div>
+                <div class="p-2.5 bg-white rounded-xl border border-emerald-100 text-center">
+                  <span class="font-bold text-slate-800 block text-xs">৪. Follow-up (অনুসরণ)</span>
+                  <span class="text-[10px] text-slate-500">কার্যক্রম অগ্রগতি ও বাস্তবায়ন নিশ্চিতকরণ</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 3: EXCEPTION & ALERT CENTRE (8 TRIGGERS)
+      // ==========================================
+      function viewExceptions() {
+        const activeExceptions = state.cases.filter(
+          (c) => c.exceptionType && c.exceptionType !== "none",
+        );
+
+        return `
+        <div class="space-y-6">
+          <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-2xs space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 gap-3">
+              <div>
+                <div class="flex items-center space-x-2">
+                  <span class="bg-rose-100 text-rose-800 text-xs font-bold px-2.5 py-0.5 rounded">Exception-Based Monitoring</span>
+                  <h3 class="text-xl font-bold text-slate-900">ব্যতিক্রম ও সতর্কতা কেন্দ্র</h3>
+                </div>
+                <p class="text-xs text-slate-500 mt-1">
+                  চেয়ারম্যান দৈনন্দিন অপারেশনাল কাজে জড়িত না হয়ে কেবল বিলম্বিত, আটকে থাকা ও জরুরি বিষয়ে সরাসরি দিকনির্দেশনা প্রদান করেন।
+                </p>
+              </div>
+              <span class="text-xs bg-rose-50 text-rose-700 font-bold px-3 py-1.5 rounded-xl border border-rose-200 flex items-center space-x-1">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>${activeExceptions.length} টি সক্রিয় সতর্কতা</span>
+              </span>
+            </div>
+
+            <!-- 8 Statutory Exception Trigger Badges (Filter Bar) -->
+            <div class="flex flex-wrap gap-1.5 text-xs pb-2 border-b border-slate-100">
+              <span class="px-2.5 py-1 bg-slate-100 rounded-lg text-slate-700 font-semibold cursor-pointer hover:bg-slate-200" onclick="filterExceptions('all')">সকল (${activeExceptions.length})</span>
+              <span class="px-2.5 py-1 bg-rose-50 text-rose-800 rounded-lg font-medium border border-rose-200 cursor-pointer" onclick="filterExceptions('Emergency response overdue')"> Emergency overdue</span>
+              <span class="px-2.5 py-1 bg-amber-50 text-amber-900 rounded-lg font-medium border border-amber-200 cursor-pointer" onclick="filterExceptions('Mediation repeatedly adjourned')"> Mediation repeatedly adjourned</span>
+              <span class="px-2.5 py-1 bg-blue-50 text-blue-800 rounded-lg font-medium border border-blue-200 cursor-pointer" onclick="filterExceptions('Lawyer update overdue')"> Lawyer update overdue</span>
+              <span class="px-2.5 py-1 bg-teal-50 text-teal-800 rounded-lg font-medium border border-teal-200 cursor-pointer" onclick="filterExceptions('Referral not acknowledged')"> Referral not acknowledged</span>
+              <span class="px-2.5 py-1 bg-purple-50 text-purple-800 rounded-lg font-medium border border-purple-200 cursor-pointer" onclick="filterExceptions('Applicant complaint')"> Applicant complaint</span>
+            </div>
+
+            <!-- Exception Cards Feed -->
+            <div class="space-y-4" id="exceptionCardsContainer">
+              ${activeExceptions
+                .map(
+                  (c) => `
+                <div class="p-5 rounded-2xl border-2 border-rose-200 bg-rose-50/20 hover:bg-rose-50/40 transition space-y-3">
+                  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-rose-100 pb-2">
+                    <div class="flex items-center space-x-2.5">
+                      <span class="font-mono font-bold text-slate-900 text-sm">${c.id}</span>
+                      <span class="bg-rose-600 text-white font-bold text-[10px] px-2 py-0.5 rounded uppercase tracking-wider">${c.exceptionType}</span>
+                      <span class="text-xs text-slate-500">মুলতবি: <strong>${c.daysPending} দিন</strong></span>
+                    </div>
+                    <span class="text-xs text-slate-600">দায়িত্বশীল: <strong>${c.officerName}</strong></span>
+                  </div>
+
+                  <div class="space-y-1 text-xs">
+                    <h4 class="font-bold text-slate-900 text-sm">${c.applicant} বনাম ${c.respondent}</h4>
+                    <p class="text-slate-600">${c.type} | আদালত/স্থান: ${c.court}</p>
+                    <div class="p-3 bg-white rounded-xl border border-rose-200 text-rose-950 font-medium leading-relaxed mt-2">
+                      <span class="font-bold block text-rose-800 text-[11px] mb-0.5">⚠️ সতর্কতার কারণ ও জটিলতা:</span>
+                      ${c.exceptionDesc}
+                    </div>
+                  </div>
+
+                  ${
+                    c.chairmanObservations && c.chairmanObservations.length > 0
+                      ? `
+                    <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs space-y-1">
+                      <span class="font-bold text-emerald-950 block text-[11px]">চেয়ারম্যানের সর্বশেষ পর্যবেক্ষণ:</span>
+                      <p class="text-emerald-900 font-medium">${c.chairmanObservations[c.chairmanObservations.length - 1]}</p>
+                    </div>
+                  `
+                      : ""
+                  }
+
+                  <!-- Actions -->
+                  <div class="flex justify-end space-x-2 pt-2">
+                    <button onclick="openCaseRecordModal('${c.id}')" class="px-3.5 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs rounded-xl shadow-2xs">
+                      নথি পর্যালোচনা
+                    </button>
+                    <button onclick="openObservationModal('${c.id}')" class="px-4 py-1.5 bg-brand-900 hover:bg-brand-800 text-white font-bold text-xs rounded-xl shadow-2xs flex items-center space-x-1.5">
+                      <i class="fa-solid fa-gavel"></i>
+                      <span>চেয়ারম্যান দিকনির্দেশনা দিন</span>
+                    </button>
+                  </div>
+                </div>
+              `,
+                )
+                .join("")}
+            </div>
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 4: PANEL LAWYER OVERSIGHT (ধারা ১০)
+      // ==========================================
+      function viewPanelLawyers() {
+        return `
+        <div class="space-y-6">
+          <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-2xs space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 gap-3">
+              <div>
+                <div class="flex items-center space-x-2">
+                  <span class="bg-purple-100 text-purple-900 text-xs font-bold px-2.5 py-0.5 rounded">সংশোধিত ধারা ১০ বিধান</span>
+                  <h3 class="text-xl font-bold text-slate-900">প্যানেল আইনজীবী তদারকি ও মূল্যায়ন</h3>
+                </div>
+                <p class="text-xs text-slate-500 mt-1">
+                  জেলা কমিটি প্যানেল তালিকা অনুমোদন ও পারফরম্যান্স, আন্তরিকতা, সেবা মনোভাব, সততা বিবেচনায় তালিকা হালনাগাদ করবে। অনিয়মে শুনানি ও বার কাউন্সিলে রেফারেলের ক্ষমতা রয়েছে।
+                </p>
+              </div>
+              <div class="flex gap-2">
+                <button onclick="openPanelReviewModal()" class="px-3.5 py-2 bg-brand-900 hover:bg-brand-800 text-white text-xs font-bold rounded-xl shadow-2xs flex items-center space-x-1.5">
+                  <i class="fa-solid fa-list-check"></i>
+                  <span>প্যানেল তালিকা হালনাগাদ সভা</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Panel Lawyers Roster Table -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr class="bg-slate-50 border-b border-slate-200 text-slate-600">
+                    <th class="p-3">আইনজীবীর নাম ও বার আইডি</th>
+                    <th class="p-3">কার্যক্ষেত্র / বিশেষত্ব</th>
+                    <th class="p-3 text-center">চলমান কেস</th>
+                    <th class="p-3 text-center">মুলতবি আপডেট</th>
+                    <th class="p-3 text-center">স্কোর ও আন্তরিকতা</th>
+                    <th class="p-3 text-center">অভিযোগ</th>
+                    <th class="p-3 text-center">স্ট্যাটাস</th>
+                    <th class="p-3 text-right">কমিটি অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 font-medium">
+                  ${state.panelLawyers
+                    .map(
+                      (l) => `
+                    <tr class="hover:bg-slate-50/70 transition">
+                      <td class="p-3">
+                        <div class="font-bold text-slate-900 text-sm">${l.name}</div>
+                        <div class="text-slate-500 text-[11px] font-mono">${l.barCouncilNo} | ${l.phone}</div>
+                      </td>
+                      <td class="p-3 text-slate-700">${l.assignedMatters}</td>
+                      <td class="p-3 text-center font-mono font-bold text-slate-900">${l.activeCases}</td>
+                      <td class="p-3 text-center">
+                        ${
+                          l.pendingUpdates > 0
+                            ? `
+                          <span class="bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded text-[11px]">${l.pendingUpdates} টি</span>
+                        `
+                            : `<span class="text-emerald-700 font-bold">০ (হালনাগাদ)</span>`
+                        }
+                      </td>
+                      <td class="p-3 text-center">
+                        <span class="font-bold ${l.performanceScore >= 90 ? "text-emerald-700" : l.performanceScore >= 80 ? "text-blue-700" : "text-rose-700"}">
+                          ${l.performanceScore}%
+                        </span>
+                        <span class="text-[10px] text-slate-500 block">(${l.sincerity})</span>
+                      </td>
+                      <td class="p-3 text-center">
+                        ${
+                          l.complaints > 0
+                            ? `
+                          <span class="bg-rose-600 text-white font-bold px-2 py-0.5 rounded text-[10px] cursor-pointer" onclick="switchView('complaints')">
+                            ${l.complaints} টি অভিযোগ
+                          </span>
+                        `
+                            : '<span class="text-slate-400">নেই</span>'
+                        }
+                      </td>
+                      <td class="p-3 text-center">
+                        <span class="text-[10px] font-bold px-2.5 py-1 rounded-full ${l.status === "Active" ? "bg-emerald-100 text-emerald-800" : l.status === "Under Review" ? "bg-amber-100 text-amber-900" : "bg-rose-100 text-rose-800"}">
+                          ${l.status}
+                        </span>
+                      </td>
+                      <td class="p-3 text-right">
+                        <button onclick="openLawyerActionModal('${l.id}')" class="px-3 py-1.5 bg-white border border-slate-300 hover:border-brand-900 text-slate-700 hover:text-brand-900 font-bold text-[11px] rounded-lg shadow-2xs">
+                          ব্যবস্থা নিন
+                        </button>
+                      </td>
+                    </tr>
+                  `,
+                    )
+                    .join("")}
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Section 10 Disciplinary & Evaluation Notice Box -->
+            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-xs space-y-2">
+              <span class="font-bold text-slate-900 block text-xs flex items-center space-x-1.5">
+                <i class="fa-solid fa-gavel text-brand-900"></i>
+                <span>আইনগত ধারা ১০ অনুযায়ী কমিটির ক্ষমতা ও শুনানি বিধান:</span>
+              </span>
+              <p class="text-slate-600 leading-relaxed text-[11px]">
+                কোনো প্যানেল আইনজীবীর বিরুদ্ধে অর্থ দাবি, অনৈতিক আচরণ বা দায়িত্বে অবহেলার অভিযোগ প্রাপ্ত হলে জেলা কমিটি তাকে শুনানির যুক্তিসঙ্গত সুযোগ প্রদান করে প্যানেল থেকে অব্যাহতি, বরখাস্ত বা কারণ দর্শানোর নোটিশ প্রদান করতে পারে। গুরুতর ক্ষেত্রে বাংলাদেশ বার কাউন্সিলে শাস্তিমূলক ব্যবস্থার সুপারিশ প্রেরণ করা হবে।
+              </p>
+            </div>
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 5: CASE OVERSIGHT & UNIFIED RECORD
+      // ==========================================
+      function viewCaseOversight() {
+        return `
+        <div class="space-y-6">
+          <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-2xs space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 gap-3">
+              <div>
+                <h3 class="text-xl font-bold text-slate-900">মামলা তদারকি ও ইউনিফাইড রেকর্ড</h3>
+                <p class="text-xs text-slate-500 mt-1">
+                  চেয়ারম্যান হিসেবে সকল লিগ্যাল এইড মামলার পূর্ণাঙ্গ টাইমলাইন, দায়িত্বশীল কর্মকর্তা ও গৃহীত পদক্ষেপ তদারকি করুন।
+                </p>
+              </div>
+              <div class="text-xs text-slate-500">
+                মোট মামলা: <strong class="text-slate-900 font-mono">${state.cases.length}</strong> টি প্রদর্শিত
+              </div>
+            </div>
+
+            <!-- Multi-Search & Filter Toolbar -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+              <div class="sm:col-span-2">
+                <input type="text" id="caseSearchInp" oninput="applyCaseSearchFilter()" placeholder="মামলা নম্বর, পক্ষগণের নাম, বিষয় বা আদালত দিয়ে খুঁজুন..." class="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-brand-900">
+              </div>
+              <div>
+                <select id="caseCategoryFilter" onchange="applyCaseSearchFilter()" class="w-full border border-slate-300 rounded-xl p-2 text-xs">
+                  <option value="ALL">সকল ক্যাটাগরি</option>
+                  <option value="Mediation">মধ্যস্থতা (Mediation / ADR)</option>
+                  <option value="Court Case">আদালতের মামলা (Court Case)</option>
+                  <option value="Emergency">জরুরি কেস (Emergency)</option>
+                  <option value="Referral">রেফারেল (Referral)</option>
+                </select>
+              </div>
+              <div>
+                <select id="caseStatusFilter" onchange="applyCaseSearchFilter()" class="w-full border border-slate-300 rounded-xl p-2 text-xs">
+                  <option value="ALL">সকল অবস্থা</option>
+                  <option value="Overdue">বিলম্বিত / ওভারডিউ</option>
+                  <option value="Active">সক্রিয় / চলমান</option>
+                  <option value="Emergency">জরুরি</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Cases Table -->
+            <div id="caseTableContainer" class="overflow-x-auto">
+              <!-- Populated by applyCaseSearchFilter() -->
+            </div>
+          </div>
+        </div>
+      `;
+      }
+
+      function applyCaseSearchFilter() {
+        const q = (
+          document.getElementById("caseSearchInp")?.value || ""
+        ).toLowerCase();
+        const cat =
+          document.getElementById("caseCategoryFilter")?.value || "ALL";
+        const st = document.getElementById("caseStatusFilter")?.value || "ALL";
+
+        const filtered = state.cases.filter((c) => {
+          const matchesQ =
+            !q ||
+            (
+              c.id +
+              " " +
+              c.applicant +
+              " " +
+              c.respondent +
+              " " +
+              c.type +
+              " " +
+              c.court +
+              " " +
+              c.officerName +
+              " " +
+              c.panelLawyer
+            )
+              .toLowerCase()
+              .includes(q);
+          const matchesCat = cat === "ALL" || c.category === cat;
+          const matchesSt = st === "ALL" || c.status === st;
+          return matchesQ && matchesCat && matchesSt;
+        });
+
+        const container = document.getElementById("caseTableContainer");
+        if (!container) return;
+
+        container.innerHTML = `
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-200 text-slate-600">
+              <th class="p-3">কেস নম্বর</th>
+              <th class="p-3">পক্ষগণ ও বিষয়</th>
+              <th class="p-3">আদালত / স্থান</th>
+              <th class="p-3">কর্মকর্তা ও প্যানেল আইনজীবী</th>
+              <th class="p-3">বর্তমান পর্যায়</th>
+              <th class="p-3 text-center">ব্যতিক্রম সতর্কতা</th>
+              <th class="p-3 text-right">অ্যাকশন</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 font-medium">
+            ${
+              filtered.length === 0
+                ? `
+              <tr><td colspan="7" class="p-6 text-center text-slate-400">কোনো মামলা পাওয়া যায়নি।</td></tr>
+            `
+                : filtered
+                    .map(
+                      (c) => `
+              <tr class="hover:bg-slate-50/70 transition">
+                <td class="p-3 font-mono font-bold text-slate-900">${c.id}</td>
+                <td class="p-3">
+                  <div class="font-bold text-slate-900">${c.applicant} বনাম ${c.respondent}</div>
+                  <div class="text-slate-500 text-[11px]">${c.type}</div>
+                </td>
+                <td class="p-3 text-slate-600">${c.court}</td>
+                <td class="p-3">
+                  <div class="text-slate-900 font-semibold">${c.officerName}</div>
+                  <div class="text-slate-500 text-[11px]">${c.panelLawyer}</div>
+                </td>
+                <td class="p-3">
+                  <span class="bg-slate-100 text-slate-800 font-bold px-2 py-0.5 rounded text-[11px]">${c.stage}</span>
+                </td>
+                <td class="p-3 text-center">
+                  ${
+                    c.exceptionType && c.exceptionType !== "none"
+                      ? `
+                    <span class="bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded text-[10px] block truncate max-w-[130px] mx-auto" title="${c.exceptionType}">
+                      ${c.exceptionType}
+                    </span>
+                  `
+                      : '<span class="text-emerald-700">স্বাভাবিক</span>'
+                  }
+                </td>
+                <td class="p-3 text-right space-x-1">
+                  <button onclick="openCaseRecordModal('${c.id}')" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-[11px] rounded-lg">
+                    নথি খুলুন
+                  </button>
+                  <button onclick="openObservationModal('${c.id}')" class="px-2.5 py-1 bg-brand-900 hover:bg-brand-800 text-white font-bold text-[11px] rounded-lg shadow-2xs">
+                    পরামর্শ
+                  </button>
+                </td>
+              </tr>
+            `,
+                    )
+                    .join("")
+            }
+          </tbody>
+        </table>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 6: MEDIATION & ADR OVERVIEW
+      // ==========================================
+      function viewMediation() {
+        const medCases = state.cases.filter((c) => c.category === "Mediation");
+        return `
+        <div class="space-y-6">
+          <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-2xs space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 gap-3">
+              <div>
+                <h3 class="text-xl font-bold text-slate-900">মধ্যস্থতা ও বিকল্প বিরোধ নিষ্পত্তি (ADR Overview)</h3>
+                <p class="text-xs text-slate-500 mt-1">পারিবারিক ও দেওয়ানী বিরোধে আদালতের বাইরে আপস মীমাংসার জেলা অগ্রগতি।</p>
+              </div>
+              <span class="bg-purple-100 text-purple-900 font-bold text-xs px-3 py-1.5 rounded-xl">
+                চলতি মাসে সাফল্য: ৭৮%
+              </span>
+            </div>
+
+            <!-- ADR KPI Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center text-xs">
+              <div class="p-4 bg-purple-50 rounded-2xl border border-purple-200">
+                <span class="text-slate-500 block">চলমান মধ্যস্থতা</span>
+                <span class="text-2xl font-bold text-purple-900 font-mono">৩৫</span>
+              </div>
+              <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200">
+                <span class="text-slate-500 block">আপসে নিষ্পত্তিকৃত</span>
+                <span class="text-2xl font-bold text-emerald-900 font-mono">৪৮</span>
+              </div>
+              <div class="p-4 bg-amber-50 rounded-2xl border border-amber-200">
+                <span class="text-slate-500 block">বারবার মুলতবি (Alert)</span>
+                <span class="text-2xl font-bold text-amber-900 font-mono">২</span>
+              </div>
+              <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200">
+                <span class="text-slate-500 block">ধারা ২১(ক) সার্টিফিকেট</span>
+                <span class="text-2xl font-bold text-slate-900 font-mono">১২</span>
+              </div>
+            </div>
+
+            <!-- Mediation Cases List -->
+            <div class="space-y-3">
+              <h4 class="font-bold text-slate-800 text-sm">মধ্যস্থতা চলমান মামলাসমূহ</h4>
+              ${medCases
+                .map(
+                  (c) => `
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-xs">
+                  <div>
+                    <div class="flex items-center space-x-2">
+                      <span class="font-mono font-bold text-slate-900">${c.id}</span>
+                      <span class="font-bold text-slate-800">${c.applicant} বনাম ${c.respondent}</span>
+                      <span class="bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded text-[10px]">ADR</span>
+                    </div>
+                    <p class="text-slate-500 mt-1">${c.type} | দায়িত্বে: <strong>${c.officerName}</strong> | মধ্যস্থতাকারী: ${c.panelLawyer}</p>
+                    <span class="text-slate-600 block mt-0.5">পরবর্তী বৈঠকের তারিখ: <strong>${c.nextHearing}</strong></span>
+                  </div>
+                  <div class="flex space-x-2 shrink-0">
+                    <button onclick="openCaseRecordModal('${c.id}')" class="px-3 py-1.5 bg-white border border-slate-300 font-bold rounded-lg text-slate-700">বিবরণ</button>
+                    <button onclick="openObservationModal('${c.id}')" class="px-3 py-1.5 bg-brand-900 text-white font-bold rounded-lg shadow-2xs">দিকনির্দেশনা</button>
+                  </div>
+                </div>
+              `,
+                )
+                .join("")}
+            </div>
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 7: REFERRALS OVERVIEW
+      // ==========================================
+      function viewReferrals() {
+        const refCases = state.cases.filter((c) => c.category === "Referral");
+        return `
+        <div class="space-y-6">
+          <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-2xs space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 gap-3">
+              <div>
+                <h3 class="text-xl font-bold text-slate-900">রেফারেল ও আন্তঃপ্রাতিষ্ঠানিক সহযোগিতা</h3>
+                <p class="text-xs text-slate-500 mt-1">One Stop Crisis Centre (OCC), সমাজসেবা, পুলিশ প্রশাসন ও এনজিওর সাথে সমন্বয়।</p>
+              </div>
+              <span class="bg-teal-100 text-teal-900 font-bold text-xs px-3 py-1.5 rounded-xl">
+                ১২ টি সক্রিয় রেফারেল
+              </span>
+            </div>
+
+            <div class="space-y-3 text-xs">
+              ${refCases
+                .map(
+                  (c) => `
+                <div class="p-4 rounded-xl border border-teal-200 bg-teal-50/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                  <div>
+                    <div class="flex items-center space-x-2">
+                      <span class="font-mono font-bold text-slate-900">${c.id}</span>
+                      <span class="font-bold text-slate-800">${c.applicant}</span>
+                      <span class="bg-teal-100 text-teal-800 font-bold px-2 py-0.5 rounded text-[10px]">Referral Partner: OCC Joypurhat</span>
+                    </div>
+                    <p class="text-slate-600 mt-1">বিষয়: ${c.type} | চাহিদা: ${c.reliefSought}</p>
+                    <div class="text-rose-800 font-semibold mt-1">⚠️ স্থিতি: ওসিসি থেকে প্রাপ্তিস্বীকার এখনো আসেনি (৭ দিন অতিক্রান্ত)।</div>
+                  </div>
+                  <div class="flex space-x-2 shrink-0">
+                    <button onclick="openCaseRecordModal('${c.id}')" class="px-3 py-1.5 bg-white border border-slate-300 font-bold rounded-lg text-slate-700">নথি দেখুন</button>
+                    <button onclick="openObservationModal('${c.id}')" class="px-3 py-1.5 bg-brand-900 text-white font-bold rounded-lg">ডিও লেটার ইস্যু</button>
+                  </div>
+                </div>
+              `,
+                )
+                .join("")}
+            </div>
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 8: COMMITTEE MANAGEMENT & MEETINGS (ধারা ১১)
+      // ==========================================
+      function viewMeetings() {
+        const scheduledMtg = state.meetings.find(
+          (m) => m.status === "Scheduled",
+        );
+        const pastMtgs = state.meetings.filter((m) => m.status === "Completed");
+
+        return `
+        <div class="space-y-6">
+          <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-2xs space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 gap-3">
+              <div>
+                <div class="flex items-center space-x-2">
+                  <span class="bg-amber-100 text-amber-900 text-xs font-bold px-2.5 py-0.5 rounded">ধারা ১১ বিধান</span>
+                  <h3 class="text-xl font-bold text-slate-900">জেলা লিগ্যাল এইড কমিটি ও মাসিক সভা ব্যবস্থাপনা</h3>
+                </div>
+                <p class="text-xs text-slate-500 mt-1">
+                  আইনের ধারা ১১ অনুযায়ী জেলা কমিটির প্রতি মাসে কমপক্ষে একবার সভা অনুষ্ঠিত হবে এবং জেলা ও দায়রা জজ (চেয়ারম্যান) সভায় সভাপতিত্ব করবেন।
+                </p>
+              </div>
+              <button onclick="openNewMeetingModal()" class="px-3.5 py-2 bg-brand-900 hover:bg-brand-800 text-white text-xs font-bold rounded-xl shadow-2xs flex items-center space-x-1.5">
+                <i class="fa-solid fa-plus"></i>
+                <span>নতুন সভা আহ্বান</span>
+              </button>
+            </div>
+
+            <!-- Scheduled Upcoming Meeting (Active Spotlight) -->
+            ${
+              scheduledMtg
+                ? `
+              <div class="p-6 rounded-2xl border-2 border-emerald-600 bg-emerald-50/20 space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-emerald-200 pb-3">
+                  <div>
+                    <span class="text-[11px] font-bold text-emerald-800 uppercase block tracking-wider">আসন্ন সংবিধিবদ্ধ মাসিক সভা</span>
+                    <h4 class="text-lg font-bold text-slate-900">${scheduledMtg.meetingNo}</h4>
+                    <span class="text-xs text-slate-600 font-medium">তারিখ: <strong>${scheduledMtg.date} (${scheduledMtg.time})</strong> | স্থান: ${scheduledMtg.venue}</span>
+                  </div>
+                  <span class="bg-emerald-700 text-white text-xs font-bold px-3 py-1 rounded-full self-start">
+                    ওয়ার্কিং পেপার প্রস্তুত ✓
+                  </span>
+                </div>
+
+                <!-- Agenda Items -->
+                <div class="space-y-2 text-xs">
+                  <span class="font-bold text-slate-800 block text-sm">অনুমোদিত সভার কার্যসূচি (Agenda):</span>
+                  <div class="space-y-1.5 bg-white p-4 rounded-xl border border-slate-200">
+                    ${scheduledMtg.agendaItems
+                      .map(
+                        (item) => `
+                      <div class="py-1 text-slate-700 flex items-start space-x-2">
+                        <i class="fa-solid fa-circle-check text-emerald-700 text-[10px] mt-1 shrink-0"></i>
+                        <span>${item}</span>
+                      </div>
+                    `,
+                      )
+                      .join("")}
+                  </div>
+                </div>
+
+                <!-- Attendees Roster -->
+                <div class="space-y-1.5 text-xs">
+                  <span class="font-bold text-slate-800 block text-xs">আমন্ত্রিত সদস্যবৃন্দ:</span>
+                  <div class="flex flex-wrap gap-1.5">
+                    ${scheduledMtg.attendees
+                      .map(
+                        (a) => `
+                      <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg font-medium border border-slate-200">${a}</span>
+                    `,
+                      )
+                      .join("")}
+                  </div>
+                </div>
+
+                <div class="flex justify-end space-x-2 pt-2">
+                  <button onclick="printMeetingNotice('${scheduledMtg.id}')" class="px-4 py-2 bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 font-bold text-xs rounded-xl shadow-2xs flex items-center space-x-1.5">
+                    <i class="fa-solid fa-print"></i>
+                    <span>নোটিশ ও এজেন্ডা প্রিন্ট</span>
+                  </button>
+                  <button onclick="openRecordDecisionsModal('${scheduledMtg.id}')" class="px-4 py-2 bg-brand-900 hover:bg-brand-800 text-white font-bold text-xs rounded-xl shadow-2xs flex items-center space-x-1.5">
+                    <i class="fa-solid fa-check-double"></i>
+                    <span>সভার সিদ্ধান্ত ও রেজুলেশন রেকর্ড করুন</span>
+                  </button>
+                </div>
+              </div>
+            `
+                : ""
+            }
+
+            <!-- Past Completed Meetings History -->
+            <div class="pt-4 border-t border-slate-200 space-y-3">
+              <h4 class="font-bold text-slate-800 text-sm">বিগত সভার সিদ্ধান্ত ও রেজুলেশন খতিয়ান</h4>
+              <div class="space-y-3">
+                ${pastMtgs
+                  .map(
+                    (m) => `
+                  <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs">
+                    <div class="flex justify-between items-center border-b pb-1.5">
+                      <span class="font-bold text-slate-900">${m.meetingNo}</span>
+                      <span class="text-slate-500 font-mono">${m.date}</span>
+                    </div>
+                    <p class="text-slate-700">${m.minutes}</p>
+                    <div class="bg-white p-2.5 rounded-lg border border-slate-200 space-y-1">
+                      <span class="font-bold text-slate-900 block text-[11px]">গৃহীত সিদ্ধান্তসমূহ:</span>
+                      ${m.decisions.map((d) => `<div class="text-emerald-900 font-medium">✓ ${d}</div>`).join("")}
+                    </div>
+                  </div>
+                `,
+                  )
+                  .join("")}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 9: COMPLAINTS & SERVICE ISSUES
+      // ==========================================
+      function viewComplaints() {
+        return `
+        <div class="space-y-6">
+          <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-2xs space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 gap-3">
+              <div>
+                <h3 class="text-xl font-bold text-slate-900">অভিযোগ ও সেবা সংক্রান্ত অসন্তোষ নিষ্পত্তি</h3>
+                <p class="text-xs text-slate-500 mt-1">প্যানেল আইনজীবী বা সেবা প্রদানকারীর বিরুদ্ধে অর্থ দাবি, অবহেলা ও অনিয়মের তদন্ত খতিয়ান।</p>
+              </div>
+              <span class="bg-rose-100 text-rose-800 font-bold text-xs px-3 py-1.5 rounded-xl">
+                ৩ টি অভিযোগ নিষ্পত্তাধীন
+              </span>
+            </div>
+
+            <div class="space-y-4 text-xs">
+              ${state.complaints
+                .map(
+                  (cmp) => `
+                <div class="p-5 rounded-2xl border-2 border-rose-200 bg-white space-y-3 shadow-2xs">
+                  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-2">
+                    <div class="flex items-center space-x-2">
+                      <span class="font-mono font-bold text-rose-900 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">${cmp.id}</span>
+                      <span class="font-bold text-slate-900">${cmp.nature}</span>
+                    </div>
+                    <span class="text-slate-400 font-mono">${cmp.date}</span>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-700 bg-slate-50 p-3 rounded-xl">
+                    <div><span class="text-slate-500 block">অভিযোগকারী:</span><strong>${cmp.complainant}</strong></div>
+                    <div><span class="text-slate-500 block">অভিযুক্ত পক্ষ:</span><strong class="text-rose-900">${cmp.respondent}</strong></div>
+                  </div>
+
+                  <p class="text-slate-800 leading-relaxed font-medium bg-rose-50/50 p-3 rounded-xl border border-rose-100">
+                    "${cmp.details}"
+                  </p>
+
+                  <div class="flex justify-between items-center pt-2">
+                    <div class="text-[11px] text-slate-600">
+                      <strong>কমিটির পদক্ষেপ:</strong> ${cmp.committeeAction}
+                    </div>
+                    <button onclick="openComplaintActionModal('${cmp.id}')" class="px-3.5 py-1.5 bg-brand-900 hover:bg-brand-800 text-white font-bold text-xs rounded-xl shadow-2xs">
+                      তদন্ত ও আদেশ প্রদান
+                    </button>
+                  </div>
+                </div>
+              `,
+                )
+                .join("")}
+            </div>
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 10: REPORTS & PERFORMANCE (KPI)
+      // ==========================================
+      function viewReports() {
+        return `
+        <div class="space-y-6">
+          <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-2xs space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 gap-3">
+              <div>
+                <h3 class="text-xl font-bold text-slate-900">জেলা পারফরম্যান্স ও সংবিধিবদ্ধ রিপোর্ট</h3>
+                <p class="text-xs text-slate-500 mt-1">একই অথরিটেটিভ কেস ডাটাবেজ থেকে প্রস্তুতকৃত ৯টি বিধিবদ্ধ রিপোর্ট।</p>
+              </div>
+              <div class="flex gap-2">
+                <button onclick="exportCurrentViewCSV()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl border border-slate-300 flex items-center space-x-1">
+                  <i class="fa-solid fa-download text-emerald-800"></i>
+                  <span>CSV ডাউনলোড</span>
+                </button>
+                <button onclick="printCurrentReport()" class="px-3.5 py-1.5 bg-brand-900 hover:bg-brand-800 text-white text-xs font-bold rounded-xl flex items-center space-x-1">
+                  <i class="fa-solid fa-print"></i>
+                  <span>প্রিন্ট / PDF</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 9 Standard Statutory Reports Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div class="p-3.5 rounded-xl border bg-slate-50 hover:bg-white hover:border-emerald-700 cursor-pointer" onclick="showReportDetails('monthly')">
+                <span class="font-bold text-slate-900 block text-sm">১. Monthly District Report</span>
+                <p class="text-slate-500 text-[11px] mt-1">সেপ্টেম্বর ২০২৬ মাসিক সামগ্রিক অগ্রগতি রিপোর্ট।</p>
+              </div>
+              <div class="p-3.5 rounded-xl border bg-slate-50 hover:bg-white hover:border-emerald-700 cursor-pointer" onclick="showReportDetails('apps')">
+                <span class="font-bold text-slate-900 block text-sm">২. Application Report</span>
+                <p class="text-slate-500 text-[11px] mt-1">প্রাপ্ত, অনুমোদিত ও নাকচকৃত আবেদনের পরিসংখ্যান।</p>
+              </div>
+              <div class="p-3.5 rounded-xl border bg-slate-50 hover:bg-white hover:border-emerald-700 cursor-pointer" onclick="showReportDetails('granted')">
+                <span class="font-bold text-slate-900 block text-sm">৩. Legal Aid Granted Report</span>
+                <p class="text-slate-500 text-[11px] mt-1">মঞ্জুরকৃত সুবিধাভোগীদের আর্থ-সামাজিক তালিকা।</p>
+              </div>
+              <div class="p-3.5 rounded-xl border bg-slate-50 hover:bg-white hover:border-emerald-700 cursor-pointer" onclick="showReportDetails('mediation')">
+                <span class="font-bold text-slate-900 block text-sm">৪. Mediation Report</span>
+                <p class="text-slate-500 text-[11px] mt-1">আপস নিষ্পত্তি ও দেনমোহর আদায়ের আর্থিক খতিয়ান।</p>
+              </div>
+              <div class="p-3.5 rounded-xl border bg-slate-50 hover:bg-white hover:border-emerald-700 cursor-pointer" onclick="showReportDetails('lawyers')">
+                <span class="font-bold text-slate-900 block text-sm">৫. Lawyer Report</span>
+                <p class="text-slate-500 text-[11px] mt-1">প্যানেল আইনজীবীদের কার্যসম্পাদন ও পারফরম্যান্স খতিয়ান।</p>
+              </div>
+              <div class="p-3.5 rounded-xl border bg-slate-50 hover:bg-white hover:border-emerald-700 cursor-pointer" onclick="showReportDetails('referral')">
+                <span class="font-bold text-slate-900 block text-sm">৬. Referral Report</span>
+                <p class="text-slate-500 text-[11px] mt-1">ওসিসি ও অন্যান্য সহযোগী প্রতিষ্ঠানের পরিসংখ্যান।</p>
+              </div>
+              <div class="p-3.5 rounded-xl border bg-slate-50 hover:bg-white hover:border-emerald-700 cursor-pointer" onclick="showReportDetails('overdue')">
+                <span class="font-bold text-slate-900 block text-sm">৭. Pending / Overdue Report</span>
+                <p class="text-slate-500 text-[11px] mt-1">বিলম্বিত মামলার বিশেষ কারণ ও তদারকি নোট।</p>
+              </div>
+              <div class="p-3.5 rounded-xl border bg-slate-50 hover:bg-white hover:border-emerald-700 cursor-pointer" onclick="showReportDetails('closure')">
+                <span class="font-bold text-slate-900 block text-sm">৮. Case Closure Report</span>
+                <p class="text-slate-500 text-[11px] mt-1">চূড়ান্ত রায় ও নিষ্পত্তি সংক্রান্ত পূর্ণাঙ্গ বিবরণ।</p>
+              </div>
+              <div class="p-3.5 rounded-xl border bg-slate-50 hover:bg-white hover:border-emerald-700 cursor-pointer" onclick="showReportDetails('committee')">
+                <span class="font-bold text-slate-900 block text-sm">৯. Committee Meeting Report</span>
+                <p class="text-slate-500 text-[11px] mt-1">মাসিক সভার সিদ্ধান্তের বাস্তবায়ন মূল্যায়ন।</p>
+              </div>
+            </div>
+
+            <!-- Report Display Panel -->
+            <div id="activeReportContainer" class="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-4">
+              <div class="flex justify-between items-center border-b pb-2">
+                <h4 class="font-bold text-slate-900 text-sm" id="repHeading">মাসিক জেলা পারফরম্যান্স কেপিআই পরিসংখ্যান (সেপ্টেম্বর ২০২৬)</h4>
+                <span class="text-[11px] text-slate-500">অনুমোদনে: বিজ্ঞ জেলা ও দায়রা জজ</span>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr class="bg-white border-b text-slate-600">
+                      <th class="p-2.5">কেপিআই সূচক (KPI Indicator)</th>
+                      <th class="p-2.5 text-center">টার্গেট</th>
+                      <th class="p-2.5 text-center">বাস্তব অর্জন</th>
+                      <th class="p-2.5 text-center">হার (%)</th>
+                      <th class="p-2.5 text-right">চেয়ারম্যান পর্যবেক্ষণ</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-200 bg-white font-medium">
+                    <tr><td class="p-2.5">Application Processing</td><td class="p-2.5 text-center">১০০%</td><td class="p-2.5 text-center">৯৬%</td><td class="p-2.5 text-center text-emerald-700 font-bold">৯৬%</td><td class="p-2.5 text-right text-emerald-800">সন্তোষজনক</td></tr>
+                    <tr><td class="p-2.5">Emergency Response (24h)</td><td class="p-2.5 text-center">১০০%</td><td class="p-2.5 text-center">৮০%</td><td class="p-2.5 text-center text-amber-700 font-bold">৮০%</td><td class="p-2.5 text-right text-amber-800">গতি বৃদ্ধি প্রয়োজন</td></tr>
+                    <tr><td class="p-2.5">Legal Advice Completion</td><td class="p-2.5 text-center">৯৫%</td><td class="p-2.5 text-center">৯২%</td><td class="p-2.5 text-center text-emerald-700 font-bold">৯২%</td><td class="p-2.5 text-right text-emerald-800">উত্তম</td></tr>
+                    <tr><td class="p-2.5">Mediation Success Rate</td><td class="p-2.5 text-center">৭০%</td><td class="p-2.5 text-center">৭৮%</td><td class="p-2.5 text-center text-emerald-700 font-bold">৭৮%</td><td class="p-2.5 text-right text-emerald-800">প্রশংসনীয় সাফল্য</td></tr>
+                    <tr><td class="p-2.5">Panel Lawyer Updates</td><td class="p-2.5 text-center">১০০%</td><td class="p-2.5 text-center">৭৪%</td><td class="p-2.5 text-center text-rose-700 font-bold">৭৪%</td><td class="p-2.5 text-right text-rose-800">কমিটি সভায় শো-কজ নোটিশ</td></tr>
+                    <tr><td class="p-2.5">Referral Acknowledgment</td><td class="p-2.5 text-center">১০০%</td><td class="p-2.5 text-center">৮৫%</td><td class="p-2.5 text-center text-emerald-700 font-bold">৮৫%</td><td class="p-2.5 text-right text-slate-700">স্বাভাবিক</td></tr>
+                    <tr><td class="p-2.5">Case Closure Documentation</td><td class="p-2.5 text-center">৯৫%</td><td class="p-2.5 text-center">৯১%</td><td class="p-2.5 text-center text-emerald-700 font-bold">৯১%</td><td class="p-2.5 text-right text-emerald-800">সন্তোষজনক</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 11: AUDIT & DECISION HISTORY
+      // ==========================================
+      function viewAudit() {
+        return `
+        <div class="space-y-6">
+          <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-2xs space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 gap-3">
+              <div>
+                <h3 class="text-xl font-bold text-slate-900">নিরীক্ষা ও সিদ্ধান্ত লগ (Audit & Decision Trail)</h3>
+                <p class="text-xs text-slate-500 mt-1">চেয়ারম্যান কর্তৃক প্রদত্ত দিকনির্দেশনা, কমিটির সিদ্ধান্ত ও প্রশাসনিক আদেশনামার অপরিবর্তনীয় খতিয়ান।</p>
+              </div>
+              <button onclick="resetDemoData()" class="px-3.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-800 text-xs font-bold rounded-xl border border-rose-200">
+                ডাটা রিসেট (Demo Reset)
+              </button>
+            </div>
+
+            <div class="relative pl-6 space-y-4 border-l-2 border-slate-200 ml-3 text-xs">
+              ${state.auditLog
+                .map(
+                  (log) => `
+                <div class="relative">
+                  <span class="absolute -left-[31px] top-1 w-3.5 h-3.5 rounded-full bg-brand-900 border-2 border-white shadow-xs"></span>
+                  <span class="font-mono text-slate-400 text-[11px] block">${log.date}</span>
+                  <span class="font-bold text-slate-900 text-xs block mt-0.5">${log.action} — <span class="text-emerald-800 font-semibold">${log.actor}</span></span>
+                  <p class="text-slate-700 mt-1 font-medium leading-relaxed">${log.details}</p>
+                </div>
+              `,
+                )
+                .join("")}
+            </div>
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // MODALS & INTERACTIVE ACTIONS
+      // ==========================================
+      function showModal(contentHtml) {
+        document.getElementById("modalBody").innerHTML = contentHtml;
+        document.getElementById("modalOverlay").classList.remove("hidden");
+      }
+
+      function closeModal() {
+        document.getElementById("modalOverlay").classList.add("hidden");
+      }
+
+      // Modal: Chairman Review / Observation / Directive
+      function openObservationModal(caseId) {
+        const c = state.cases.find((x) => x.id === caseId);
+        if (!c) return;
+
+        showModal(`
+        <div class="space-y-4 text-xs">
+          <div class="flex items-center justify-between border-b pb-3">
+            <h3 class="text-base font-bold text-slate-900 flex items-center">
+              <i class="fa-solid fa-gavel text-brand-900 mr-2 text-base"></i>
+              চেয়ারম্যান পর্যবেক্ষণ ও সংবিধিবদ্ধ নির্দেশনা (Statutory Directive)
+            </h3>
+            <span class="font-mono font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded">${c.id}</span>
+          </div>
+
+          <div class="p-3 bg-slate-50 rounded-xl border space-y-1">
+            <div class="text-slate-700"><strong>মামলা:</strong> ${c.applicant} বনাম ${c.respondent}</div>
+            <div class="text-slate-300"><strong>বিষয়:</strong> ${c.type} | <strong>আদালত:</strong> ${c.court}</div>
+            <div class="text-slate-300"><strong>দায়িত্বশীল কর্মকর্তা:</strong> ${c.officerName} | <strong>আইনজীবী:</strong> ${c.panelLawyer}</div>
+          </div>
+
+          <!-- Predefined Standard Judicial Directives -->
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">দ্রুত নির্দেশনা টেমপ্লেট নির্বাচন করুন:</label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <button onclick="setDirectiveText('বিপক্ষ একাধিক ধার্য তারিখে গরহাজির থাকায় আর কালক্ষেপণ না করে ধারা ২১(ক) মতে সার্টিফিকেট দিয়ে মূল পারিবারিক আদালতে মামলা দায়েরের আদেশ প্রদান করুন।')" class="p-2 border rounded-xl text-left hover:bg-slate-50 text-[11px] font-medium text-slate-700">
+                ধারা ২১(ক) মতে মধ্যস্থতা সার্টিফিকেট তলব
+              </button>
+              <button onclick="setDirectiveText('২৪ ঘণ্টার মধ্যে বিশেষ ট্রাইব্যুনালে প্যানেল আইনজীবীর ব্যক্তিগত উপস্থিতি নিশ্চিত করে ভিকটিম সাপোর্ট সেবা নিশ্চিত করুন।')" class="p-2 border rounded-xl text-left hover:bg-slate-50 text-[11px] font-medium text-slate-700">
+                জরুরি ভিকটিম ট্রাইব্যুনাল উপস্থিতি নির্দেশ
+              </button>
+              <button onclick="setDirectiveText('প্যানেল আইনজীবীকে শুনানির আদেশনামার প্রত্যয়িত কপি অবিলম্বে দাখিলের জন্য কারণ দর্শাও নোটিশ জারি করুন।')" class="p-2 border rounded-xl text-left hover:bg-slate-50 text-[11px] font-medium text-slate-700">
+                আইনজীবী শুনানির বিলম্ব নোটিশ
+              </button>
+              <button onclick="setDirectiveText('সংশ্লিষ্ট সহকারী লিগ্যাল এইড অফিসারকে আগামী ৩ কর্মদিবসের মধ্যে সরেজমিন তদন্ত প্রতিবেদন দাখিলের নির্দেশ।')" class="p-2 border rounded-xl text-left hover:bg-slate-50 text-[11px] font-medium text-slate-700">
+                কর্মকর্তাকে দ্রুত তদন্ত প্রতিবেদন নির্দেশ
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">চেয়ারম্যান মহোদয়ের বিস্তারিত পর্যবেক্ষণ ও আদেশ: <span class="text-red-500">*</span></label>
+            <textarea id="directiveTextInput" rows="3" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-brand-900" placeholder="এখানে চেয়ারম্যানের পর্যবেক্ষণ ও দিকনির্দেশনা লিখুন..."></textarea>
+          </div>
+
+          <div class="flex justify-end space-x-2 pt-2">
+            <button onclick="closeModal()" class="px-4 py-2 border rounded-xl font-bold text-slate-700 hover:bg-slate-50">বাতিল</button>
+            <button onclick="saveChairmanObservation('${c.id}')" class="px-5 py-2 bg-brand-900 hover:bg-brand-800 text-white font-bold rounded-xl shadow-2xs">
+              আদেশ নথিভুক্ত ও কর্মকর্তা বরাবর প্রেরণ
+            </button>
+          </div>
+        </div>
+      `);
+      }
+
+      function setDirectiveText(txt) {
+        document.getElementById("directiveTextInput").value = txt;
+      }
+
+      function saveChairmanObservation(caseId) {
+        const val = document.getElementById("directiveTextInput").value.trim();
+        if (!val) {
+          showToast(
+            "অনুগ্রহ করে পর্যবেক্ষণ বা নির্দেশনার বিষয়বস্তু লিখুন।",
+            "warning",
+          );
+          return;
+        }
+        const c = state.cases.find((x) => x.id === caseId);
+        if (!c) return;
+
+        const dateStr = new Date().toISOString().slice(0, 10);
+        const note = `${dateStr}: চেয়ারম্যান মহোদয়ের নির্দেশনা: ${val}`;
+        if (!c.chairmanObservations) c.chairmanObservations = [];
+        c.chairmanObservations.push(note);
+
+        // Add to audit trail
+        state.auditLog.unshift({
+          id: `AUD-${Date.now()}`,
+          date: `${dateStr} ${new Date().toLocaleTimeString("bn-BD", { hour: "2-digit", minute: "2-digit" })}`,
+          actor: "চেয়ারম্যান (জেলা ও দায়রা জজ)",
+          action: `কেস ${c.id}-তে নির্দেশনা প্রদান`,
+          details: val,
+        });
+
+        persistState();
+        closeModal();
+        renderCurrentView();
+        updateSidebarBadges();
+        showToast(
+          `কেস ${c.id}-তে চেয়ারম্যানের নির্দেশনা সফলভাবে লিপিবদ্ধ ও কর্মকর্তার কাছে প্রেরিত হয়েছে।`,
+          "success",
+        );
+      }
+
+      // Modal: Unified Case Record & Timeline
+      function openCaseRecordModal(caseId) {
+        const c = state.cases.find((x) => x.id === caseId);
+        if (!c) return;
+
+        showModal(`
+        <div class="space-y-4 text-xs">
+          <div class="flex items-center justify-between border-b pb-3">
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="font-mono font-bold text-slate-900 text-base">${c.id}</span>
+                <span class="bg-brand-100 text-brand-900 font-bold px-2 py-0.5 rounded text-[11px]">${c.category}</span>
+                <span class="bg-slate-100 text-slate-800 font-bold px-2 py-0.5 rounded text-[11px]">${c.stage}</span>
+              </div>
+              <h3 class="text-sm font-bold text-slate-900 mt-1">${c.applicant} বনাম ${c.respondent}</h3>
+            </div>
+            <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 text-lg p-1">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-50 p-3.5 rounded-xl border text-slate-700">
+            <div><strong>মোকদ্দমার বিষয়:</strong> ${c.type}</div>
+            <div><strong>আদালত / ভেন্যু:</strong> ${c.court}</div>
+            <div><strong>দায়িত্বশীল কর্মকর্তা:</strong> ${c.officerName}</div>
+            <div><strong>প্যানেল আইনজীবী:</strong> ${c.panelLawyer}</div>
+            <div><strong>আবেদন দাখিলের তারিখ:</strong> ${c.filedDate} (${c.daysPending} দিন)</div>
+            <div><strong>পরবর্তী শুনানির তারিখ:</strong> ${c.nextHearing || "—"}</div>
+            <div class="sm:col-span-2"><strong>প্রার্থিত প্রতিকার:</strong> ${c.reliefSought}</div>
+          </div>
+
+          <!-- Documents Vault -->
+          <div>
+            <span class="font-bold text-slate-800 block mb-1">সংযুক্ত অনুমোদিত নথিপত্র (${c.documents.length}):</span>
+            <div class="flex flex-wrap gap-2">
+              ${c.documents
+                .map(
+                  (d) => `
+                <span class="bg-white border border-slate-300 px-3 py-1 rounded-lg text-slate-700 font-medium flex items-center space-x-1.5 cursor-pointer hover:bg-slate-50" onclick="showToast('নথি প্রদর্শন: ${d}', 'info')">
+                  <i class="fa-solid fa-file-pdf text-rose-600"></i>
+                  <span>${d}</span>
+                </span>
+              `,
+                )
+                .join("")}
+            </div>
+          </div>
+
+          <!-- Chronological Timeline -->
+          <div>
+            <span class="font-bold text-slate-800 block mb-2">ঘটনাপঞ্জী ও আদালতের অগ্রগতির টাইমলাইন:</span>
+            <div class="relative pl-5 space-y-2.5 border-l-2 border-emerald-700 ml-2">
+              ${c.timeline
+                .map(
+                  (t) => `
+                <div class="relative">
+                  <span class="absolute -left-[27px] top-1 w-2.5 h-2.5 rounded-full bg-emerald-700 border-2 border-white"></span>
+                  <span class="font-mono text-slate-400 text-[10px]">${t.date}</span>
+                  <div class="font-bold text-slate-900">${t.title}</div>
+                  <p class="text-slate-600 text-[11px]">${t.text}</p>
+                </div>
+              `,
+                )
+                .join("")}
+            </div>
+          </div>
+
+          <!-- Chairman Observations Thread -->
+          ${
+            c.chairmanObservations && c.chairmanObservations.length > 0
+              ? `
+            <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 space-y-1">
+              <span class="font-bold text-emerald-950 block text-[11px]">চেয়ারম্যান মহোদয়ের ইতিপূর্বে প্রদত্ত দিকনির্দেশনা:</span>
+              ${c.chairmanObservations.map((o) => `<p class="text-emerald-900 font-medium text-[11px]">✓ ${o}</p>`).join("")}
+            </div>
+          `
+              : ""
+          }
+
+          <div class="flex justify-end space-x-2 pt-2 border-t">
+            <button onclick="closeModal()" class="px-4 py-2 border rounded-xl font-bold text-slate-700 hover:bg-slate-50">বন্ধ করুন</button>
+            <button onclick="openObservationModal('${c.id}')" class="px-4 py-2 bg-brand-900 text-white font-bold rounded-xl shadow-2xs">নতুন পর্যবেক্ষণ যোগ করুন</button>
+          </div>
+        </div>
+      `);
+      }
+
+      // Modal: Officer-Level Formal Directive
+      function openOfficerDirectiveModal(officerId) {
+        const off = state.officers.find((o) => o.id === officerId);
+        if (!off) return;
+
+        showModal(`
+        <div class="space-y-4 text-xs">
+          <div class="flex items-center justify-between border-b pb-3">
+            <h3 class="text-base font-bold text-slate-900">
+              কর্মকর্তা বরাবর বিধিবদ্ধ পরামর্শ ও নির্দেশনা
+            </h3>
+            <span class="font-mono font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded">${off.name}</span>
+          </div>
+
+          <p class="text-slate-600 leading-relaxed">
+            আইনগত সহায়তা প্রদান আইন, ২০০০ অনুযায়ী জেলা কমিটির চেয়ারম্যান সংশ্লিষ্ট কর্মকর্তাদের দায়িত্ব ও কার্যক্রম তদারকি করে প্রয়োজনীয় পরামর্শ ও দিকনির্দেশনা প্রদান করতে পারেন।
+          </p>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">পরামর্শের ক্যাটাগরি:</label>
+            <select id="offDirCat" class="w-full border rounded-xl p-2 text-xs">
+              <option>বিলম্বিত মধ্যস্থতা ও এডিআর কার্যক্রমে গতি আনয়ন</option>
+              <option>জরুরি ভিকটিম সাপোর্ট কেসে ২৪ ঘণ্টার মধ্যে পদক্ষেপ</option>
+              <option>প্যানেল আইনজীবীদের নিকট থেকে আদেশনামা সংগ্রহ তদারকি</option>
+              <option>মামলা নিষ্পত্তির প্রতিবেদন হালনাগাদ</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">নির্দেশনার বিস্তারিত বিবরণ: <span class="text-red-500">*</span></label>
+            <textarea id="offDirText" rows="3" class="w-full border rounded-xl p-2 text-xs" placeholder="কর্মকর্তার উদ্দেশে চেয়ারম্যানের লিখিত নির্দেশ..."></textarea>
+          </div>
+
+          <div class="flex justify-end space-x-2 pt-2">
+            <button onclick="closeModal()" class="px-4 py-2 border rounded-xl font-bold text-slate-700">বাতিল</button>
+            <button onclick="saveOfficerDirective('${off.id}')" class="px-5 py-2 bg-brand-900 text-white font-bold rounded-xl shadow-2xs">
+              নির্দেশনা জারি করুন
+            </button>
+          </div>
+        </div>
+      `);
+      }
+
+      function saveOfficerDirective(officerId) {
+        const cat = document.getElementById("offDirCat").value;
+        const text = document.getElementById("offDirText").value.trim();
+        if (!text) {
+          showToast("নির্দেশনার বিবরণ লিখুন।", "warning");
+          return;
+        }
+        const off = state.officers.find((o) => o.id === officerId);
+        state.auditLog.unshift({
+          id: `AUD-${Date.now()}`,
+          date: new Date().toISOString().slice(0, 10),
+          actor: "চেয়ারম্যান (জেলা ও দায়রা জজ)",
+          action: `কর্মকর্তা ${off.name} বরাবর পরামর্শ প্রদান`,
+          details: `${cat}: ${text}`,
+        });
+        persistState();
+        closeModal();
+        showToast(
+          `কর্মকর্তা ${off.name} বরাবর চেয়ারম্যানের পরামর্শ রেকর্ড ও প্রেরিত হয়েছে।`,
+          "success",
+        );
+      }
+
+      // Modal: Panel Lawyer Disciplinary & Oversight Action (Section 10)
+      function openLawyerActionModal(lawyerId) {
+        const l = state.panelLawyers.find((x) => x.id === lawyerId);
+        if (!l) return;
+
+        showModal(`
+        <div class="space-y-4 text-xs">
+          <div class="flex items-center justify-between border-b pb-3">
+            <h3 class="text-base font-bold text-slate-900">
+              প্যানেল আইনজীবী তদারকি ও কমিটি অ্যাকশন (ধারা ১০)
+            </h3>
+            <span class="font-mono font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded">${l.name}</span>
+          </div>
+
+          <div class="p-3 bg-slate-50 rounded-xl border space-y-1">
+            <div><strong>আইনজীবী:</strong> ${l.name} (${l.barCouncilNo})</div>
+            <div><strong>চলমান কেস:</strong> ${l.activeCases} টি | <strong>মুলতবি আপডেট:</strong> ${l.pendingUpdates} টি</div>
+            <div><strong>পারফরম্যান্স স্কোর:</strong> ${l.performanceScore}% (${l.sincerity})</div>
+            <div><strong>বর্তমান স্থিতি:</strong> <span class="font-bold text-rose-800">${l.status}</span></div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">কমিটি অ্যাকশন বা পদক্ষেপ নির্বাচন করুন: <span class="text-red-500">*</span></label>
+            <select id="lawyerActionSelect" class="w-full border rounded-xl p-2.5 text-xs">
+              <option value="show_cause">১. কারণ দর্শানোর নোটিশ (Show Cause Notice) জারি</option>
+              <option value="hearing">২. পরবর্তী জেলা কমিটি সভায় শুনানিতে তলব</option>
+              <option value="suspend">৩. সাময়িকভাবে প্যানেল থেকে দায়িত্ব স্থগিত (Suspension)</option>
+              <option value="bar_council">৪. বাংলাদেশ বার কাউন্সিলে শৃঙ্খলাভঙ্গের অভিযোগ প্রেরণ</option>
+              <option value="update_profile">৫. পারফরম্যান্স সন্তোষজনক মর্মে অনুমোদন ও প্রশংসাপত্র</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">কমিটির সিদ্ধান্ত বা নির্দেশনার বিবরণ:</label>
+            <textarea id="lawyerActionNotes" rows="3" class="w-full border rounded-xl p-2.5 text-xs" placeholder="সিদ্ধান্তের যৌক্তিকতা ও নোটিশের বয়ান লিখুন..."></textarea>
+          </div>
+
+          <div class="flex justify-end space-x-2 pt-2">
+            <button onclick="closeModal()" class="px-4 py-2 border rounded-xl font-bold text-slate-700">বাতিল</button>
+            <button onclick="executeLawyerAction('${l.id}')" class="px-5 py-2 bg-brand-900 text-white font-bold rounded-xl shadow-2xs">
+              কমিটি আদেশ কার্যকর করুন
+            </button>
+          </div>
+        </div>
+      `);
+      }
+
+      function executeLawyerAction(lawyerId) {
+        const act = document.getElementById("lawyerActionSelect").value;
+        const notes = document.getElementById("lawyerActionNotes").value.trim();
+        const l = state.panelLawyers.find((x) => x.id === lawyerId);
+
+        if (act === "show_cause") l.status = "Show Cause Issued";
+        else if (act === "suspend") l.status = "Suspended";
+        else if (act === "hearing") l.status = "Under Review";
+
+        state.auditLog.unshift({
+          id: `AUD-${Date.now()}`,
+          date: new Date().toISOString().slice(0, 10),
+          actor: "জেলা লিগ্যাল এইড কমিটি",
+          action: `আইনজীবী ${l.name} সংক্রান্ত সিদ্ধান্ত`,
+          details: `পদক্ষেপ: ${act}. বিবরণ: ${notes || "কমিটি নির্দেশিত"}`,
+        });
+
+        persistState();
+        closeModal();
+        renderCurrentView();
+        showToast(
+          `আইনজীবী ${l.name} এর বিরুদ্ধে কমিটির পদক্ষেপ গৃহীত হয়েছে।`,
+          "success",
+        );
+      }
+
+      // Modal: Schedule Committee Meeting
+      function openNewMeetingModal() {
+        showModal(`
+        <div class="space-y-4 text-xs">
+          <div class="flex items-center justify-between border-b pb-3">
+            <h3 class="text-base font-bold text-slate-900">
+              জেলা লিগ্যাল এইড কমিটির নতুন মাসিক সভা আহ্বান (ধারা ১১)
+            </h3>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">সভার স্মারক ও নম্বর:</label>
+            <input type="text" id="mtgNoInp" value="১০/২০২৬ (অক্টোবর মাসিক সভা)" class="w-full border rounded-xl p-2 text-xs">
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">তারিখ:</label>
+              <input type="date" id="mtgDateInp" value="2026-10-27" class="w-full border rounded-xl p-2 text-xs">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">সময়:</label>
+              <input type="text" id="mtgTimeInp" value="বিকাল ০৩:৩০ ঘটিকা" class="w-full border rounded-xl p-2 text-xs">
+            </div>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">স্থান:</label>
+            <input type="text" id="mtgVenueInp" value="সম্মেলন কক্ষ, জেলা ও দায়রা জজ আদালত, জয়পুরহাট" class="w-full border rounded-xl p-2 text-xs">
+          </div>
+          <div class="flex justify-end space-x-2 pt-2">
+            <button onclick="closeModal()" class="px-4 py-2 border rounded-xl font-bold text-slate-700">বাতিল</button>
+            <button onclick="saveNewMeeting()" class="px-5 py-2 bg-brand-900 text-white font-bold rounded-xl shadow-2xs">
+              নোটিশ ও কার্যসূচি জারি
+            </button>
+          </div>
+        </div>
+      `);
+      }
+
+      function saveNewMeeting() {
+        const no = document.getElementById("mtgNoInp").value;
+        const dt = document.getElementById("mtgDateInp").value;
+        const tm = document.getElementById("mtgTimeInp").value;
+        const vn = document.getElementById("mtgVenueInp").value;
+
+        state.meetings.unshift({
+          id: `MTG-${Date.now()}`,
+          meetingNo: no,
+          date: dt,
+          time: tm,
+          venue: vn,
+          status: "Scheduled",
+          mandate: "ধারা ১১ বিধান",
+          agendaItems: [
+            "১. পূর্ববর্তী সভার কার্যবিবরণী অনুমোদন।",
+            "২. মাসিক লিগ্যাল এইড পরিসংখ্যান ও নিষ্পত্তি পর্যালোচনা।",
+            "৩. বিবিধ আলোচনা।",
+          ],
+          attendees: [
+            "জেলা ও দায়রা জজ (চেয়ারম্যান)",
+            "জেলা প্রশাসক",
+            "পুলিশ সুপার",
+            "সিভিল সার্জন",
+            "ডিএলএও",
+          ],
+          decisions: [],
+        });
+
+        state.auditLog.unshift({
+          id: `AUD-${Date.now()}`,
+          date: new Date().toISOString().slice(0, 10),
+          actor: "চেয়ারম্যান (জেলা ও দায়রা জজ)",
+          action: "নতুন মাসিক সভার নোটিশ জারি",
+          details: `${no} এর নোটিশ জারি করা হলো।`,
+        });
+
+        persistState();
+        closeModal();
+        renderCurrentView();
+        showToast("নতুন মাসিক সভার নোটিশ জারি সম্পন্ন হয়েছে।", "success");
+      }
+
+      // Modal: Record Meeting Decisions
+      function openRecordDecisionsModal(meetingId) {
+        const m = state.meetings.find((x) => x.id === meetingId);
+        if (!m) return;
+
+        showModal(`
+        <div class="space-y-4 text-xs">
+          <div class="flex items-center justify-between border-b pb-3">
+            <h3 class="text-base font-bold text-slate-900">মাসিক সভার রেজুলেশন ও সিদ্ধান্ত রেকর্ড (${m.meetingNo})</h3>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">কমিটির গৃহীত সিদ্ধান্তসমূহ (নতুন লাইন দিয়ে লিখুন):</label>
+            <textarea id="mtgDecisionsInp" rows="4" class="w-full border rounded-xl p-2.5 text-xs" placeholder="সিদ্ধান্ত ১: প্যানেল আইনজীবী তালিকা হালনাগাদ অনুমোদন।&#10;সিদ্ধান্ত ২: মধ্যস্থতা সেল সম্প্রসারণ।"></textarea>
+          </div>
+          <div class="flex justify-end space-x-2 pt-2">
+            <button onclick="closeModal()" class="px-4 py-2 border rounded-xl font-bold text-slate-700">বাতিল</button>
+            <button onclick="saveMeetingDecisions('${m.id}')" class="px-5 py-2 bg-brand-900 text-white font-bold rounded-xl shadow-2xs">
+              রেজুলেশন অনুমোদন ও সমাপ্ত ঘোষণা
+            </button>
+          </div>
+        </div>
+      `);
+      }
+
+      function saveMeetingDecisions(meetingId) {
+        const text = document.getElementById("mtgDecisionsInp").value.trim();
+        if (!text) {
+          showToast("সিদ্ধান্তসমূহ লিখুন।", "warning");
+          return;
+        }
+        const m = state.meetings.find((x) => x.id === meetingId);
+        const lines = text.split("\n").filter((x) => x.trim().length > 0);
+        m.decisions = lines;
+        m.status = "Completed";
+        m.minutes = "সভা অনুষ্ঠিত হয়েছে এবং সর্বসম্মত রেজুলেশন গৃহীত হয়েছে।";
+
+        state.auditLog.unshift({
+          id: `AUD-${Date.now()}`,
+          date: new Date().toISOString().slice(0, 10),
+          actor: "জেলা লিগ্যাল এইড কমিটি",
+          action: `মাসিক সভা ${m.meetingNo} এর রেজুলেশন অনুমোদন`,
+          details: `${lines.length} টি সিদ্ধান্ত অনুমোদিত হয়েছে।`,
+        });
+
+        persistState();
+        closeModal();
+        renderCurrentView();
+        showToast("সভার রেজুলেশন ও সিদ্ধান্ত অনুমোদিত হয়েছে।", "success");
+      }
+
+      // Modal: Complaint Action
+      function openComplaintActionModal(complaintId) {
+        const cmp = state.complaints.find((x) => x.id === complaintId);
+        if (!cmp) return;
+
+        showModal(`
+        <div class="space-y-4 text-xs">
+          <div class="flex items-center justify-between border-b pb-3">
+            <h3 class="text-base font-bold text-slate-900">অভিযোগ তদন্ত ও আদেশ (${cmp.id})</h3>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border">
+            <div><strong>অভিযোগকারী:</strong> ${cmp.complainant}</div>
+            <div><strong>অভিযুক্ত:</strong> ${cmp.respondent}</div>
+            <div><strong>অভিযোগের বিষয়:</strong> ${cmp.nature}</div>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">কমিটি তদন্ত আদেশ বা সিদ্ধান্ত:</label>
+            <textarea id="cmpActionNotes" rows="3" class="w-full border rounded-xl p-2.5 text-xs" placeholder="আদেশ বা সিদ্ধান্তের বয়ান লিখুন..."></textarea>
+          </div>
+          <div class="flex justify-end space-x-2 pt-2">
+            <button onclick="closeModal()" class="px-4 py-2 border rounded-xl font-bold text-slate-700">বাতিল</button>
+            <button onclick="saveComplaintAction('${cmp.id}')" class="px-5 py-2 bg-brand-900 text-white font-bold rounded-xl shadow-2xs">
+              আদেশ নথিভুক্ত করুন
+            </button>
+          </div>
+        </div>
+      `);
+      }
+
+      function saveComplaintAction(complaintId) {
+        const txt = document.getElementById("cmpActionNotes").value.trim();
+        if (!txt) {
+          showToast("আদেশের বিষয়বস্তু লিখুন।", "warning");
+          return;
+        }
+        const cmp = state.complaints.find((x) => x.id === complaintId);
+        cmp.status = "Action Taken";
+        cmp.committeeAction = txt;
+
+        state.auditLog.unshift({
+          id: `AUD-${Date.now()}`,
+          date: new Date().toISOString().slice(0, 10),
+          actor: "জেলা লিগ্যাল এইড কমিটি",
+          action: `অভিযোগ ${cmp.id} নিষ্পত্তি আদেশ`,
+          details: txt,
+        });
+
+        persistState();
+        closeModal();
+        renderCurrentView();
+        showToast(`অভিযোগ ${cmp.id}-তে আদেশ জারি সম্পন্ন হয়েছে।`, "success");
+      }
+
+      // Modal: Competition Demo Flow Guided Walkthrough
+      function openDemoFlowModal() {
+        showModal(`
+        <div class="space-y-4 text-xs">
+          <div class="flex items-center justify-between border-b pb-3">
+            <div class="flex items-center space-x-2">
+              <span class="w-3 h-3 rounded-full bg-amber-500 animate-ping"></span>
+              <h3 class="text-base font-bold text-slate-900">
+                Chairman Prototype — Competition Demo Flow
+              </h3>
+            </div>
+            <span class="bg-amber-100 text-amber-900 font-bold px-2 py-0.5 rounded text-[10px]">Judges Showcase</span>
+          </div>
+
+          <p class="text-slate-600 leading-relaxed">
+            বিচারকমণ্ডলীর সামনে চেয়ারম্যান ড্যাশবোর্ডের আইনগত তদারকি ও বিধিবদ্ধ ক্ষমতা প্রদর্শন করার জন্য নিচের ধাপগুলো ক্রমানুসারে অনুসরণ করুন:
+          </p>
+
+          <div class="space-y-2.5">
+            <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between cursor-pointer hover:bg-emerald-50 hover:border-emerald-300" onclick="switchView('dashboard'); closeModal();">
+              <div>
+                <strong class="text-slate-900 block text-xs">১. Dashboard (District Overview)</strong>
+                <span class="text-[11px] text-slate-500">জেলায় ১২৮টি কেস, ৪টি ব্যতিক্রম এবং ভাইটাল ইনডিকেটর পর্যবেক্ষণ।</span>
+              </div>
+              <i class="fa-solid fa-arrow-right text-emerald-800"></i>
+            </div>
+
+            <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between cursor-pointer hover:bg-emerald-50 hover:border-emerald-300" onclick="switchView('officers'); closeModal();">
+              <div>
+                <strong class="text-slate-900 block text-xs">২. Officer Supervision (DLAO & LAO)</strong>
+                <span class="text-[11px] text-slate-500">ধারা ১০ অনুযায়ী কর্মকর্তাদের দায়িত্ব ও পেন্ডিং ফাইল তদারকি ও পরামর্শ দান।</span>
+              </div>
+              <i class="fa-solid fa-arrow-right text-emerald-800"></i>
+            </div>
+
+            <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between cursor-pointer hover:bg-emerald-50 hover:border-emerald-300" onclick="switchView('exceptions'); closeModal();">
+              <div>
+                <strong class="text-slate-900 block text-xs">৩. Exception & Alert Centre (৮টি ট্রিগার)</strong>
+                <span class="text-[11px] text-slate-500">জরুরি ভিকটিম কেস ও ৩ বার মুলতবি হওয়া মধ্যস্থতায় দ্রুত চেয়ারম্যান নির্দেশনা।</span>
+              </div>
+              <i class="fa-solid fa-arrow-right text-emerald-800"></i>
+            </div>
+
+            <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between cursor-pointer hover:bg-emerald-50 hover:border-emerald-300" onclick="switchView('lawyers'); closeModal();">
+              <div>
+                <strong class="text-slate-900 block text-xs">৪. Panel Lawyer Oversight (ধারা ১০)</strong>
+                <span class="text-[11px] text-slate-500">আইনজীবীদের তালিকা হালনাগাদ, স্কোরিং এবং অর্থ দাবির অভিযোগে শুনানি।</span>
+              </div>
+              <i class="fa-solid fa-arrow-right text-emerald-800"></i>
+            </div>
+
+            <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between cursor-pointer hover:bg-emerald-50 hover:border-emerald-300" onclick="switchView('meetings'); closeModal();">
+              <div>
+                <strong class="text-slate-900 block text-xs">৫. Committee & Monthly Meeting (ধারা ১১)</strong>
+                <span class="text-[11px] text-slate-500">বাধ্যতামূলক মাসিক সভা, এজেন্ডা, রেজুলেশন ও কমিটির বিশেষ ক্ষমতা।</span>
+              </div>
+              <i class="fa-solid fa-arrow-right text-emerald-800"></i>
+            </div>
+
+            <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between cursor-pointer hover:bg-emerald-50 hover:border-emerald-300" onclick="switchView('reports'); closeModal();">
+              <div>
+                <strong class="text-slate-900 block text-xs">৬. District KPI & Reports</strong>
+                <span class="text-[11px] text-slate-500">একই অথরিটেটিভ কেস রেকর্ড থেকে ৯টি সংবিধিবদ্ধ সরকারি রিপোর্ট তৈরি।</span>
+              </div>
+              <i class="fa-solid fa-arrow-right text-emerald-800"></i>
+            </div>
+
+            <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between cursor-pointer hover:bg-emerald-50 hover:border-emerald-300" onclick="switchView('audit'); closeModal();">
+              <div>
+                <strong class="text-slate-900 block text-xs">৭. Audit Trail & Decision History</strong>
+                <span class="text-[11px] text-slate-500">চেয়ারম্যান ও কমিটির সকল প্রশাসনিক আদেশের অপরিবর্তনীয় খতিয়ান।</span>
+              </div>
+              <i class="fa-solid fa-arrow-right text-emerald-800"></i>
+            </div>
+          </div>
+
+          <div class="flex justify-end pt-2">
+            <button onclick="closeModal()" class="px-4 py-2 border rounded-xl font-bold text-slate-700">বন্ধ করুন</button>
+          </div>
+        </div>
+      `);
+      }
+
+      // Toast Notification System
+      function showToast(message, type = "info") {
+        const container = document.getElementById("toastContainer");
+        const toast = document.createElement("div");
+        toast.className = `p-3.5 rounded-xl shadow-lg border text-xs font-semibold flex items-center space-x-2 transform transition duration-300 translate-y-2 pointer-events-auto ${
+          type === "success"
+            ? "bg-emerald-900 text-white border-emerald-700"
+            : type === "warning"
+              ? "bg-amber-600 text-white border-amber-500"
+              : type === "error"
+                ? "bg-rose-700 text-white border-rose-600"
+                : "bg-slate-900 text-white border-slate-700"
+        }`;
+        toast.innerHTML = `
+        <i class="fa-solid ${type === "success" ? "fa-circle-check text-emerald-300" : "fa-bell text-amber-300"}"></i>
+        <span>${message}</span>
+      `;
+        container.appendChild(toast);
+        setTimeout(() => {
+          toast.classList.add("opacity-0", "translate-x-full");
+          setTimeout(() => toast.remove(), 300);
+        }, 3500);
+      }
+
+      // CSV Exporter
+      function exportCurrentViewCSV() {
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent +=
+          "Case ID,Applicant,Respondent,Type,Court,Officer,Lawyer,Stage,Status\n";
+        state.cases.forEach((c) => {
+          csvContent += `"${c.id}","${c.applicant}","${c.respondent}","${c.type}","${c.court}","${c.officerName}","${c.panelLawyer}","${c.stage}","${c.status}"\n`;
+        });
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute(
+          "download",
+          `District_Legal_Aid_Joypurhat_${currentView}_Report.csv`,
+        );
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast("CSV রিপোর্ট ডাউনলোড সম্পন্ন হয়েছে।", "success");
+      }
+
+      // Print Report
+      function printCurrentReport() {
+        const printDiv = document.getElementById("printArea");
+        printDiv.innerHTML = `
+        <div style="font-family: 'Hind Siliguri', sans-serif; padding: 20px;">
+          <div style="text-align: center; border-bottom: 2px solid #0f3322; padding-bottom: 10px; margin-bottom: 15px;">
+            <h2 style="margin: 0; color: #0f3322;">জেলা লিগ্যাল এইড কমিটি, জয়পুরহাট</h2>
+            <h4 style="margin: 5px 0;">বিজ্ঞ জেলা ও দায়রা জজ আদালত</h4>
+            <p style="margin: 0; font-size: 12px; color: #555;">আইনগত সহায়তা প্রদান আইন, ২০০০ অনুযায়ী বিধিবদ্ধ তদারকি খতিয়ান</p>
+          </div>
+          <h3>${document.getElementById("topPageTitle").innerText}</h3>
+          <div>${document.getElementById("viewMountPoint").innerHTML}</div>
+        </div>
+      `;
+        window.print();
+      }
+
+      function printMeetingNotice(meetingId) {
+        showToast(
+          "সভার নোটিশ ও কার্যসূচি প্রিন্টারের জন্য প্রস্তুত হচ্ছে...",
+          "info",
+        );
+        setTimeout(() => {
+          printCurrentReport();
+        }, 500);
+      }
+
+      // Accessibility handlers
+      function changeFontSize(delta) {
+        fontSizeDelta += delta;
+        if (fontSizeDelta > 4) fontSizeDelta = 4;
+        if (fontSizeDelta < -2) fontSizeDelta = -2;
+        document.getElementById("appBody").style.fontSize =
+          14.5 + fontSizeDelta + "px";
+      }
+
+      function resetFontSize() {
+        fontSizeDelta = 0;
+        document.getElementById("appBody").style.fontSize = "14.5px";
+      }
+
+      function refreshData() {
+        renderCurrentView();
+        updateSidebarBadges();
+        showToast("তথ্য রিফ্রেশ ও সিঙ্ক সম্পন্ন হয়েছে।", "success");
+      }
+
+      function filterCasesByOfficer(officerId) {
+        switchView("cases");
+        setTimeout(() => {
+          const off = state.officers.find((o) => o.id === officerId);
+          if (off) {
+            const inp = document.getElementById("caseSearchInp");
+            if (inp) {
+              inp.value = off.name;
+              applyCaseSearchFilter();
+            }
+          }
+        }, 50);
+      }
+
+      function filterExceptions(type) {
+        const container = document.getElementById("exceptionCardsContainer");
+        if (!container) return;
+        let list = state.cases.filter(
+          (c) => c.exceptionType && c.exceptionType !== "none",
+        );
+        if (type !== "all") {
+          list = list.filter((c) => c.exceptionType === type);
+        }
+        container.innerHTML = list
+          .map(
+            (c) => `
+        <div class="p-5 rounded-2xl border-2 border-rose-200 bg-rose-50/20 hover:bg-rose-50/40 transition space-y-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-rose-100 pb-2">
+            <div class="flex items-center space-x-2.5">
+              <span class="font-mono font-bold text-slate-900 text-sm">${c.id}</span>
+              <span class="bg-rose-600 text-white font-bold text-[10px] px-2 py-0.5 rounded uppercase tracking-wider">${c.exceptionType}</span>
+              <span class="text-xs text-slate-500">মুলতবি: <strong>${c.daysPending} দিন</strong></span>
+            </div>
+            <span class="text-xs text-slate-600">দায়িত্বশীল: <strong>${c.officerName}</strong></span>
+          </div>
+          <div class="space-y-1 text-xs">
+            <h4 class="font-bold text-slate-900 text-sm">${c.applicant} বনাম ${c.respondent}</h4>
+            <p class="text-slate-600">${c.type} | আদালত: ${c.court}</p>
+            <div class="p-3 bg-white rounded-xl border border-rose-200 text-rose-950 font-medium leading-relaxed mt-2">
+              <span class="font-bold block text-rose-800 text-[11px] mb-0.5">⚠️ সতর্কতার কারণ:</span>
+              ${c.exceptionDesc}
+            </div>
+          </div>
+          <div class="flex justify-end space-x-2 pt-2">
+            <button onclick="openCaseRecordModal('${c.id}')" class="px-3.5 py-1.5 bg-white border border-slate-300 font-bold text-xs rounded-xl">নথি পর্যালোচনা</button>
+            <button onclick="openObservationModal('${c.id}')" class="px-4 py-1.5 bg-brand-900 text-white font-bold text-xs rounded-xl shadow-2xs">দিকনির্দেশনা দিন</button>
+          </div>
+        </div>
+      `,
+          )
+          .join("");
+      }
+
+      function showReportDetails(repKey) {
+        const heading = document.getElementById("repHeading");
+        const titles = {
+          monthly:
+            "১. মাসিক জেলা লিগ্যাল এইড সামগ্রিক অগ্রগতি প্রতিবেদন (সেপ্টেম্বর ২০২৬)",
+          apps: "২. প্রাপ্ত, মঞ্জুর ও বাতিলকৃত আবেদনের তুলনামূলক পরিসংখ্যান রিপোর্ট",
+          granted:
+            "৩. আইনি সহায়তা প্রাপ্ত সুবিধাভোগীদের আর্থিক ও আর্থ-সামাজিক তালিকা",
+          mediation:
+            "৪. মধ্যস্থতা (এডিআর) সাফল্য ও দেনমোহর/ভরণপোষণ আদায় রিপোর্ট",
+          lawyers: "৫. প্যানেল আইনজীবী পারফরম্যান্স মূল্যায়ন ও মামলার খতিয়ান",
+          referral: "৬. ওসিসি, সমাজসেবা ও এনজিও যৌথ রেফারেল রিপোর্ট",
+          overdue: "৭. বিলম্বিত ও বিশেষ কারণযুক্ত মামলার পর্যালোচনা রিপোর্ট",
+          closure: "৮. চূড়ান্ত নিষ্পত্তি ও মামলা সমাপ্তি রিপোর্ট",
+          committee: "৯. জেলা কমিটির রেজুলেশন বাস্তবায়ন ও মূল্যায়ন রিপোর্ট",
+        };
+        if (heading)
+          heading.innerText = titles[repKey] || "জেলা লিগ্যাল এইড রিপোর্ট";
+        showToast(`${titles[repKey]} লোড করা হয়েছে।`, "info");
+      }
+
+      // App Initialization
+      window.addEventListener("DOMContentLoaded", () => {
+        initState();
+        switchView("dashboard");
+      });
+    </script>
+  </body>
+</html>

@@ -26,21 +26,21 @@ const actions = [
     number: "০৩",
     title: "অনলাইনে আবেদন",
     description: "ওয়েবের মাধ্যমে আইনগত সহায়তার আবেদন করুন।",
-    href: "/apply/web",
+    href: "/login",
     icon: FiGlobe,
   },
   {
     number: "০৪",
     title: "ইউডিসির মাধ্যমে আবেদন",
     description: "ইউডিসি সহায়তাকারীর মাধ্যমে আবেদন শুরু করুন।",
-    href: "/apply/udc",
+    href: "/login",
     icon: FiUsers,
   },
   {
     number: "০৫",
     title: "ডিএলএও রেফারেল",
     description: "বিদ্যমান বিষয়ে রেফারেলের তথ্য প্রদান করুন।",
-    href: "/apply/referral",
+    href: "/login",
     icon: FiBriefcase,
   },
 ];
@@ -64,7 +64,7 @@ export default function ActionCards() {
             একটি সেবা, পাঁচটি মাধ্যম
           </h2>
 
-          <p className="mt-4 leading-7 text-slate-600">
+          <p className="mt-4 text-xs leading-7 text-slate-600">
             প্রতিটি মাধ্যম সেবা গ্রহণের আলাদা ইন্টারফেস। পরিকল্পনা অনুযায়ী সব
             মাধ্যমের তথ্য একই মূল কেস নথিতে যুক্ত হবে।
           </p>

@@ -21,8 +21,8 @@ export default async function RegisterPage({ searchParams }) {
     return <StaffRegistrationForm title="ডিএলও অফিসার" />;
   }
 
-  if (role === "legal-aid-officer-mediator") {
-    return <StaffRegistrationForm title="লিগ্যাল এইড অফিসার/মেডিয়েটর" />;
+  if (role === "chairman-portal") {
+    return <StaffRegistrationForm title="চেয়ারম্যান পোর্টাল" />;
   }
 
   if (role === "panel-lawyer") {
