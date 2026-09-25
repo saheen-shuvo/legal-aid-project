@@ -15,52 +15,64 @@ import bgImg from "../../assets/bannerImg/banner.png";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 
+const demoAccounts = {
+  "dlao@gmail.com": "/dashboard/dlao",
+  "case@gmail.com": "/dashboard/dlo-administration-case-support",
+  "udc@gmail.com": "/udc-portal.html",
+};
+
 export default function LoginPage() {
   const router = useRouter();
 
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [dashboardPath, setDashboardPath] = useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (isSuccess) return;
 
-    const formData = new FormData(event.currentTarget);
-    const identifier = String(formData.get("identifier") || "")
+    const email = identifier
+      .normalize("NFKC")
+      .replace(/[\u200B-\u200D\uFEFF]/g, "")
       .trim()
       .toLowerCase();
-    const password = String(formData.get("password") || "");
 
-    if (identifier === "dlao@gmail.com" && password === "12345678") {
-      setIsSuccess(true);
+    const destination = demoAccounts[email];
+
+    if (destination && password.trim() === "12345678") {
+      setDashboardPath(destination);
       setMessage("লগইন সফল হয়েছে! ড্যাশবোর্ডে নিয়ে যাওয়া হচ্ছে...");
     } else {
-      setIsSuccess(false);
+      setDashboardPath("");
       setMessage("ইমেইল অথবা পাসওয়ার্ড সঠিক নয়।");
     }
   }
 
   useEffect(() => {
-    if (!isSuccess) return;
+    if (!dashboardPath) return;
 
-    const timer = setTimeout(() => {
-      router.replace("/dashboard/dlao");
+    const timer = window.setTimeout(() => {
+      router.replace(dashboardPath);
     }, 1000);
 
-    return () => clearTimeout(timer);
-  }, [isSuccess, router]);
+    return () => window.clearTimeout(timer);
+  }, [dashboardPath, router]);
+
+  const isSuccess = Boolean(dashboardPath);
 
   return (
     <>
-    <Navbar />
+      <Navbar />
+
       <main
         className="flex min-h-screen items-center justify-center bg-cover bg-center px-4 py-12"
         style={{
           backgroundImage: `linear-gradient(
-    rgba(0, 58, 47, 0.78),
-    rgba(0, 48, 40, 0.82)
-  ), url("${bgImg.src}")`,
+            rgba(0, 58, 47, 0.78),
+            rgba(0, 48, 40, 0.82)
+          ), url("${bgImg.src}")`,
         }}
       >
         <div className="w-full max-w-xl">
@@ -91,6 +103,7 @@ export default function LoginPage() {
                 >
                   মোবাইল নম্বর বা ইমেইল
                 </label>
+
                 <div className="flex items-center gap-3 rounded-xl border border-slate-300 px-4 focus-within:border-emerald-700">
                   <FiMail
                     className="shrink-0 text-slate-500"
@@ -102,6 +115,11 @@ export default function LoginPage() {
                     type="text"
                     autoComplete="username"
                     required
+                    value={identifier}
+                    onChange={(event) => {
+                      setIdentifier(event.target.value);
+                      setMessage("");
+                    }}
                     placeholder="মোবাইল নম্বর বা ইমেইল টাইপ করুন"
                     className="w-full bg-transparent py-4 outline-none"
                   />
@@ -115,6 +133,7 @@ export default function LoginPage() {
                 >
                   পাসওয়ার্ড
                 </label>
+
                 <div className="flex items-center gap-3 rounded-xl border border-slate-300 px-4 focus-within:border-emerald-700">
                   <FiLock
                     className="shrink-0 text-slate-500"
@@ -126,6 +145,11 @@ export default function LoginPage() {
                     type={showPassword ? "text" : "password"}
                     autoComplete="current-password"
                     required
+                    value={password}
+                    onChange={(event) => {
+                      setPassword(event.target.value);
+                      setMessage("");
+                    }}
                     placeholder="পাসওয়ার্ড লিখুন"
                     className="w-full bg-transparent py-4 outline-none"
                   />
@@ -199,6 +223,7 @@ export default function LoginPage() {
           </p>
         </div>
       </main>
+
       <Footer />
     </>
   );

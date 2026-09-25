@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="bn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>লিগ্যাল এইড | ইউডিসি উদ্যোক্তা ড্যাশবোর্ড</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              ink: "#0d392e",
+              blue: "#0d392e",
+              teal: "#145542",
+              mist: "#f6f9ff",
+              line: "#d6e0f2",
+            },
+            boxShadow: {
+              panel: "0 8px 30px rgba(19, 48, 92, 0.055)",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      body {
+        font-family: "Noto Sans Bengali", sans-serif;
+      }
+      .serif {
+        font-family: "Noto Serif Bengali", serif;
+      }
+      .nav.active {
+        background: rgba(255, 255, 255, 0.13);
+        color: #fff;
+      }
+      .hide {
+        display: none !important;
+      }
+      @media print {
+        aside,
+        .no-print {
+          display: none !important;
+        }
+        main {
+          margin: 0 !important;
+          width: 100% !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-mist text-ink">
+    <div id="app"></div>
+    <script>
+      const KEY = "nyaysetu-udc-v1",
+        today = () => new Date().toISOString().slice(0, 10),
+        stamp = () => new Date().toLocaleString("bn-BD");
+      const seed = {
+        network: true,
+        light: false,
+        audit: [
+          {
+            time: stamp(),
+            action: "ইউডিসি সেশন শুরু হয়েছে",
+            detail: "UDC-ATAPUR-01 · OP-102",
+          },
+        ],
+        offline: [],
+        conflicts: [],
+        apps: [
+          {
+            id: "APP-2026-00125",
+            name: "নুচিং মারমা",
+            location: "খাগড়াছড়ি",
+            language: "Marma",
+            bangla: "Limited",
+            contact: "",
+            contactType: "ব্যক্তিগত ফোন নম্বর দেওয়া হয়নি",
+            safe: "যোগাযোগের আগে অনুমতি নিন",
+            statement:
+              "আমার জমি সংক্রান্ত সমস্যা রয়েছে এবং আমি আইনগত সহায়তা চাই।",
+            translation:
+              "আমার জমি সংক্রান্ত একটি সমস্যা রয়েছে এবং আমি Legal Aid সহায়তা চাই।",
+            status: "Draft",
+            consent: false,
+            recorded: false,
+            camera: false,
+            locked: false,
+            docs: [],
+            versions: [
+              ["v1", "ইউডিসি কর্তৃক তথ্য সংযোজন", "প্রাথমিক সহায়তাপ্রাপ্ত আবেদন", stamp()],
+            ],
+            created: stamp(),
+          },
+        ],
+      };
+      let S = load(),
+        state = { page: "dashboard", active: S.apps[0]?.id, modal: null };
+      let cameraStream = null;
+      let statusCameraStream = null;
+      const nav = [
+        ["dashboard", "LayoutDashboard", "ড্যাশবোর্ড"],
+        ["intake", "FilePenLine", "নতুন সহায়তাপ্রাপ্ত আবেদন"],
+        ["apps", "FolderOpen", "আমার আবেদনসমূহ"],
+        ["status", "Search", "আবেদনের অবস্থা"],
+        ["sync", "RefreshCw", "অফলাইন ও সমন্বয়"],
+        ["tasks", "ListTodo", "কাজ ও সতর্কতা"],
+        ["access", "LockKeyhole", "প্রবেশাধিকার ও গোপনীয়তা"],
+        ["audit", "ScrollText", "নিরীক্ষা ইতিহাস"],
+        ["help", "CircleHelp", "সহায়তা ও যোগাযোগ"],
+      ];
+      function load() {
+        try {
+          const stored = JSON.parse(localStorage.getItem(KEY));
+          if (!stored) return structuredClone(seed);
+          for (const application of stored.apps || []) {
+            delete application.confirmed;
+            delete application.confirmationMethod;
+            if (
+              ["Applicant Confirmation Pending", "Consent Pending"].includes(
+                application.status,
+              )
+            ) {
+              application.status = "Draft";
+            }
+          }
+          return stored;
+        } catch {
+          return structuredClone(seed);
+        }
+      }
+      function save() {
+        localStorage.setItem(KEY, JSON.stringify(S));
+      }
+      function I(n, c = "") {
+        return `<i data-lucide="${n}" class="${c}"></i>`;
+      }
+      function esc(v) {
+        return String(v ?? "").replace(
+          /[&<>'"]/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              "'": "&#39;",
+              '"': "&quot;",
+            })[c],
+        );
+      }
+      function app() {
+        return S.apps.find((a) => a.id === state.active) || S.apps[0];
+      }
+      function note(msg) {
+        let e = document.querySelector("#toast");
+        e.textContent = msg;
+        e.classList.remove("hide");
+        clearTimeout(note.t);
+        note.t = setTimeout(() => e.classList.add("hide"), 2600);
+      }
+      function audit(action, detail) {
+        S.audit.unshift({ time: stamp(), action, detail });
+        save();
+      }
+      function bn(value) {
+        const labels = {
+          "Applicant statement: Land dispute": "আবেদনকারীর বক্তব্য: জমি নিয়ে বিরোধ",
+          "Applicant statement: Land boundary dispute": "আবেদনকারীর বক্তব্য: জমির সীমানা নিয়ে বিরোধ",
+          "Conflict": "বিরোধ",
+          "YES": "হ্যাঁ", "NO": "না", "Submitted": "জমা হয়েছে",
+          "Accepted": "গৃহীত", "Case Created": "মামলার নথি তৈরি",
+          "Offline Saved": "অফলাইনে সংরক্ষিত",
+          "Sync Pending": "সমন্বয়ের অপেক্ষায়",
+          "Pending": "অপেক্ষমাণ", "Draft": "খসড়া",
+          "Consent Pending": "সম্মতির অপেক্ষায়",
+          "More Information Required": "আরও তথ্য প্রয়োজন",
+          "Document Check Pending": "নথি যাচাইয়ের অপেক্ষায়",
+          "Consent Declined": "সম্মতি দেওয়া হয়নি",
+          "Readable": "পাঠযোগ্য", "Partially readable": "আংশিক পাঠযোগ্য",
+          "Poor quality": "নিম্নমানের ছবি", "Missing page": "পৃষ্ঠা অনুপস্থিত",
+          "Duplicate": "একই নথি", "Uncertain": "অনিশ্চিত",
+          "Recorded": "নথিবদ্ধ", "Synced": "সমন্বিত",
+          "Keep Offline Version": "অফলাইন তথ্য রাখুন",
+          "Keep Central Version": "কেন্দ্রীয় তথ্য রাখুন",
+          "Escalated to authorised human": "অনুমোদিত কর্মকর্তার কাছে পাঠানো",
+          "Identity document": "পরিচয়পত্র", "Land document": "জমির নথি",
+          "Application form": "আবেদন ফরম", "Other reference": "অন্যান্য তথ্যসূত্র",
+          "Nuching Marma": "নুচিং মারমা", "Khagrachari": "খাগড়াছড়ি",
+          "Marma": "মারমা", "Limited": "সীমিত",
+          "No personal phone provided": "ব্যক্তিগত ফোন নম্বর দেওয়া হয়নি",
+          "Ask before contacting": "যোগাযোগের আগে অনুমতি নিন",
+          "UDC session started": "ইউডিসি সেশন শুরু হয়েছে",
+          "Initial assisted intake": "প্রাথমিক সহায়তাপ্রাপ্ত আবেদন",
+          "Consent recording created": "সম্মতির ডেমো রেকর্ড তৈরি",
+          "Consent camera started": "সম্মতির জন্য ক্যামেরা চালু",
+          "Applicant consent YES recorded": "আবেদনকারীর সম্মতি নথিবদ্ধ",
+          "Applicant consent NO recorded": "আবেদনকারীর অসম্মতি নথিবদ্ধ",
+          "Offline queue synchronised": "অফলাইন সারি সমন্বিত হয়েছে",
+          "Sync conflict detected": "সমন্বয়ে বিরোধ শনাক্ত",
+          "Sync conflict resolved": "সমন্বয়ের বিরোধ নিষ্পত্তি",
+          "Assisted draft saved": "আবেদনের খসড়া সংরক্ষিত",
+          "Application submitted to central DLAS": "আবেদন কেন্দ্রীয় সিস্টেমে জমা হয়েছে",
+          "Application securely saved offline": "আবেদন অফলাইনে নিরাপদে সংরক্ষিত",
+          "Applicant consented to demo status lookup": "আবেদনকারী ডেমোতে অবস্থা দেখতে সম্মতি দিয়েছেন",
+          "Document captured": "নথি সংযুক্ত হয়েছে",
+          "Network changed": "সংযোগ পরিবর্তিত হয়েছে",
+        };
+        return labels[String(value ?? "")] ?? value;
+      }
+      function badge(x) {
+        let c =
+          x === "YES" ||
+          x === "Submitted" ||
+          x === "Accepted" ||
+          x === "Case Created"
+            ? "bg-emerald-100 text-emerald-800"
+            : x === "NO" ||
+                x === "Conflict" ||
+                x === "More Information Required"
+              ? "bg-rose-100 text-rose-800"
+              : x === "Offline Saved" ||
+                  x === "Sync Pending" ||
+                  x === "Pending" ||
+                  x === "Draft" ||
+                  x === "Consent Pending"
+                ? "bg-amber-100 text-amber-800"
+                : "bg-sky-100 text-sky-800";
+        return `<span class="inline-flex rounded-full px-2.5 py-1 text-[11px] font-bold ${c}">${esc(bn(x))}</span>`;
+      }
+      function title() {
+        return nav.find((n) => n[0] === state.page)?.[2] || "আইনগত সহায়তা";
+      }
+      function shell(content) {
+        return `<div class="min-h-screen lg:flex"><aside class="no-print relative bg-ink text-slate-200 lg:fixed lg:inset-y-0 lg:w-72"><div class="flex items-center gap-3 px-6 py-6"><div class="grid h-10 w-10 place-items-center rounded-lg bg-teal text-white">${I("Landmark", "h-5 w-5")}</div><div><div class="font-bold text-white">ইউডিসি উদ্যোক্তা পোর্টাল</div></div></div><nav class="px-3 pb-24">${nav.map((n) => `<button onclick="go('${n[0]}')" class="nav ${state.page === n[0] ? "active" : ""} flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-medium hover:bg-white/10">${I(n[1], "h-4 w-4")}${n[2]}</button>`).join("")}</nav><div class="absolute bottom-0 m-4 hidden rounded-lg border border-white/10 bg-white/5 p-4 text-xs leading-5 text-slate-300 lg:block"><b class="text-teal-300">ইউডিসির মূলনীতি</b><br>সহায়তা করুন, তথ্য নিন, সম্মতি নিন ও সমন্বয় করুন। সিদ্ধান্ত দেবেন না।</div></aside><main class="min-w-0 flex-1 lg:ml-72"><header class="no-print flex min-h-[76px] items-center justify-between border-b border-line bg-white px-5 sm:px-8"><div><h1 class="serif text-2xl font-semibold">${title()}</h1></div><div class="flex items-center gap-2"><button title="ডেমো তথ্য রিসেট করুন" onclick="resetDemo()" class="grid h-9 w-9 place-items-center rounded-lg border border-line text-slate-500">${I("RotateCcw", "h-4 w-4")}</button><button
+  onclick="window.location.href='/login'"
+  class="hidden items-center gap-2 rounded-lg bg-blue px-3.5 py-2 text-sm font-bold text-white sm:flex"
+>
+  লগ আউট
+</button><span class="grid h-9 w-9 place-items-center rounded-full bg-teal text-xs font-bold text-white">OP</span></div></header><div class="px-5 py-6 sm:px-8">${content}</div></main></div><div id="modal"></div><div id="toast" class="hide fixed bottom-5 right-5 z-50 rounded-lg bg-ink px-4 py-3 text-sm font-semibold text-white shadow-xl"></div>`;
+      }
+      function render() {
+        let pages = {
+          dashboard,
+          intake,
+          apps: appsPage,
+          status,
+          sync,
+          tasks,
+          access,
+          audit: auditPage,
+          help,
+        };
+        document.querySelector("#app").innerHTML = shell(pages[state.page]());
+        const cameraPreview = document.querySelector("#cam");
+        if (cameraPreview && cameraStream?.active) {
+          cameraPreview.srcObject = cameraStream;
+        }
+        const statusPreview = document.querySelector("#status-cam");
+        if (statusPreview && statusCameraStream?.active) {
+          statusPreview.srcObject = statusCameraStream;
+        }
+        renderModal();
+        lucide.createIcons();
+      }
+      function card(label, value, icon, tone) {
+        if (typeof value === "number") value = value.toLocaleString("bn-BD");
+        return `<div class="rounded-lg border border-line bg-white p-4 shadow-panel"><div class="flex justify-between"><div><div class="text-[10px] font-bold uppercase tracking-[.1em] text-slate-500">${label}</div><div class="mt-2 text-3xl font-bold">${value}</div></div><div class="grid h-9 w-9 place-items-center rounded-lg ${tone}">${I(icon, "h-4 w-4")}</div></div></div>`;
+      }
+      function dashboard() {
+        let pendS = S.apps.filter((a) => !a.consent).length,
+          issues = S.apps.reduce(
+            (n, a) => n + a.docs.filter((d) => d.quality !== "Readable").length,
+            0,
+          );
+        return `<div class="space-y-6"><div class="rounded-lg bg-ink p-6 text-white"><div class="text-xs font-bold uppercase tracking-[.13em] text-teal-300">আজ ইউডিসি-আটাপুর-০১-এ</div><h2 class="serif mt-2 text-3xl">আবেদনকারীর নিয়ন্ত্রণে সহায়তাপ্রাপ্ত সেবা।</h2><p class="mt-2 max-w-2xl text-sm leading-6 text-slate-300">ইউডিসি আবেদনকারীর বক্তব্য লিপিবদ্ধ, অনুবাদ ও টাইপ করে; আবেদনকারীর সম্মতি বা আইনগত সিদ্ধান্তের বিকল্প নয়।</p></div><div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">${card("আজকের আবেদন", S.apps.length, "Files", "bg-sky-100 text-sky-700")}${card("অফলাইন সারি", S.offline.length, "CloudOff", "bg-amber-100 text-amber-700")}${card("সম্মতির অপেক্ষায়", pendS, "ShieldAlert", "bg-violet-100 text-violet-700")}${card("নথির সমস্যা", issues, "FileWarning", "bg-rose-100 text-rose-700")}</div><div class="grid gap-5 lg:grid-cols-2"><section class="rounded-lg border border-line bg-white shadow-panel"><div class="border-b border-line p-5"><h3 class="font-bold">প্রধান কাজগুলো</h3></div><div class="grid grid-cols-2 gap-3 p-5"><button onclick="go('intake')" class="rounded-lg border border-line p-4 text-left hover:bg-slate-50">${I("FilePenLine", "h-5 w-5 text-teal")}<b class="mt-3 block text-sm">নতুন সহায়তাপ্রাপ্ত আবেদন</b></button><button onclick="go('status')" class="rounded-lg border border-line p-4 text-left hover:bg-slate-50">${I("Search", "h-5 w-5 text-teal")}<b class="mt-3 block text-sm">আবেদনের অবস্থা</b></button><button onclick="go('sync')" class="rounded-lg border border-line p-4 text-left hover:bg-slate-50">${I("RefreshCw", "h-5 w-5 text-teal")}<b class="mt-3 block text-sm">অফলাইন ও সমন্বয়</b></button><button onclick="go('apps')" class="rounded-lg border border-line p-4 text-left hover:bg-slate-50">${I("FolderOpen", "h-5 w-5 text-teal")}<b class="mt-3 block text-sm">আমার আবেদনসমূহ</b></button></div></section><section class="rounded-lg border border-line bg-white shadow-panel"><div class="border-b border-line p-5"><h3 class="font-bold">কার্যক্রমের সূচক</h3></div><div class="divide-y divide-line px-5">${[
+          ["অফলাইন নথি", S.offline.length],
+          ["সমন্বয়জনিত বিরোধ", S.conflicts.filter((c) => !c.resolved).length],
+          [
+            "ফেরত / সংশোধন প্রয়োজন",
+            S.apps.filter((a) => a.status === "More Information Required")
+              .length,
+          ],
+          [
+            "জমা দেওয়া আবেদন",
+            S.apps.filter((a) => a.status === "Submitted").length,
+          ],
+        ]
+          .map(
+            (x) =>
+              `<div class="flex justify-between py-3 text-sm"><span class="text-slate-600">${x[0]}</span><b>${x[1]}</b></div>`,
+          )
+          .join("")}</div></section></div></div>`;
+      }
+      function field(label, id, value = "", type = "text") {
+        return `<label class="block text-sm font-bold">${label}<input id="${id}" type="${type}" value="${esc(value)}" class="mt-1.5 w-full rounded-lg border border-line px-3 py-2.5 font-normal outline-none focus:ring-4 focus:ring-teal/15"></label>`;
+      }
+      function intake() {
+        let a = app();
+        const ready = Boolean(
+          a?.camera && a?.recorded && a?.consent && a?.docs?.length,
+        );
+        return `<div class="space-y-5"><div><h2 class="text-lg font-bold">সহায়তাপ্রাপ্ত আবেদন গ্রহণ</h2><p class="mt-1 text-sm text-slate-500">প্রতিটি ধাপে আবেদনকারী ও ইউডিসির ভূমিকা আলাদা থাকবে। জমা দেওয়ার পর তথ্য পরিবর্তন বন্ধ হবে।</p></div><div class="grid gap-5 xl:grid-cols-[1fr_320px]"><form onsubmit="saveIntake(event)" class="rounded-lg border border-line bg-white p-5 shadow-panel"><div class="flex items-center justify-between"><h3 class="font-bold">আবেদনকারীর তথ্য</h3>${a?.locked ? badge("তথ্য পরিবর্তন বন্ধ") : badge(a?.status || "Draft")}</div><div class="mt-5 grid gap-4 sm:grid-cols-2">${field("আবেদনকারীর নাম", "name", bn(a?.name) || "")}${field("ঠিকানা", "location", bn(a?.location) || "")}${field("পছন্দের ভাষা", "language", bn(a?.language) || "")}${field("বাংলা ভাষায় দক্ষতা", "bangla", bn(a?.bangla) || "")}${field("আবেদনকারীর ব্যক্তিগত ফোন", "contact", a?.contact || "")}${field("নিরাপদ যোগাযোগের নির্দেশনা", "safe", bn(a?.safe) || "যোগাযোগের আগে অনুমতি নিন")}</div><div class="mt-5 border-t border-line pt-5"><h3 class="font-bold">ভাষা ও তথ্যের উৎস</h3><p class="mt-1 text-sm text-slate-500">মূল বক্তব্য, অনুবাদ এবং সিস্টেমে লেখা তথ্য আলাদা রাখুন।</p><div class="mt-4 grid gap-4"><label class="text-sm font-bold">আবেদনকারীর মূল বক্তব্য <span class="text-xs font-medium text-teal">আবেদনকারীর বক্তব্য · মারমা</span><textarea id="original" rows="3" class="mt-1.5 w-full rounded-lg border border-line p-3 font-normal" ${a?.locked ? "disabled" : ""}>${esc(bn(a?.statement) || "")}</textarea></label><label class="text-sm font-bold">অনুবাদ / ব্যাখ্যা <span class="text-xs font-medium text-teal">সহায়তাকারীর অনুবাদ · বাংলা</span><textarea id="translation" rows="3" class="mt-1.5 w-full rounded-lg border border-line p-3 font-normal" ${a?.locked ? "disabled" : ""}>${esc(a?.translation || "")}</textarea></label><label class="text-sm font-bold">সিস্টেমে লেখা তথ্য <span class="text-xs font-medium text-teal">ইউডিসি কর্তৃক লেখা</span><textarea id="entry" rows="2" class="mt-1.5 w-full rounded-lg border border-line p-3 font-normal" ${a?.locked ? "disabled" : ""}>${esc(a?.translation || "")}</textarea></label></div></div><div class="mt-5 flex justify-end"><button ${a?.locked ? "disabled" : ""} class="rounded-lg bg-blue px-4 py-2.5 text-sm font-bold text-white disabled:opacity-40">আবেদনের খসড়া সংরক্ষণ</button></div></form><aside class="rounded-lg border border-teal-200 bg-teal-50 p-5"><h3 class="font-bold text-teal-950">তথ্যের উৎসের বিবরণ</h3><div class="mt-4 space-y-3 text-sm"><div><b>আবেদনকারী</b><p class="text-slate-600">তথ্য ও সম্মতির উৎস।</p></div><div><b>ইউডিসি উদ্যোক্তা</b><p class="text-slate-600">সহায়তা, অনুবাদ, টাইপ ও নথি সংযুক্ত করেন।</p></div><div><b>সিস্টেম</b><p class="text-slate-600">আবেদন আইডি তৈরি ও তথ্যের অখণ্ডতা যাচাই করে।</p></div><div><b>অনুমোদিত কর্মকর্তা</b><p class="text-slate-600">পর্যালোচনা ও আইনগত সহায়তার সিদ্ধান্ত নেন।</p></div></div><div class="mt-5 border-t border-teal-200 pt-4 text-xs leading-5 text-teal-950"><b>ইউডিসির যোগাযোগের নিয়ম:</b> কেন্দ্র বা উদ্যোক্তার নম্বর আবেদনকারীর ব্যক্তিগত নিরাপদ যোগাযোগের নম্বর হিসেবে সংরক্ষণ করবেন না।</div></aside></div><section id="consent-centre" class="space-y-4 pt-2"><div><h2 class="text-lg font-bold">সম্মতি গ্রহণ</h2><p class="mt-1 text-sm text-slate-500">আবেদনের খসড়া সংরক্ষণের পর আবেদনকারীর কাছ থেকে সরাসরি সম্মতি নিন।</p></div>${consent()}</section><section id="application-documents" class="space-y-4 pt-2"><div><h2 class="text-lg font-bold">নথিপত্র</h2><p class="mt-1 text-sm text-slate-500">জমা দেওয়ার আগে অন্তত একটি নথি বা তথ্যসূত্র সংযুক্ত করুন।</p></div>${docs()}</section><div class="flex justify-end rounded-lg border border-line bg-white p-5"><button onclick="submitApp()" ${ready ? "" : "disabled"} class="rounded-lg bg-blue px-5 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-35">আবেদন জমা দিন</button></div></div>`;
+      }
+      function appsPage() {
+        return `<section class="rounded-lg border border-line bg-white shadow-panel"><div class="flex flex-col justify-between gap-3 border-b border-line p-5 sm:flex-row"><div><h2 class="font-bold">আমার আবেদনসমূহ</h2><p class="mt-1 text-sm text-slate-500">এই কেন্দ্র ও উদ্যোক্তার অনুমোদিত আবেদনগুলোই এখানে দেখানো হয়।</p></div><input id="app-q" oninput="filterApps()" placeholder="আবেদন আইডি বা আবেদনকারীর নাম" class="rounded-lg border border-line px-3 py-2 text-sm" /></div><div id="apps-table">${appsTable(S.apps)}</div></section>`;
+      }
+      function appsTable(list) {
+        return `<div class="overflow-x-auto"><table class="w-full min-w-[920px] text-left text-sm"><thead class="bg-slate-50 text-xs uppercase tracking-[.08em] text-slate-500"><tr><th class="px-5 py-3">আবেদন</th><th class="px-4 py-3">আবেদনকারী</th><th class="px-4 py-3">সম্মতি</th><th class="px-4 py-3">নথিপত্র</th><th class="px-4 py-3">সমন্বয়</th><th class="px-5 py-3"></th></tr></thead><tbody class="divide-y divide-line">${list.map((a) => `<tr><td class="px-5 py-4 font-mono text-xs font-bold text-blue">${a.id}<div class="mt-1 font-sans font-normal text-slate-500">${esc(bn(a.status))}</div></td><td class="px-4 py-4 font-semibold">${esc(bn(a.name))}<div class="mt-1 text-xs font-normal text-slate-500">${esc(bn(a.language))}</div></td><td class="px-4 py-4">${badge(a.consent ? "YES" : a.recorded ? "Recorded" : "Pending")}</td><td class="px-4 py-4">${badge(a.docs.length ? `${a.docs.length.toLocaleString("bn-BD")}টি সংযুক্ত` : "Pending")}</td><td class="px-4 py-4">${badge(S.offline.some((o) => o.appId === a.id) ? "Sync Pending" : "Synced")}</td><td class="px-5 py-4"><button onclick="openApp('${a.id}')" class="rounded-lg px-2 py-1.5 text-xs font-bold text-blue hover:bg-sky-50">খুলুন</button></td></tr>`).join("")}</tbody></table></div>`;
+      }
+      function filterApps() {
+        let q = document.querySelector("#app-q").value.toLowerCase();
+        document.querySelector("#apps-table").innerHTML = appsTable(
+          S.apps.filter((a) => (a.id + a.name + bn(a.name)).toLowerCase().includes(q)),
+        );
+      }
+      function consent() {
+        let a = app();
+        return `<div class="grid gap-5 lg:grid-cols-2"><section class="rounded-lg border border-line bg-white p-5 shadow-panel"><h2 class="font-bold">সম্মতি গ্রহণ</h2><p class="mt-2 text-sm text-slate-600">তাঁর তথ্য আইনগত সহায়তা সেবায় ব্যবহার করা যাবে কি না, আবেদনকারীকে সরাসরি জিজ্ঞাসা করুন।</p><video id="cam" autoplay muted playsinline class="mt-5 aspect-video w-full rounded-lg bg-slate-900 object-cover"></video><div class="mt-3 flex flex-wrap gap-2"><button onclick="startCamera()" class="rounded-lg border border-line px-3 py-2 text-sm font-bold">${I("Camera", "inline h-4 w-4")}ক্যামেরা চালু করুন</button><button onclick="recordConsent()" class="rounded-lg border border-line px-3 py-2 text-sm font-bold">${I("CircleDot", "inline h-4 w-4")}সম্মতির ডেমো রেকর্ড তৈরি করুন</button></div><div class="mt-5 flex gap-3"><button onclick="giveConsent(true)" class="rounded-lg bg-teal px-4 py-2.5 text-sm font-bold text-white">আবেদনকারী সম্মত</button><button onclick="giveConsent(false)" class="rounded-lg border border-line px-4 py-2.5 text-sm font-bold">আবেদনকারী অসম্মত</button></div></section><section class="rounded-lg border border-line bg-white p-5 shadow-panel"><h3 class="font-bold">আবেদন জমার আবশ্যিক শর্ত</h3><div class="mt-4 space-y-3 text-sm">${[
+          ["ক্যামেরা / ওয়েবক্যাম চালু", a?.camera],
+          ["সম্মতির ডেমো রেকর্ড তৈরি", a?.recorded],
+          ["আবেদনকারী সম্মতি দিয়েছেন", a?.consent],
+          ["প্রয়োজনীয় নথি ও প্রক্রিয়া সম্পন্ন", a?.docs.length > 0],
+        ]
+          .map(
+            (g) =>
+              `<div class="flex items-center gap-3 rounded-lg border border-line p-3"><span class="grid h-5 w-5 place-items-center rounded-full ${g[1] ? "bg-emerald-600 text-white" : "bg-slate-200 text-slate-500"}">${g[1] ? "✓" : "-"}</span>${g[0]}</div>`,
+          )
+          .join(
+            "",
+          )}</div><p class="mt-3 text-xs leading-5 text-slate-500">জমা দেওয়ার পর নথির তথ্য পরিবর্তন বন্ধ হবে। পরবর্তী সংশোধন অনুমোদিত পদ্ধতিতে করতে হবে।</p></section></div>`;
+      }
+      function docs() {
+        let a = app();
+        return `<div class="grid gap-5 lg:grid-cols-[.85fr_1.15fr]"><section class="rounded-lg border border-line bg-white p-5 shadow-panel"><h2 class="font-bold">নথি সংযুক্তি</h2><p class="mt-1 text-sm text-slate-500">নথির মান যাচাই কেবল পরামর্শ; অস্পষ্ট লেখা অনুমান করা হবে না।</p><div class="mt-5 space-y-4"><label class="block text-sm font-bold">নথির ধরন<select id="doc-type" class="mt-1.5 w-full rounded-lg border border-line bg-white p-2.5 font-normal"><option>পরিচয়পত্র</option><option>জমির নথি</option><option>আবেদন ফরম</option><option>অন্যান্য তথ্যসূত্র</option></select></label><label class="block text-sm font-bold">ছবি তুলুন / আপলোড করুন<input id="doc-file" type="file" class="mt-1.5 block w-full text-sm font-normal"></label><label class="block text-sm font-bold">নথির মান যাচাই<select id="doc-quality" class="mt-1.5 w-full rounded-lg border border-line bg-white p-2.5 font-normal"><option value="Readable">পাঠযোগ্য</option><option value="Partially readable">আংশিক পাঠযোগ্য</option><option value="Poor quality">নিম্নমানের ছবি</option><option value="Missing page">পৃষ্ঠা অনুপস্থিত</option><option value="Duplicate">একই নথি</option><option value="Uncertain">অনিশ্চিত</option></select></label><button onclick="addDoc()" class="rounded-lg bg-blue px-4 py-2.5 text-sm font-bold text-white">আবেদনে সংযুক্ত করুন</button></div></section><section class="rounded-lg border border-line bg-white shadow-panel"><div class="border-b border-line p-5"><h3 class="font-bold">${a?.id || "সক্রিয় আবেদন নেই"}: সংযুক্ত নথি</h3></div><div class="divide-y divide-line">${a?.docs?.length ? a.docs.map((d) => `<div class="flex items-center justify-between p-4"><div><b class="text-sm">${esc(bn(d.type))}</b><div class="mt-1 text-xs text-slate-500">${esc(d.name)}</div></div>${badge(d.quality)}</div>`).join("") : '<div class="p-8 text-center text-sm text-slate-500">এখনো কোনো নথি সংযুক্ত হয়নি।</div>'}</div><div class="m-5 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><b>মান যাচাইয়ের নিয়ম:</b> “নথির বিষয়বস্তু বোঝা যাচ্ছে না। কর্মকর্তার পর্যালোচনা বা ভালো ছবি প্রয়োজন।”</div></section></div>`;
+      }
+      function status() {
+        return `<section class="mx-auto max-w-2xl rounded-lg border border-line bg-white p-6 shadow-panel"><h2 class="font-bold">আবেদনের অবস্থা দেখুন</h2><p class="mt-2 text-sm leading-6 text-slate-600">আবেদনের অবস্থা দেখানোর আগে আবেদনকারীর অনুমতি নিন এবং ক্যামেরা চালু করুন। এটি কেবল সম্মতির ডেমো, মুখ শনাক্তকরণ বা পরিচয় যাচাই নয়।</p><label for="status-id" class="mt-5 block text-sm font-bold">আবেদন আইডি</label><input id="status-id" oninput="updateStatusAccess()" placeholder="আবেদন আইডি লিখুন" class="mt-1.5 w-full rounded-lg border border-line px-3 py-2.5 text-sm"><div class="mt-5 rounded-lg border border-line bg-slate-50 p-4"><video id="status-cam" autoplay muted playsinline class="aspect-video w-full rounded-lg bg-slate-900 object-cover"></video><button type="button" onclick="startStatusCamera()" class="mt-3 rounded-lg border border-line bg-white px-3 py-2 text-sm font-bold">ক্যামেরা চালু করুন</button><p class="mt-2 text-xs text-slate-500">ক্যামেরার ছবি শুধু এই ডিভাইসে দেখা যাবে। এই ডেমোতে কোনো ছবি সংরক্ষণ বা পাঠানো হয় না।</p></div><label class="mt-5 flex items-start gap-3 text-sm text-slate-700"><input id="status-consent" type="checkbox" onchange="updateStatusAccess()" class="mt-1 accent-emerald-700"><span>ক্যামেরা চালু রেখে আবেদনের অবস্থা দেখার জন্য আবেদনকারী সম্মতি দিয়েছেন।</span></label><button id="status-verify" type="button" onclick="verifyStatus()" disabled class="mt-5 rounded-lg bg-blue px-4 py-2.5 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-40">আবেদনের অবস্থা দেখুন</button><p class="mt-3 text-xs text-slate-500">ক্যামেরা ব্যবহার করা না গেলে বিকল্প যাচাইয়ের জন্য অনুমোদিত কর্মকর্তার সহায়তা নিন।</p><div id="status-result" role="status" class="mt-5"></div></section>`;
+      }
+      function sync() {
+        return `<div class="space-y-5"><div class="grid gap-3 sm:grid-cols-3">${card("সংযোগ", S.network ? "অনলাইন" : "অফলাইন", "Wifi", S.network ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700")}${card("অফলাইন সারি", S.offline.length, "CloudOff", "bg-amber-100 text-amber-700")}${card("সমন্বয়জনিত বিরোধ", S.conflicts.filter((c) => !c.resolved).length, "GitCompareArrows", "bg-rose-100 text-rose-700")}</div><div class="flex flex-wrap gap-3"><button onclick="toggleNetwork()" class="rounded-lg border border-line bg-white px-4 py-2.5 text-sm font-bold">${S.network ? "সংযোগ বিচ্ছিন্ন করে দেখুন" : "সংযোগ ফিরিয়ে আনুন"}</button><button onclick="syncAll()" class="rounded-lg bg-blue px-4 py-2.5 text-sm font-bold text-white">এখনই সমন্বয় করুন</button><button onclick="makeConflict()" class="rounded-lg border border-line bg-white px-4 py-2.5 text-sm font-bold">ডেমো বিরোধ তৈরি করুন</button></div><section class="rounded-lg border border-line bg-white shadow-panel"><div class="border-b border-line p-5"><h3 class="font-bold">অফলাইন নথি</h3></div>${S.offline.length ? S.offline.map((o) => `<div class="flex justify-between border-b border-line p-4 text-sm"><div><b>${o.tempId}</b><div class="mt-1 text-slate-500">${o.appId} · স্থানীয়ভাবে সংরক্ষিত</div></div>${badge("Sync Pending")}</div>`).join("") : '<div class="p-8 text-center text-sm text-slate-500">সমন্বয়ের অপেক্ষায় কোনো অফলাইন নথি নেই।</div>'}</section>${S.conflicts.length ? `<section class="rounded-lg border border-amber-200 bg-amber-50 p-5"><h3 class="font-bold text-amber-950">বিরোধ পর্যালোচনা</h3>${S.conflicts.map((c, i) => `<div class="mt-4 rounded-lg border border-amber-200 bg-white p-4"><div class="grid gap-3 sm:grid-cols-2"><div><b class="text-xs text-slate-500">অফলাইন সংস্করণ</b><p class="mt-1 text-sm">${esc(bn(c.offline))}</p></div><div><b class="text-xs text-slate-500">কেন্দ্রীয় সংস্করণ</b><p class="mt-1 text-sm">${esc(bn(c.central))}</p></div></div>${c.resolved ? `<div class="mt-3">${badge(c.resolved)}</div>` : `<div class="mt-3 flex flex-wrap gap-2"><button onclick="resolveConflict(${i},'Keep Offline Version')" class="rounded-lg bg-blue px-3 py-2 text-xs font-bold text-white">অফলাইন তথ্য রাখুন</button><button onclick="resolveConflict(${i},'Keep Central Version')" class="rounded-lg border border-line px-3 py-2 text-xs font-bold">কেন্দ্রীয় তথ্য রাখুন</button><button onclick="resolveConflict(${i},'Escalated to authorised human')" class="rounded-lg border border-line px-3 py-2 text-xs font-bold">কর্মকর্তাকে জানান</button></div>`}</div>`).join("")}</section>` : ""}</div>`;
+      }
+      function tasks() {
+        let items = [
+          ...S.apps
+            .filter((a) => !a.consent)
+            .map((a) => ["সম্মতি প্রয়োজন", a.id, a.name]),
+          ...S.apps
+            .filter((a) => a.docs.length === 0)
+            .map((a) => ["নথি সংযুক্তি প্রয়োজন", a.id, a.name]),
+        ];
+        return `<section class="rounded-lg border border-line bg-white shadow-panel"><div class="border-b border-line p-5"><h2 class="font-bold">কাজ ও সতর্কতা</h2></div>${items.length ? items.map((x) => `<div class="flex items-center justify-between border-b border-line p-4"><div><b class="text-sm">${x[0]}</b><div class="mt-1 text-xs text-slate-500">${x[1]} · ${esc(bn(x[2]))}</div></div><button onclick="openApp('${x[1]}')" class="rounded-lg border border-line px-2.5 py-1.5 text-xs font-bold text-blue">খুলুন</button></div>`).join("") : '<div class="p-8 text-center text-sm text-slate-500">এই মুহূর্তে কোনো কাজ বাকি নেই।</div>'}</section>`;
+      }
+      function access() {
+        return `<div class="grid gap-5 lg:grid-cols-2"><section class="rounded-lg border border-line bg-white p-5 shadow-panel"><h2 class="font-bold">বর্তমান প্রবেশাধিকার</h2><div class="mt-4 space-y-3 text-sm"><div class="flex justify-between border-b border-line py-2"><span>ভূমিকা</span><b>ইউডিসি উদ্যোক্তা</b></div><div class="flex justify-between border-b border-line py-2"><span>কেন্দ্র</span><b>UDC-ATAPUR-01</b></div><div class="flex justify-between py-2"><span>উদ্যোক্তা</span><b>OP-102</b></div></div><h3 class="mt-5 font-bold">অনুমোদিত কাজ</h3><p class="mt-2 text-sm leading-6 text-slate-600">আবেদন গ্রহণে সহায়তা, তথ্যের উৎস ও আবেদনকারীর সম্মতি নথিবদ্ধ করা, নথি সংযুক্তি, অনুমোদিত অবস্থার তথ্য দেখা, সমন্বয় এবং নিজের কাজের নিরীক্ষা।</p></section><section class="rounded-lg border border-rose-200 bg-rose-50 p-5"><h2 class="font-bold text-rose-950">অননুমোদিত কাজ</h2><p class="mt-3 text-sm leading-6 text-rose-950">ইউডিসি আইনগত সহায়তা অনুমোদন বা প্রত্যাখ্যান, মামলার মূল্যায়ন, আইনজীবী নিয়োগ, অগ্রাধিকার পরিবর্তন, রেফারেলের সিদ্ধান্ত, ডিএলএও নোট দেখা, আবেদনকারীর হয়ে সম্মতি দেওয়া, জমা দেওয়া তথ্য পরিবর্তন বা মামলা বন্ধ করতে পারবেন না।</p></section></div>`;
+      }
+      function auditPage() {
+        return `<section class="rounded-lg border border-line bg-white shadow-panel"><div class="flex justify-between border-b border-line p-5"><div><h2 class="font-bold">নিরীক্ষা ইতিহাস</h2><p class="mt-1 text-sm text-slate-500">কে, কখন, কোন ভূমিকা ও মাধ্যমে কী করেছেন।</p></div><button onclick="clearAudit()" class="no-print rounded-lg border border-line px-3 py-2 text-xs font-bold">ডেমো ঘটনাগুলো মুছুন</button></div><div class="divide-y divide-line">${S.audit.map((x) => `<div class="grid gap-2 p-4 sm:grid-cols-[190px_1fr]"><div class="text-xs font-semibold text-slate-500">${x.time}</div><div><b class="text-sm">${esc(bn(x.action))}</b><div class="mt-1 text-sm text-slate-600">${esc(bn(x.detail))} · ইউডিসি উদ্যোক্তা</div></div></div>`).join("")}</div></section>`;
+      }
+      function help() {
+        return `<div class="grid gap-5 md:grid-cols-3">${[
+          [
+            "ইউডিসি সহায়তা",
+            "কার্যক্রমে সমস্যার জন্য সহায়তার অনুরোধ জানান।",
+            "LifeBuoy",
+          ],
+          [
+            "১৬৬৯৯ সেবা",
+            "ফোনে আইনগত সহায়তা গ্রহণ ও আবেদনের অবস্থা জানার মাধ্যম।",
+            "Phone",
+          ],
+          [
+            "জরুরি নিরাপত্তা সহায়তা",
+            "অনিরাপদ মাধ্যমে ব্যক্তিগত তথ্য প্রকাশ করবেন না।",
+            "ShieldAlert",
+          ],
+        ]
+          .map(
+            (x) =>
+              `<section class="rounded-lg border border-line bg-white p-5 shadow-panel">${I(x[2], "h-5 w-5 text-teal")}<h2 class="mt-4 font-bold">${x[0]}</h2><p class="mt-2 text-sm leading-6 text-slate-600">${x[1]}</p><button onclick="note('${x[0]} খোলা হয়েছে — শুধু ডেমো')" class="mt-5 rounded-lg border border-line px-3 py-2 text-sm font-bold">খুলুন</button></section>`,
+          )
+          .join("")}</div>`;
+      }
+      function go(p) {
+        if (state.page === "status" && p !== "status") stopStatusCamera();
+        state.page = p;
+        render();
+      }
+      function stopStatusCamera() {
+        statusCameraStream?.getTracks().forEach((track) => track.stop());
+        statusCameraStream = null;
+      }
+      function updateStatusAccess() {
+        const id = document.querySelector("#status-id");
+        const consent = document.querySelector("#status-consent");
+        const button = document.querySelector("#status-verify");
+        if (!id || !consent || !button) return;
+        button.disabled = !(
+          id.value.trim() &&
+          consent.checked &&
+          statusCameraStream?.active
+        );
+        document.querySelector("#status-result").innerHTML = "";
+      }
+      async function startStatusCamera() {
+        if (!navigator.mediaDevices?.getUserMedia) {
+          note("এই ব্রাউজারে ক্যামেরা চালু করা যাচ্ছে না।");
+          return;
+        }
+        try {
+          stopStatusCamera();
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: false,
+          });
+          if (state.page !== "status") {
+            stream.getTracks().forEach((track) => track.stop());
+            return;
+          }
+          statusCameraStream = stream;
+          const preview = document.querySelector("#status-cam");
+          if (preview) preview.srcObject = stream;
+          stream
+            .getVideoTracks()[0]
+            ?.addEventListener("ended", updateStatusAccess);
+          updateStatusAccess();
+          note("ক্যামেরা চালু হয়েছে। আবেদনকারীর সম্মতি নিন।");
+        } catch {
+          note(
+            "ক্যামেরা পাওয়া যাচ্ছে না। বিকল্প যাচাইয়ের জন্য অনুমোদিত কর্মকর্তার সহায়তা নিন।",
+          );
+        }
+      }
+      function openApp(id) {
+        state.active = id;
+        state.page = "intake";
+        render();
+      }
+      function saveIntake(e) {
+        e.preventDefault();
+        const form = e.currentTarget;
+        const value = (id) => form.querySelector(`#${id}`).value;
+        let a = app();
+        if (!a) {
+          a = {
+            id: `APP-2026-${String(125 + S.apps.length).padStart(5, "0")}`,
+            docs: [],
+            versions: [],
+            created: stamp(),
+          };
+          S.apps.push(a);
+          state.active = a.id;
+        }
+        if (a.locked) {
+          note("জমা দেওয়া তথ্য পরিবর্তন করা যাবে না।");
+          return;
+        }
+        Object.assign(a, {
+          name: value("name"),
+          location: value("location"),
+          language: value("language"),
+          bangla: value("bangla"),
+          contact: value("contact"),
+          safe: value("safe"),
+          statement: value("original"),
+          translation: value("translation"),
+          status: a.status || "Draft",
+        });
+        a.versions.push([
+          `v${a.versions.length + 1}`,
+          "ইউডিসি কর্তৃক তথ্য সংযোজন",
+          "খসড়া হালনাগাদ",
+          stamp(),
+        ]);
+        audit("আবেদনের খসড়া সংরক্ষিত", a.id);
+        render();
+        note("তথ্যের উৎসসহ খসড়া সংরক্ষিত হয়েছে।");
+      }
+      async function startCamera() {
+        let a = app();
+        try {
+          cameraStream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: false,
+          });
+          let v = document.querySelector("#cam");
+          v.srcObject = cameraStream;
+          a.camera = true;
+          audit("সম্মতির জন্য ক্যামেরা চালু", a.id);
+          save();
+          render();
+          note("ক্যামেরা চালু হয়েছে। এবার সম্মতির ডেমো রেকর্ড তৈরি করুন।");
+        } catch {
+          note(
+            "ক্যামেরা পাওয়া যাচ্ছে না। ডেমোর জন্য উপযুক্ত ডিভাইস বা ব্রাউজার ব্যবহার করুন।",
+          );
+        }
+      }
+      function recordConsent() {
+        let a = app();
+        if (!a?.camera) {
+          note("প্রথমে আবেদনকারীর সামনে ক্যামেরা চালু করুন।");
+          return;
+        }
+        a.recorded = true;
+        a.consentRef = `CONSENT-${Date.now()}`;
+        audit("সম্মতির ডেমো রেকর্ড তৈরি", a.id);
+        save();
+        render();
+        note("সম্মতির ডেমো রেকর্ড আবেদনটির সঙ্গে যুক্ত হয়েছে।");
+      }
+      function giveConsent(yes) {
+        let a = app();
+        if (!a?.recorded) {
+          note("আগে ক্যামেরার মাধ্যমে সম্মতির ডেমো রেকর্ড তৈরি করুন।");
+          return;
+        }
+        a.consent = yes;
+        a.status = yes ? "Document Check Pending" : "Consent Declined";
+        audit(`আবেদনকারীর সম্মতি ${yes ? "YES" : "NO"} recorded`, a.id);
+        save();
+        render();
+        note(
+          yes
+            ? "সম্মতি নথিবদ্ধ হয়েছে। প্রয়োজনীয় নথি সংযুক্ত করুন।"
+            : "সম্মতি দেওয়া হয়নি; আবেদন জমা দেওয়া যাবে না।",
+        );
+      }
+      function addDoc() {
+        let a = app();
+        if (!a) {
+          note("প্রথমে একটি আবেদন শুরু করুন।");
+          return;
+        }
+        let f = document.querySelector("#doc-file").files[0],
+          q = document.querySelector("#doc-quality").value,
+          d = {
+            type: document.querySelector("#doc-type").value,
+            name: f?.name || "ডেমো নথির ছবি",
+            quality: q,
+            time: stamp(),
+          };
+        a.docs.push(d);
+        audit("নথি সংযুক্ত হয়েছে", `${a.id} · ${d.type} · ${q}`);
+        save();
+        render();
+        note(
+          q === "Readable"
+            ? "নথিটি আবেদনের সঙ্গে যুক্ত হয়েছে।"
+            : "নথির সমস্যা নথিবদ্ধ হয়েছে; কর্মকর্তার পর্যালোচনা বা পরিষ্কার ছবি প্রয়োজন।",
+        );
+      }
+      function submitApp() {
+        let a = app();
+        if (!a.camera || !a.recorded || !a.consent || !a.docs.length) {
+          note("আবেদন জমা দেওয়ার সব আবশ্যিক শর্ত পূরণ করুন।");
+          return;
+        }
+        a.locked = true;
+        if (S.network) {
+          a.status = "Submitted";
+          audit("আবেদন কেন্দ্রীয় সিস্টেমে জমা হয়েছে", a.id);
+          note(`জমা হয়েছে: ${a.id}`);
+        } else {
+          a.status = "Offline Saved";
+          let o = {
+            tempId: `OFF-2026-${String(41 + S.offline.length).padStart(4, "0")}`,
+            appId: a.id,
+            payload: JSON.stringify(a),
+          };
+          S.offline.push(o);
+          audit("আবেদন অফলাইনে নিরাপদে সংরক্ষিত", o.tempId);
+          note(`অফলাইনে সংরক্ষিত: ${o.tempId}`);
+        }
+        save();
+        state.page = "apps";
+        render();
+      }
+      function verifyStatus() {
+        if (
+          !statusCameraStream?.active ||
+          !document.querySelector("#status-consent")?.checked
+        ) {
+          note("আগে ক্যামেরা চালু করে আবেদনকারীর সম্মতি নিন।");
+          return;
+        }
+        let id = document.querySelector("#status-id").value.trim(),
+          a = S.apps.find((x) => x.id === id),
+          out = document.querySelector("#status-result");
+        if (!a) {
+          out.innerHTML =
+            '<div class="rounded-lg bg-rose-50 p-4 text-sm text-rose-950">ডেমো তথ্যের মধ্যে এই আবেদনটি পাওয়া যায়নি।</div>';
+          return;
+        }
+        out.innerHTML = `<div class="rounded-lg border border-emerald-200 bg-emerald-50 p-5 text-sm"><b>আবেদনকারীর সম্মতিতে অবস্থা দেখানো হয়েছে — ডেমো</b><div class="mt-3 grid gap-2 sm:grid-cols-2"><span>আবেদন আইডি <b>${esc(a.id)}</b></span><span>অবস্থা ${badge(a.status)}</span><span>আবেদনকারী ${esc(bn(a.name))}</span><span>পরবর্তী কাজ ${a.status === "Submitted" ? "কর্মকর্তার পর্যালোচনার অপেক্ষায়" : "বাকি শর্তগুলো পূরণ করুন"}</span></div><p class="mt-4 text-xs text-emerald-950">শুধু ক্যামেরার মাধ্যমে সম্মতি নিলে পরিচয় যাচাই হয় না। বাস্তব তথ্য দেখানোর আগে অনুমোদিত পদ্ধতিতে পরিচয় নিশ্চিত করুন।</p></div>`;
+        audit("আবেদনকারী ডেমোতে অবস্থা দেখতে সম্মতি দিয়েছেন", a.id);
+        save();
+      }
+      function toggleNetwork() {
+        S.network = !S.network;
+        audit("সংযোগ পরিবর্তিত হয়েছে", S.network ? "Online" : "Offline");
+        save();
+        render();
+        note(
+          S.network
+            ? "সংযোগ ফিরে এসেছে।"
+            : "সংযোগ বিচ্ছিন্ন। আবেদন স্থানীয়ভাবে সংরক্ষিত হবে।",
+        );
+      }
+      function syncAll() {
+        if (!S.network) {
+          note("সংযোগ নেই; এখন সমন্বয় করা যাবে না।");
+          return;
+        }
+        if (!S.offline.length) {
+          note("সমন্বয় করার মতো অফলাইন নথি নেই।");
+          return;
+        }
+        S.offline.forEach((o) => {
+          let a = S.apps.find((x) => x.id === o.appId);
+          if (a) a.status = "Submitted";
+        });
+        let n = S.offline.length;
+        S.offline = [];
+        audit(
+          "অফলাইন সারি সমন্বিত হয়েছে",
+          `${n} টি নথি; একই নথির যাচাই সম্পন্ন`,
+        );
+        save();
+        render();
+        note("সমন্বয় সম্পন্ন। একই নথি দ্বিতীয়বার তৈরি হয়নি।");
+      }
+      function makeConflict() {
+        let a = app();
+        S.conflicts.push({
+          offline: "আবেদনকারীর বক্তব্য: জমি নিয়ে বিরোধ",
+          central: "আবেদনকারীর বক্তব্য: জমির সীমানা নিয়ে বিরোধ",
+          appId: a?.id,
+        });
+        audit("সমন্বয়ে বিরোধ শনাক্ত", a?.id || "ডেমো");
+        save();
+        render();
+      }
+      function resolveConflict(i, r) {
+        S.conflicts[i].resolved = r;
+        audit("সমন্বয়ের বিরোধ নিষ্পত্তি", r);
+        save();
+        render();
+        note("নিষ্পত্তি নিরীক্ষা ইতিহাসে নথিবদ্ধ হয়েছে।");
+      }
+      function clearAudit() {
+        S.audit = [];
+        save();
+        render();
+        note("ডেমো নিরীক্ষার ঘটনাগুলো মুছে দেওয়া হয়েছে।");
+      }
+      function resetDemo() {
+        if (!confirm("ইউডিসির সব স্থানীয় ডেমো তথ্য রিসেট করবেন?")) return;
+        localStorage.removeItem(KEY);
+        S = structuredClone(seed);
+        state = { page: "dashboard", active: S.apps[0].id, modal: null };
+        render();
+        note("ইউডিসির ডেমো তথ্য রিসেট হয়েছে।");
+      }
+      function renderModal() {
+        let root = document.querySelector("#modal");
+        root.innerHTML = "";
+      }
+      render();
+    </script>
+  </body>
+</html>

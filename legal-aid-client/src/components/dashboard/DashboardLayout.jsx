@@ -46,20 +46,42 @@ export default function DashboardLayout({ role, roleConfig, children }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [dialog, setDialog] = useState(null);
   const [taskCreated, setTaskCreated] = useState(false);
-  const [activeHash, setActiveHash] = useState("#command-centre");
+  const [activeHash, setActiveHash] = useState(
+    role === "dlo-administration-case-support"
+      ? "#overview"
+      : "#command-centre",
+  );
   const isDlao = role === "dlao";
+  const isCaseSupport = role === "dlo-administration-case-support";
+
+  const caseSupportItems = [
+    { label: "সারসংক্ষেপ", icon: FiGrid, href: "#overview" },
+    { label: "কেস অনুসন্ধান", icon: FiArchive, href: "#case-search" },
+    { label: "কেস রেজিস্টার", icon: FiClipboard, href: "#case-register" },
+    { label: "কাজের তালিকা", icon: FiCheck, href: "#task-queue" },
+    { label: "প্রতিবেদন", icon: FiActivity, href: "#reports" },
+    { label: "অডিট ইতিহাস", icon: FiShield, href: "#audit-trail" },
+  ];
+
   const items = isDlao
     ? dlaoItems
-    : [
-        { label: "ড্যাশবোর্ড", icon: FiGrid, href: "#command-centre" },
-        { label: "আবেদনসমূহ", icon: FiClipboard, href: "#applications" },
-        { label: "নথিপত্র", icon: FiFileText },
-        { label: "সেটিংস", icon: FiShield },
-      ];
+    : isCaseSupport
+      ? caseSupportItems
+      : [
+          { label: "Dashboard", icon: FiGrid, href: "#command-centre" },
+          { label: "Applications", icon: FiClipboard },
+          { label: "Documents", icon: FiFileText },
+          { label: "Settings", icon: FiShield },
+        ];
 
   useEffect(() => {
     const updateHash = () =>
-      setActiveHash(window.location.hash || "#command-centre");
+      setActiveHash(
+        window.location.hash ||
+          (role === "dlo-administration-case-support"
+            ? "#overview"
+            : "#command-centre"),
+      );
     updateHash();
     window.addEventListener("hashchange", updateHash);
     return () => window.removeEventListener("hashchange", updateHash);

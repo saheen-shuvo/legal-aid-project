@@ -5,6 +5,7 @@ import { FiX } from "react-icons/fi";
 import DlaoSections from "./DlaoSections";
 import ReferralWorkspace from "./ReferralWorkspace";
 import DuplicateReview from "./DuplicateReview";
+import CaseSupportDashboard from "./CaseSupportDashboard";
 
 const sectionIds = new Set([
   "command-centre",
@@ -232,6 +233,10 @@ export default function DashboardContent({ role, roleConfig }) {
     setMessage(
       "Demo review noted locally. No official decision has been recorded.",
     );
+  }
+
+  if (role === "dlo-administration-case-support") {
+    return <CaseSupportDashboard />;
   }
 
   if (role !== "dlao") {
