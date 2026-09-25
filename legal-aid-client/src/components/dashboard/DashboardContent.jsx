@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
 import DlaoSections from "./DlaoSections";
+import ReferralWorkspace from "./ReferralWorkspace";
 
 const sectionIds = new Set([
   "command-centre",
@@ -244,6 +245,10 @@ export default function DashboardContent({ role, roleConfig }) {
         </p>
       </section>
     );
+  }
+
+  if (active === "referrals") {
+    return <ReferralWorkspace />;
   }
 
   if (active !== "command-centre") {
