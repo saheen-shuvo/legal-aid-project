@@ -20,11 +20,11 @@ import {
 } from "react-icons/fi";
 
 // All conversations and records are competition demo data. No microphone is used.
-const CASE_ID = "CASE-2026-000342";
+const CASE_ID = "20260342";
 const CASE_DIGITS = "2026000342";
 const CASE_PIN = "1234";
 const SAMPLE_APP_ID = "20260342";
-const SAMPLE_APP_PIN = "5824";
+const SAMPLE_APP_PIN = "1234";
 const KEYS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#"];
 const bn = (value) =>
   String(value).replace(/[০-৯]/g, (digit) => "০১২৩৪৫৬৭৮৯".indexOf(digit));
@@ -1521,11 +1521,6 @@ export default function VoiceSimulator() {
                 <p>
                   কেস: <strong>{CASE_ID}</strong>
                   <br />
-                  কিপ্যাডে: <strong>{CASE_DIGITS}</strong> · PIN:{" "}
-                  <strong>{CASE_PIN}</strong>
-                </p>
-                <p>
-                  বিশেষ সহায়তার PIN: <strong>1112</strong>
                 </p>
               </div>
             </details>
