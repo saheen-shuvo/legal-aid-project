@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
 import DlaoSections from "./DlaoSections";
 import ReferralWorkspace from "./ReferralWorkspace";
+import DuplicateReview from "./DuplicateReview";
 
 const sectionIds = new Set([
   "command-centre",
@@ -17,6 +18,7 @@ const sectionIds = new Set([
   "panel-lawyers",
   "referrals",
   "mediation",
+  "duplicate",
   "offline-sync",
   "safety-privacy",
   "audit-trail",
@@ -249,6 +251,10 @@ export default function DashboardContent({ role, roleConfig }) {
 
   if (active === "referrals") {
     return <ReferralWorkspace />;
+  }
+
+  if (active === "duplicate") {
+    return <DuplicateReview />;
   }
 
   if (active !== "command-centre") {

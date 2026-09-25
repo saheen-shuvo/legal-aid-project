@@ -2,6 +2,8 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
+import Footer from "@/components/shared/Footer";
+import Navbar from "@/components/shared/Navbar";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   FiArrowDown,
@@ -1465,409 +1467,414 @@ export default function VoiceSimulator() {
   }
 
   return (
-    <section
-      lang="bn"
-      className="min-h-screen bg-[#f0f5f2] px-3 py-8 text-slate-800 sm:px-6 sm:py-14"
-    >
-      <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1fr_440px] lg:gap-20">
-        <div className="order-2 lg:order-1">
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-4 py-2 text-xs font-semibold text-emerald-800">
-            <span className="h-2 w-2 rounded-full bg-emerald-500" />{" "}
-             ইন্টারঅ্যাকটিভ ডেমো
-          </span>
-          <h1 className="mt-6 text-4xl font-bold leading-snug text-emerald-950 sm:text-5xl">
-            সহায়তার শুরু
-            <br />
-            <span className="text-emerald-700">একটি কথোপকথনে।</span>
-          </h1>
-          <p className="mt-5 max-w-md text-base leading-8 text-slate-600">
-            ১৬৬৯৯ ডায়াল করুন। কিপ্যাডে সেবা বেছে নিন। নাম বা বিবরণ বলার সময়ে
-            স্ক্রিপ্টের উত্তরটি কথোপকথনে যোগ করুন।
-          </p>
-          <div className="mt-8 grid gap-3 sm:grid-cols-2">
-            <div className="rounded-2xl border border-white bg-white/75 p-5">
-              <span className="text-xs font-bold tracking-widest text-emerald-600">
-                ০১ · কিপ্যাড
-              </span>
-              <p className="mt-2 text-sm leading-6">
-                নম্বর ও PIN দিন। <strong>#</strong> দিয়ে পাঠান,{" "}
-                <strong>*</strong> দিয়ে মুছুন। মেনুর সংখ্যা চাপলেই নির্বাচন হবে।
-              </p>
-            </div>
-            <div className="rounded-2xl border border-white bg-white/75 p-5">
-              <span className="text-xs font-bold tracking-widest text-emerald-600">
-                ০২ · স্ক্রিপ্ট
-              </span>
-              <p className="mt-2 text-sm leading-6">
-                "উত্তর বলুন" চাপলে প্রস্তুত উত্তর যোগ হবে।
-                মাইক্রোফোন বা ভয়েস রেকর্ডিং ব্যবহার হয় না।
-              </p>
-            </div>
-          </div>
-          <details className="mt-6 rounded-2xl border border-emerald-100 bg-white/70 p-5 text-sm">
-            <summary className="cursor-pointer font-semibold text-emerald-900">
-              ডেমোর নম্বর ও PIN দেখুন
-            </summary>
-            <div className="mt-4 space-y-2 leading-6 text-slate-600">
-              <p>
-                আবেদন: <strong>{SAMPLE_APP_ID}</strong> · PIN:{" "}
-                <strong>{SAMPLE_APP_PIN}</strong>
-              </p>
-              <p>
-                কেস: <strong>{CASE_ID}</strong>
-                <br />
-                কিপ্যাডে: <strong>{CASE_DIGITS}</strong> · PIN:{" "}
-                <strong>{CASE_PIN}</strong>
-              </p>
-              <p>
-                বিশেষ সহায়তার PIN: <strong>1112</strong>
-              </p>
-            </div>
-          </details>
-          <p className="mt-5 flex items-start gap-2 text-xs leading-6 text-slate-500">
-            <FiShield className="mt-1 shrink-0" aria-hidden="true" />
-            সব তথ্য নমুনা। বাস্তবে কোনো কল, আবেদন, SMS বা জরুরি সহায়তার অনুরোধ
-            পাঠানো হয় না।
-          </p>
-        </div>
-
-        <div className="order-1 mx-auto w-full max-w-110 lg:order-2">
-          <div
-            tabIndex={0}
-            onKeyDown={onKeyDown}
-            aria-label="ডেমো ফোন: সংখ্যা, Enter ও Backspace ব্যবহার করতে পারবেন"
-            className="overflow-hidden rounded-[2.8rem] border-[6px] border-slate-800 bg-slate-900 p-2 shadow-2xl shadow-emerald-950/20 outline-none focus-visible:ring-4 focus-visible:ring-emerald-300"
-          >
-            <div className="flex h-6 items-center justify-center">
-              <div className="h-1 w-20 rounded-full bg-slate-600" />
-            </div>
-            <div className="overflow-hidden rounded-4xl bg-white">
-              <header className="flex items-center gap-3 bg-emerald-900 px-4 py-2 text-white">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-white/15">
-                  <FiPhone size={21} aria-hidden="true" />
+    <>
+      <Navbar />
+      <section
+        lang="bn"
+        className="min-h-screen bg-[#f0f5f2] px-3 py-8 text-slate-800 sm:px-6 sm:py-14"
+      >
+        <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1fr_440px] lg:gap-20">
+          <div className="order-2 lg:order-1">
+            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-4 py-2 text-xs font-semibold text-emerald-800">
+              <span className="h-2 w-2 rounded-full bg-emerald-500" />{" "}
+              ইন্টারঅ্যাকটিভ ডেমো
+            </span>
+            <h1 className="mt-6 text-4xl font-bold leading-snug text-emerald-950 sm:text-5xl">
+              সহায়তার শুরু
+              <br />
+              <span className="text-emerald-700">একটি কথোপকথনে।</span>
+            </h1>
+            <p className="mt-5 max-w-md text-base leading-8 text-slate-600">
+              ১৬৬৯৯ ডায়াল করুন। কিপ্যাডে সেবা বেছে নিন। নাম বা বিবরণ বলার সময়ে
+              স্ক্রিপ্টের উত্তরটি কথোপকথনে যোগ করুন।
+            </p>
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              <div className="rounded-2xl border border-white bg-white/75 p-5">
+                <span className="text-xs font-bold tracking-widest text-emerald-600">
+                  ০১ · কিপ্যাড
                 </span>
-                <div className="min-w-0 flex-1">
-                  <h2 className="font-bold text-sm">লিগ্যাল এইড · ১৬৬৯৯</h2>
-                  <p className="mt-1 flex items-center gap-1.5 text-[10px] text-emerald-100">
-                    <span
-                      className={`h-1.5 w-1.5 rounded-full ${ended ? "bg-slate-300" : "bg-emerald-300"}`}
-                    />
-                    {ended
-                      ? "কল শেষ"
-                      : speaking
-                        ? "এজেন্ট কথা বলছে"
-                        : step === "idle"
-                          ? "ডায়াল করতে প্রস্তুত"
-                          : "সংযুক্ত · নমুনা কথোপকথন"}
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={toggleSound}
-                  disabled={!speechSupported}
-                  aria-label={
-                    soundOn
-                      ? "এজেন্টের শব্দ বন্ধ করুন"
-                      : "এজেন্টের শব্দ চালু করুন"
-                  }
-                  aria-pressed={soundOn}
-                  className="rounded-full p-2 hover:bg-white/15 disabled:opacity-30"
-                >
-                  {soundOn ? (
-                    <FiVolume2 aria-hidden="true" />
-                  ) : (
-                    <FiVolumeX aria-hidden="true" />
-                  )}
-                </button>
-                <button
-                  type="button"
-                  onClick={reset}
-                  aria-label="নতুন করে শুরু করুন"
-                  className="rounded-full p-2 hover:bg-white/15"
-                >
-                  <FiRefreshCw aria-hidden="true" />
-                </button>
-              </header>
-              <div className="border-b border-emerald-100 bg-emerald-50 px-4 py-1 text-center text-[10px] font-medium text-emerald-800">
-                স্ক্রিপ্টের কথোপকথন · মাইক্রোফোন বন্ধ
+                <p className="mt-2 text-sm leading-6">
+                  নম্বর ও PIN দিন। <strong>#</strong> দিয়ে পাঠান,{" "}
+                  <strong>*</strong> দিয়ে মুছুন। মেনুর সংখ্যা চাপলেই নির্বাচন
+                  হবে।
+                </p>
               </div>
-              <div className="relative">
-                <div
-                  ref={screenRef}
-                  role="log"
-                  aria-label="কথোপকথন"
-                  aria-live="off"
-                  onScroll={(event) => {
-                    const el = event.currentTarget;
-                    const near =
-                      el.scrollHeight - el.scrollTop - el.clientHeight < 70;
-                    followBottom.current = near;
-                    setShowLatest(!near);
-                  }}
-                  className="h-75 space-y-5 overflow-y-auto overscroll-contain bg-[#f6f8f6] px-3 py-5 sm:h-75"
-                >
-                  <div className="text-center text-[10px] font-medium text-slate-400">
-                    আজ · ১৬৬৯৯ ডেমো
+              <div className="rounded-2xl border border-white bg-white/75 p-5">
+                <span className="text-xs font-bold tracking-widest text-emerald-600">
+                  ০২ · স্ক্রিপ্ট
+                </span>
+                <p className="mt-2 text-sm leading-6">
+                  "উত্তর বলুন" চাপলে প্রস্তুত উত্তর যোগ হবে। মাইক্রোফোন বা ভয়েস
+                  রেকর্ডিং ব্যবহার হয় না।
+                </p>
+              </div>
+            </div>
+            <details className="mt-6 rounded-2xl border border-emerald-100 bg-white/70 p-5 text-sm">
+              <summary className="cursor-pointer font-semibold text-emerald-900">
+                ডেমোর নম্বর ও PIN দেখুন
+              </summary>
+              <div className="mt-4 space-y-2 leading-6 text-slate-600">
+                <p>
+                  আবেদন: <strong>{SAMPLE_APP_ID}</strong> · PIN:{" "}
+                  <strong>{SAMPLE_APP_PIN}</strong>
+                </p>
+                <p>
+                  কেস: <strong>{CASE_ID}</strong>
+                  <br />
+                  কিপ্যাডে: <strong>{CASE_DIGITS}</strong> · PIN:{" "}
+                  <strong>{CASE_PIN}</strong>
+                </p>
+                <p>
+                  বিশেষ সহায়তার PIN: <strong>1112</strong>
+                </p>
+              </div>
+            </details>
+            <p className="mt-5 flex items-start gap-2 text-xs leading-6 text-slate-500">
+              <FiShield className="mt-1 shrink-0" aria-hidden="true" />
+              সব তথ্য নমুনা। বাস্তবে কোনো কল, আবেদন, SMS বা জরুরি সহায়তার অনুরোধ
+              পাঠানো হয় না।
+            </p>
+          </div>
+
+          <div className="order-1 mx-auto w-full max-w-110 lg:order-2">
+            <div
+              tabIndex={0}
+              onKeyDown={onKeyDown}
+              aria-label="ডেমো ফোন: সংখ্যা, Enter ও Backspace ব্যবহার করতে পারবেন"
+              className="overflow-hidden rounded-[2.8rem] border-[6px] border-slate-800 bg-slate-900 p-2 shadow-2xl shadow-emerald-950/20 outline-none focus-visible:ring-4 focus-visible:ring-emerald-300"
+            >
+              <div className="flex h-6 items-center justify-center">
+                <div className="h-1 w-20 rounded-full bg-slate-600" />
+              </div>
+              <div className="overflow-hidden rounded-4xl bg-white">
+                <header className="flex items-center gap-3 bg-emerald-900 px-4 py-2 text-white">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-white/15">
+                    <FiPhone size={21} aria-hidden="true" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <h2 className="font-bold text-sm">লিগ্যাল এইড · ১৬৬৯৯</h2>
+                    <p className="mt-1 flex items-center gap-1.5 text-[10px] text-emerald-100">
+                      <span
+                        className={`h-1.5 w-1.5 rounded-full ${ended ? "bg-slate-300" : "bg-emerald-300"}`}
+                      />
+                      {ended
+                        ? "কল শেষ"
+                        : speaking
+                          ? "এজেন্ট কথা বলছে"
+                          : step === "idle"
+                            ? "ডায়াল করতে প্রস্তুত"
+                            : "সংযুক্ত · নমুনা কথোপকথন"}
+                    </p>
                   </div>
-                  {messages.map((message) =>
-                    message.role === "system" ? (
-                      <p
-                        key={message.id}
-                        className="rounded-xl bg-slate-200/60 px-4 py-3 text-center text-xs text-slate-600"
-                      >
-                        {message.text}
-                      </p>
-                    ) : (
-                      <div
-                        key={message.id}
-                        className={`flex animate-[chatIn_180ms_ease-out] motion-reduce:animate-none ${message.role === "caller" ? "justify-end" : "justify-start"}`}
-                      >
-                        <div
-                          className={`max-w-[92%] rounded-2xl px-4 py-3 shadow-sm ${message.role === "caller" ? "rounded-tr-sm bg-emerald-800 text-white" : "rounded-tl-sm border border-slate-100 bg-white text-slate-700"}`}
-                        >
-                          <div
-                            className={`mb-2 flex items-center gap-1.5 text-[10px] font-semibold ${message.role === "caller" ? "text-emerald-200" : "text-emerald-700"}`}
-                          >
-                            {message.role === "agent" ? (
-                              <>
-                                <FiShield aria-hidden="true" />{" "}
-                                {message.title === "মানব কর্মকর্তা · ডেমো"
-                                  ? "মানব কর্মকর্তা · ডেমো"
-                                  : "লিগ্যাল এইড এজেন্ট"}
-                              </>
-                            ) : (
-                              <>
-                                {message.source === "voice" && (
-                                  <FiMic aria-hidden="true" />
-                                )}{" "}
-                                {message.title} ·{" "}
-                                {message.source === "voice"
-                                  ? "স্ক্রিপ্টের উত্তর"
-                                  : "কিপ্যাড"}
-                              </>
-                            )}
-                          </div>
-                          <AnimatedMessage
-                            message={message}
-                            animate={message.id === animatedId}
-                            onComplete={finishAnimation}
-                            onProgress={scrollBottom}
-                          />
-                          {message.options && message.id !== animatedId && (
-                            <ul className="mt-3 space-y-2 border-t border-slate-100 pt-3">
-                              {message.options.map(([key, label]) => (
-                                <li
-                                  key={key}
-                                  className="flex items-start gap-2 text-xs leading-5"
-                                >
-                                  <span className="grid h-5 w-5 shrink-0 place-items-center rounded bg-emerald-50 font-bold text-emerald-800">
-                                    {bnDigit(key)}
-                                  </span>
-                                  <span>
-                                    {label}
-                                    <span className="block text-[10px] text-slate-400">
-                                      {bnDigit(key)} চাপুন অথবা বলুন
-                                    </span>
-                                  </span>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                          {message.role === "caller" && (
-                            <span className="mt-1 flex justify-end text-emerald-200">
-                              <FiCheck
-                                size={12}
-                                aria-label="ডেমো উত্তর দেওয়া হয়েছে"
-                              />
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    ),
-                  )}
-                  {phase === "thinking" && (
-                    <div
-                      className="flex w-fit items-center gap-1 rounded-2xl rounded-tl-sm border border-slate-100 bg-white px-5 py-4"
-                      role="status"
-                      aria-label="এজেন্ট উত্তর প্রস্তুত করছে"
-                    >
-                      {[0, 1, 2].map((dot) => (
-                        <span
-                          key={dot}
-                          style={{ animationDelay: `${dot * 130}ms` }}
-                          className="h-1.5 w-1.5 animate-bounce rounded-full bg-emerald-500 motion-reduce:animate-none"
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
-                {showLatest && (
                   <button
                     type="button"
-                    onClick={() => {
-                      followBottom.current = true;
-                      scrollBottom();
-                      setShowLatest(false);
-                    }}
-                    className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full border border-emerald-200 bg-white px-3 py-2 text-xs text-emerald-900 shadow-md"
+                    onClick={toggleSound}
+                    disabled={!speechSupported}
+                    aria-label={
+                      soundOn
+                        ? "এজেন্টের শব্দ বন্ধ করুন"
+                        : "এজেন্টের শব্দ চালু করুন"
+                    }
+                    aria-pressed={soundOn}
+                    className="rounded-full p-2 hover:bg-white/15 disabled:opacity-30"
                   >
-                    <FiArrowDown aria-hidden="true" /> সর্বশেষ
+                    {soundOn ? (
+                      <FiVolume2 aria-hidden="true" />
+                    ) : (
+                      <FiVolumeX aria-hidden="true" />
+                    )}
                   </button>
-                )}
-              </div>
-              <p className="sr-only" role="status" aria-live="polite">
-                {phase === "ready"
-                  ? `${current.body} ${(current.options || []).map(([key, label]) => `${bnDigit(key)}: ${label}`).join("। ")}`
-                  : "উত্তর তৈরি হচ্ছে"}
-              </p>
-              <div className="border-t border-slate-200 bg-white px-4 py-3">
-                {ended ? (
                   <button
                     type="button"
                     onClick={reset}
-                    className="w-full rounded-xl bg-emerald-800 px-4 py-3 text-sm font-semibold text-white"
-                  >
-                    নতুন কল শুরু করুন
-                  </button>
-                ) : (
-                  <>
-                    {reply && !isPin && step !== "idle" && (
-                      <div className="mb-3">
-                        <button
-                          type="button"
-                          disabled={busy}
-                          onClick={() =>
-                            submit(reply.value, "voice", reply.text)
-                          }
-                          className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-900 transition hover:bg-emerald-100 disabled:opacity-40"
-                        >
-                          <FiMic aria-hidden="true" /> উত্তর বলুন
-                        </button>
-                        <p
-                          className="mt-1.5 truncate text-center text-[10px] text-slate-400"
-                          title={reply.text}
-                        >
-                          নমুনা: “{reply.text}”
-                        </p>
-                      </div>
-                    )}
-                    {!voiceOnly && (
-                      <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-1">
-                        <output
-                          aria-label={isPin ? "গোপন PIN" : "কিপ্যাডের নম্বর"}
-                          className="min-w-0 flex-1 truncate text-center font-mono text-lg tracking-[0.16em] text-emerald-950"
-                        >
-                          {entry ? (
-                            isPin ? (
-                              "•".repeat(entry.length)
-                            ) : (
-                              entry
-                            )
-                          ) : (
-                            <span className="font-sans text-xs tracking-normal text-slate-400">
-                              {current.options
-                                ? "কিপ্যাডে একটি বিকল্প চাপুন"
-                                : isPin
-                                  ? "৪ সংখ্যার PIN"
-                                  : "কিপ্যাডে নম্বর দিন"}
-                            </span>
-                          )}
-                        </output>
-                        <button
-                          type="button"
-                          disabled={busy || !entry}
-                          onClick={() => keyPress("*")}
-                          aria-label="শেষ সংখ্যা মুছুন"
-                          className="rounded-lg p-2 text-slate-500 disabled:opacity-30"
-                        >
-                          <FiDelete aria-hidden="true" />
-                        </button>
-                      </div>
-                    )}
-                    {voiceOnly && (
-                      <p className="text-center text-[10px] text-slate-400">
-                        এই ধাপে নাম বা বিবরণ স্ক্রিপ্ট থেকে যোগ হবে।
-                      </p>
-                    )}
-                    {hints[step] && !entry && (
-                      <p className="mt-1.5 text-center text-[10px] text-slate-400">
-                        ডেমোর জন্য: {hints[step]}
-                      </p>
-                    )}
-                  </>
-                )}
-                {error && (
-                  <p
-                    role="alert"
-                    className="mt-2 rounded-lg bg-red-50 p-2 text-xs text-red-700"
-                  >
-                    {error}
-                  </p>
-                )}
-              </div>
-              <div className="border-t border-slate-100 bg-[#f9faf9] px-6 pb-4 pt-3">
-                <div className="grid grid-cols-3 gap-2">
-                  {KEYS.map((key) => (
-                    <button
-                      type="button"
-                      key={key}
-                      disabled={busy || ended || voiceOnly}
-                      onClick={() => keyPress(key)}
-                      aria-label={
-                        key === "*"
-                          ? "শেষ সংখ্যা মুছুন"
-                          : key === "#"
-                            ? "নম্বর পাঠান"
-                            : key
-                      }
-                      className="h-10 rounded-xl border border-slate-100 bg-white font-mono text-xl font-medium text-slate-700 shadow-sm transition hover:bg-emerald-50 active:scale-95 disabled:opacity-25 sm:h-11"
-                    >
-                      {key}
-                    </button>
-                  ))}
-                </div>
-                <div className="mt-3 flex items-center justify-center gap-5">
-                  <button
-                    type="button"
-                    disabled={busy || ended || step === "idle"}
-                    onClick={() =>
-                      enqueueAgent("menu", data, "মূল মেনুতে ফিরুন", "keypad")
-                    }
-                    aria-label="মূল মেনু"
-                    className="rounded-full bg-slate-200 p-3 text-slate-600 disabled:opacity-30"
+                    aria-label="নতুন করে শুরু করুন"
+                    className="rounded-full p-2 hover:bg-white/15"
                   >
                     <FiRefreshCw aria-hidden="true" />
                   </button>
-                  <button
-                    type="button"
-                    disabled={busy || ended || voiceOnly || !entry}
-                    onClick={() => submit()}
-                    aria-label={step === "idle" ? "কল করুন" : "নম্বর পাঠান"}
-                    className="rounded-full bg-emerald-700 p-4 text-xl text-white shadow-lg shadow-emerald-900/20 transition hover:bg-emerald-600 disabled:opacity-30"
+                </header>
+                <div className="border-b border-emerald-100 bg-emerald-50 px-4 py-1 text-center text-[10px] font-medium text-emerald-800">
+                  স্ক্রিপ্টের কথোপকথন · মাইক্রোফোন বন্ধ
+                </div>
+                <div className="relative">
+                  <div
+                    ref={screenRef}
+                    role="log"
+                    aria-label="কথোপকথন"
+                    aria-live="off"
+                    onScroll={(event) => {
+                      const el = event.currentTarget;
+                      const near =
+                        el.scrollHeight - el.scrollTop - el.clientHeight < 70;
+                      followBottom.current = near;
+                      setShowLatest(!near);
+                    }}
+                    className="h-75 space-y-5 overflow-y-auto overscroll-contain bg-[#f6f8f6] px-3 py-5 sm:h-75"
                   >
-                    {step === "idle" ? (
-                      <FiPhone aria-hidden="true" />
-                    ) : (
-                      <FiSend aria-hidden="true" />
+                    <div className="text-center text-[10px] font-medium text-slate-400">
+                      আজ · ১৬৬৯৯ ডেমো
+                    </div>
+                    {messages.map((message) =>
+                      message.role === "system" ? (
+                        <p
+                          key={message.id}
+                          className="rounded-xl bg-slate-200/60 px-4 py-3 text-center text-xs text-slate-600"
+                        >
+                          {message.text}
+                        </p>
+                      ) : (
+                        <div
+                          key={message.id}
+                          className={`flex animate-[chatIn_180ms_ease-out] motion-reduce:animate-none ${message.role === "caller" ? "justify-end" : "justify-start"}`}
+                        >
+                          <div
+                            className={`max-w-[92%] rounded-2xl px-4 py-3 shadow-sm ${message.role === "caller" ? "rounded-tr-sm bg-emerald-800 text-white" : "rounded-tl-sm border border-slate-100 bg-white text-slate-700"}`}
+                          >
+                            <div
+                              className={`mb-2 flex items-center gap-1.5 text-[10px] font-semibold ${message.role === "caller" ? "text-emerald-200" : "text-emerald-700"}`}
+                            >
+                              {message.role === "agent" ? (
+                                <>
+                                  <FiShield aria-hidden="true" />{" "}
+                                  {message.title === "মানব কর্মকর্তা · ডেমো"
+                                    ? "মানব কর্মকর্তা · ডেমো"
+                                    : "লিগ্যাল এইড এজেন্ট"}
+                                </>
+                              ) : (
+                                <>
+                                  {message.source === "voice" && (
+                                    <FiMic aria-hidden="true" />
+                                  )}{" "}
+                                  {message.title} ·{" "}
+                                  {message.source === "voice"
+                                    ? "স্ক্রিপ্টের উত্তর"
+                                    : "কিপ্যাড"}
+                                </>
+                              )}
+                            </div>
+                            <AnimatedMessage
+                              message={message}
+                              animate={message.id === animatedId}
+                              onComplete={finishAnimation}
+                              onProgress={scrollBottom}
+                            />
+                            {message.options && message.id !== animatedId && (
+                              <ul className="mt-3 space-y-2 border-t border-slate-100 pt-3">
+                                {message.options.map(([key, label]) => (
+                                  <li
+                                    key={key}
+                                    className="flex items-start gap-2 text-xs leading-5"
+                                  >
+                                    <span className="grid h-5 w-5 shrink-0 place-items-center rounded bg-emerald-50 font-bold text-emerald-800">
+                                      {bnDigit(key)}
+                                    </span>
+                                    <span>
+                                      {label}
+                                      <span className="block text-[10px] text-slate-400">
+                                        {bnDigit(key)} চাপুন অথবা বলুন
+                                      </span>
+                                    </span>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                            {message.role === "caller" && (
+                              <span className="mt-1 flex justify-end text-emerald-200">
+                                <FiCheck
+                                  size={12}
+                                  aria-label="ডেমো উত্তর দেওয়া হয়েছে"
+                                />
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      ),
                     )}
-                  </button>
-                  <button
-                    type="button"
-                    disabled={step === "idle" || ended}
-                    onClick={hangUp}
-                    aria-label="কল শেষ করুন"
-                    className="rounded-full bg-red-100 p-3 text-red-600 disabled:opacity-30"
-                  >
-                    <FiPhoneOff aria-hidden="true" />
-                  </button>
+                    {phase === "thinking" && (
+                      <div
+                        className="flex w-fit items-center gap-1 rounded-2xl rounded-tl-sm border border-slate-100 bg-white px-5 py-4"
+                        role="status"
+                        aria-label="এজেন্ট উত্তর প্রস্তুত করছে"
+                      >
+                        {[0, 1, 2].map((dot) => (
+                          <span
+                            key={dot}
+                            style={{ animationDelay: `${dot * 130}ms` }}
+                            className="h-1.5 w-1.5 animate-bounce rounded-full bg-emerald-500 motion-reduce:animate-none"
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  {showLatest && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        followBottom.current = true;
+                        scrollBottom();
+                        setShowLatest(false);
+                      }}
+                      className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full border border-emerald-200 bg-white px-3 py-2 text-xs text-emerald-900 shadow-md"
+                    >
+                      <FiArrowDown aria-hidden="true" /> সর্বশেষ
+                    </button>
+                  )}
+                </div>
+                <p className="sr-only" role="status" aria-live="polite">
+                  {phase === "ready"
+                    ? `${current.body} ${(current.options || []).map(([key, label]) => `${bnDigit(key)}: ${label}`).join("। ")}`
+                    : "উত্তর তৈরি হচ্ছে"}
+                </p>
+                <div className="border-t border-slate-200 bg-white px-4 py-3">
+                  {ended ? (
+                    <button
+                      type="button"
+                      onClick={reset}
+                      className="w-full rounded-xl bg-emerald-800 px-4 py-3 text-sm font-semibold text-white"
+                    >
+                      নতুন কল শুরু করুন
+                    </button>
+                  ) : (
+                    <>
+                      {reply && !isPin && step !== "idle" && (
+                        <div className="mb-3">
+                          <button
+                            type="button"
+                            disabled={busy}
+                            onClick={() =>
+                              submit(reply.value, "voice", reply.text)
+                            }
+                            className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-900 transition hover:bg-emerald-100 disabled:opacity-40"
+                          >
+                            <FiMic aria-hidden="true" /> উত্তর বলুন
+                          </button>
+                          <p
+                            className="mt-1.5 truncate text-center text-[10px] text-slate-400"
+                            title={reply.text}
+                          >
+                            নমুনা: “{reply.text}”
+                          </p>
+                        </div>
+                      )}
+                      {!voiceOnly && (
+                        <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-1">
+                          <output
+                            aria-label={isPin ? "গোপন PIN" : "কিপ্যাডের নম্বর"}
+                            className="min-w-0 flex-1 truncate text-center font-mono text-lg tracking-[0.16em] text-emerald-950"
+                          >
+                            {entry ? (
+                              isPin ? (
+                                "•".repeat(entry.length)
+                              ) : (
+                                entry
+                              )
+                            ) : (
+                              <span className="font-sans text-xs tracking-normal text-slate-400">
+                                {current.options
+                                  ? "কিপ্যাডে একটি বিকল্প চাপুন"
+                                  : isPin
+                                    ? "৪ সংখ্যার PIN"
+                                    : "কিপ্যাডে নম্বর দিন"}
+                              </span>
+                            )}
+                          </output>
+                          <button
+                            type="button"
+                            disabled={busy || !entry}
+                            onClick={() => keyPress("*")}
+                            aria-label="শেষ সংখ্যা মুছুন"
+                            className="rounded-lg p-2 text-slate-500 disabled:opacity-30"
+                          >
+                            <FiDelete aria-hidden="true" />
+                          </button>
+                        </div>
+                      )}
+                      {voiceOnly && (
+                        <p className="text-center text-[10px] text-slate-400">
+                          এই ধাপে নাম বা বিবরণ স্ক্রিপ্ট থেকে যোগ হবে।
+                        </p>
+                      )}
+                      {hints[step] && !entry && (
+                        <p className="mt-1.5 text-center text-[10px] text-slate-400">
+                          ডেমোর জন্য: {hints[step]}
+                        </p>
+                      )}
+                    </>
+                  )}
+                  {error && (
+                    <p
+                      role="alert"
+                      className="mt-2 rounded-lg bg-red-50 p-2 text-xs text-red-700"
+                    >
+                      {error}
+                    </p>
+                  )}
+                </div>
+                <div className="border-t border-slate-100 bg-[#f9faf9] px-6 pb-4 pt-3">
+                  <div className="grid grid-cols-3 gap-2">
+                    {KEYS.map((key) => (
+                      <button
+                        type="button"
+                        key={key}
+                        disabled={busy || ended || voiceOnly}
+                        onClick={() => keyPress(key)}
+                        aria-label={
+                          key === "*"
+                            ? "শেষ সংখ্যা মুছুন"
+                            : key === "#"
+                              ? "নম্বর পাঠান"
+                              : key
+                        }
+                        className="h-10 rounded-xl border border-slate-100 bg-white font-mono text-xl font-medium text-slate-700 shadow-sm transition hover:bg-emerald-50 active:scale-95 disabled:opacity-25 sm:h-11"
+                      >
+                        {key}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="mt-3 flex items-center justify-center gap-5">
+                    <button
+                      type="button"
+                      disabled={busy || ended || step === "idle"}
+                      onClick={() =>
+                        enqueueAgent("menu", data, "মূল মেনুতে ফিরুন", "keypad")
+                      }
+                      aria-label="মূল মেনু"
+                      className="rounded-full bg-slate-200 p-3 text-slate-600 disabled:opacity-30"
+                    >
+                      <FiRefreshCw aria-hidden="true" />
+                    </button>
+                    <button
+                      type="button"
+                      disabled={busy || ended || voiceOnly || !entry}
+                      onClick={() => submit()}
+                      aria-label={step === "idle" ? "কল করুন" : "নম্বর পাঠান"}
+                      className="rounded-full bg-emerald-700 p-4 text-xl text-white shadow-lg shadow-emerald-900/20 transition hover:bg-emerald-600 disabled:opacity-30"
+                    >
+                      {step === "idle" ? (
+                        <FiPhone aria-hidden="true" />
+                      ) : (
+                        <FiSend aria-hidden="true" />
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      disabled={step === "idle" || ended}
+                      onClick={hangUp}
+                      aria-label="কল শেষ করুন"
+                      className="rounded-full bg-red-100 p-3 text-red-600 disabled:opacity-30"
+                    >
+                      <FiPhoneOff aria-hidden="true" />
+                    </button>
+                  </div>
                 </div>
               </div>
+              <div className="mx-auto mt-3 h-1 w-24 rounded-full bg-slate-600" />
             </div>
-            <div className="mx-auto mt-3 h-1 w-24 rounded-full bg-slate-600" />
           </div>
         </div>
-      </div>
-      <style>{`@keyframes chatIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }`}</style>
-    </section>
+        <style>{`@keyframes chatIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }`}</style>
+      </section>
+      <Footer />
+    </>
   );
 }

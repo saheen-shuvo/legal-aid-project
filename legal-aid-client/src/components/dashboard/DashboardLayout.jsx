@@ -36,6 +36,7 @@ const dlaoItems = [
   { label: "প্যানেল আইনজীবী", icon: FiUsers, href: "#panel-lawyers" },
   { label: "রেফারেল গ্রহণকারী DLAO", icon: FiRepeat, href: "#referrals" },
   { label: "সালিশি ও মধ্যস্থতা", icon: FiLayers, href: "#mediation" },
+  { label: "ডুপ্লিকেট রিভিউ", icon: FiLayers, href: "#duplicate" },
   { label: "অফলাইন ও সিঙ্ক", icon: FiRepeat, href: "#offline-sync" },
   { label: "নিরাপত্তা ও গোপনীয়তা", icon: FiShield, href: "#safety-privacy" },
   { label: "অডিট ট্রেইল", icon: FiActivity, href: "#audit-trail" },
@@ -187,18 +188,14 @@ export default function DashboardLayout({ role, roleConfig, children }) {
               ডেটা নীতি
             </button>
 
-            {isDlao && (
+            <Link href="/login">
               <button
                 type="button"
-                onClick={() => {
-                  setTaskCreated(false);
-                  setDialog("task");
-                }}
                 className="rounded-xl bg-[#0d392e] px-3 py-2.5 text-xs font-bold text-white hover:bg-[#175341] sm:px-5 sm:text-sm"
               >
-                + নতুন কাজ
+                লগ আউট
               </button>
-            )}
+            </Link>
           </div>
         </header>
 
