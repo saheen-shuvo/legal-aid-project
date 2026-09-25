@@ -1,0 +1,3191 @@
+<!doctype html>
+<html lang="bn" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NyaySetu DLAS — নাগরিক সেবা পোর্টাল | Citizen Web Portal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts: Hind Siliguri for Bangla & Inter for English -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              bangla: ['"Hind Siliguri"', "sans-serif"],
+              sans: ['"Hind Siliguri"', '"Inter"', "sans-serif"],
+            },
+            colors: {
+              udcgreen: {
+                50: "#f0fdf4",
+                100: "#dcfce7",
+                700: "#15803d",
+                800: "#166534",
+                900: "#0f3322" /* Matching the deep forest green in user image */,
+                950: "#0a2418",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Noto Sans Bengali", sans-serif;
+      }
+      .high-contrast {
+        background-color: #000 !important;
+        color: #ff0 !important;
+      }
+      .high-contrast * {
+        background-color: #000 !important;
+        color: #ff0 !important;
+        border-color: #ff0 !important;
+      }
+      .high-contrast button,
+      .high-contrast a {
+        color: #0ff !important;
+        text-decoration: underline !important;
+      }
+      /* Main site theme: dark green sidebar, pale canvas, crisp white panels. */
+      :root {
+        --legal-green: #0d392e;
+        --legal-border: #d6e0f2;
+      }
+      body:not(.high-contrast) .sidebar-active {
+        background: #29574a !important;
+        box-shadow: inset 3px 0 0 #f97316;
+      }
+      body:not(.high-contrast) main .bg-white.rounded-2xl {
+        box-shadow: 0 8px 30px rgba(19, 48, 92, 0.055);
+      }
+      body:not(.high-contrast)
+        main
+        input:not([type="radio"]):not([type="checkbox"]):not([type="file"]),
+      body:not(.high-contrast) main select,
+      body:not(.high-contrast) main textarea {
+        accent-color: var(--legal-green);
+      }
+      body:not(.high-contrast)
+        :is(button, a, input, select, textarea):focus-visible {
+        outline: 2px solid #f97316;
+        outline-offset: 2px;
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+      .sidebar-active {
+        background-color: #29574a !important;
+        color: #ffffff !important;
+        font-weight: 600;
+      }
+      .card-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px -5px rgba(13, 57, 46, 0.1);
+        transition: all 0.2s ease-in-out;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-[#f6f9ff] text-slate-800 antialiased min-h-screen flex flex-col"
+    id="portalBody"
+  >
+    <!-- APP WRAPPER: SIDEBAR + MAIN AREA -->
+    <div class="flex-1 flex min-h-screen overflow-x-hidden">
+      <!-- DESKTOP & MOBILE SIDEBAR (MATCHING USER SCREENSHOT) -->
+      <aside
+        id="sidebarDrawer"
+        class="w-72 bg-[#0d392e] text-[#d1e7dd] flex flex-col justify-between shrink-0 fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 md:static transition-transform duration-200 ease-in-out shadow-xl md:shadow-none border-r border-[#275b4d]"
+      >
+        <!-- Top Sidebar Brand / Header -->
+        <div>
+          <div
+            class="min-h-[76px] flex items-center px-5 border-b border-[#275b4d] space-x-3"
+          >
+            <div
+              class="w-9 h-9 rounded-lg bg-orange-500 text-white flex items-center justify-center font-bold text-base shadow-sm"
+            >
+              <i class="fa-solid fa-landmark"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h1 class="text-sm font-bold text-white tracking-tight truncate">
+                নাগরিক সেবা পোর্টাল
+              </h1>
+              <p class="text-[10px] text-emerald-200/90 truncate">
+                বাংলাদেশ আইনগত সহায়তা অধিদপ্তর
+              </p>
+            </div>
+            <!-- Close button on mobile -->
+            <button
+              onclick="toggleSidebar(false)"
+              class="md:hidden text-emerald-200 hover:text-white p-1"
+            >
+              <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+          </div>
+
+          <!-- Sidebar Navigation List -->
+          <nav
+            class="p-4 space-y-1 text-sm font-medium overflow-y-auto max-h-[calc(100vh-210px)]"
+          >
+            <button
+              onclick="switchTab('dashboard')"
+              id="nav-dashboard"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-white sidebar-active transition"
+            >
+              <i
+                class="fa-solid fa-table-cells-large w-4 text-center text-sm"
+              ></i>
+              <span>ড্যাশবোর্ড</span>
+            </button>
+
+            <button
+              onclick="switchTab('apply-wizard')"
+              id="nav-apply-wizard"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i
+                class="fa-solid fa-file-circle-plus w-4 text-center text-sm"
+              ></i>
+              <span>নতুন আবেদন</span>
+            </button>
+
+            <button
+              onclick="switchTab('saved-applications')"
+              id="nav-saved-applications"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i class="fa-solid fa-folder-open w-4 text-center text-sm"></i>
+              <span>আমার আবেদনসমূহ</span>
+            </button>
+
+            <button
+              onclick="switchTab('status-tracking')"
+              id="nav-status-tracking"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i
+                class="fa-solid fa-magnifying-glass w-4 text-center text-sm"
+              ></i>
+              <span>আবেদনের অবস্থা</span>
+            </button>
+
+            <button
+              onclick="switchTab('case-dashboard')"
+              id="nav-case-dashboard"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i class="fa-solid fa-gavel w-4 text-center text-sm"></i>
+              <span>চলতি মামলা (CASE-0142)</span>
+            </button>
+
+            <button
+              onclick="switchTab('documents')"
+              id="nav-documents"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i class="fa-solid fa-paperclip w-4 text-center text-sm"></i>
+              <span>তথ্য ও দলিলপত্র</span>
+            </button>
+
+            <button
+              onclick="switchTab('hearings')"
+              id="nav-hearings"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i
+                class="fa-regular fa-calendar-check w-4 text-center text-sm"
+              ></i>
+              <span>শুনানি ও পদক্ষেপ</span>
+            </button>
+
+            <button
+              onclick="switchTab('mediation')"
+              id="nav-mediation"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i class="fa-solid fa-handshake w-4 text-center text-sm"></i>
+              <span>মধ্যস্থতা (Mediation)</span>
+            </button>
+
+            <button
+              onclick="switchTab('lawyer')"
+              id="nav-lawyer"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i class="fa-solid fa-user-tie w-4 text-center text-sm"></i>
+              <span>প্যানেল আইনজীবী</span>
+            </button>
+
+            <button
+              onclick="switchTab('referral')"
+              id="nav-referral"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i
+                class="fa-solid fa-arrows-split-up-and-left w-4 text-center text-sm"
+              ></i>
+              <span>রেফারেল ও সমন্বয়</span>
+            </button>
+
+            <button
+              onclick="switchTab('legal-advice')"
+              id="nav-legal-advice"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i class="fa-solid fa-comments w-4 text-center text-sm"></i>
+              <span>আইনি পরামর্শ ও তথ্য</span>
+            </button>
+
+            <button
+              onclick="switchTab('notifications')"
+              id="nav-notifications"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i class="fa-solid fa-bell w-4 text-center text-sm"></i>
+              <span>কাজ ও সতর্কতা</span>
+            </button>
+
+            <button
+              onclick="switchTab('safe-contact')"
+              id="nav-safe-contact"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i class="fa-solid fa-user-shield w-4 text-center text-sm"></i>
+              <span>প্রবেশাধিকার ও গোপনীয়তা</span>
+            </button>
+
+            <button
+              onclick="switchTab('activity')"
+              id="nav-activity"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i
+                class="fa-solid fa-clock-rotate-left w-4 text-center text-sm"
+              ></i>
+              <span>নিরীক্ষা ইতিহাস</span>
+            </button>
+
+            <button
+              onclick="switchTab('emergency')"
+              id="nav-emergency"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i
+                class="fa-solid fa-circle-question w-4 text-center text-sm"
+              ></i>
+              <span>সহায়তা ও যোগাযোগ</span>
+            </button>
+          </nav>
+        </div>
+
+        <!-- Bottom Principle Card (Matching Screenshot "ইউডিসির মূলনীতি" box) -->
+        <div class="p-3">
+          <div
+            class="bg-[#082c25] rounded-xl p-3 border border-[#275b4d] text-[11px] text-[#9fc7b1] space-y-1"
+          >
+            <span class="font-bold text-white text-xs block"
+              >নাগরিকের মূলনীতি</span
+            >
+            <p class="leading-snug text-[10px]">
+              সহায়তা নিন, তথ্য দিন, সম্মতি দিন। আপনার তথ্য ও কেসের একটিই
+              নির্ভরযোগ্য রেকর্ড।
+            </p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- BACKDROP FOR MOBILE SIDEBAR -->
+      <div
+        id="sidebarBackdrop"
+        onclick="toggleSidebar(false)"
+        class="fixed inset-0 bg-black/50 z-40 hidden md:hidden"
+      ></div>
+
+      <!-- MAIN RIGHT CONTENT COLUMN -->
+      <div class="flex-1 flex flex-col min-w-0">
+        <!-- TOP WHITE HEADER BAR (MATCHING SCREENSHOT) -->
+        <header
+          class="min-h-[76px] bg-white border-b border-[#d6e0f2] px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30"
+        >
+          <div class="flex items-center space-x-3">
+            <!-- Mobile Sidebar Toggle -->
+            <button
+              onclick="toggleSidebar(true)"
+              class="md:hidden text-slate-700 hover:text-slate-900 p-1.5 rounded-lg border border-[#d6e0f2]"
+            >
+              <i class="fa-solid fa-bars text-base"></i>
+            </button>
+            <h2
+              id="topBarTitle"
+              class="text-xl sm:text-2xl font-bold text-slate-900"
+            >
+              ড্যাশবোর্ড
+            </h2>
+          </div>
+
+          <!-- Right Utilities: Refresh, Language, Safe Contact, Logout & User Avatar -->
+          <div class="flex items-center space-x-2 sm:space-x-3">
+            <!-- Accessibility Toolbar -->
+            <!-- <div
+              class="hidden lg:flex items-center space-x-1 bg-slate-100 p-1 rounded-lg text-xs font-semibold text-slate-700"
+            >
+              <button
+                onclick="changeFontSize(-1)"
+                class="px-1.5 py-0.5 hover:bg-white rounded"
+              >
+                A-
+              </button>
+              <button
+                onclick="resetFontSize()"
+                class="px-1.5 py-0.5 hover:bg-white rounded"
+              >
+                A
+              </button>
+              <button
+                onclick="changeFontSize(1)"
+                class="px-1.5 py-0.5 hover:bg-white rounded"
+              >
+                A+
+              </button>
+              <button
+                onclick="toggleHighContrast()"
+                class="px-1.5 py-0.5 hover:bg-white rounded text-slate-600"
+                title="High Contrast"
+              >
+                <i class="fa-solid fa-circle-half-stroke"></i>
+              </button>
+              <button
+                onclick="readAloudPage()"
+                id="readAloudBtn"
+                class="px-1.5 py-0.5 hover:bg-white rounded text-emerald-700"
+                title="Read Aloud"
+              >
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
+            </div> -->
+
+            <!-- Safe Contact Quick Status Indicator -->
+            <div
+              onclick="switchTab('safe-contact')"
+              class="hidden sm:flex items-center space-x-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-lg text-xs font-medium cursor-pointer hover:bg-emerald-100"
+            >
+              <i class="fa-solid fa-shield-halved text-emerald-600"></i>
+              <span class="text-[11px] font-bold">নিরাপদ যোগাযোগ</span>
+            </div>
+
+            <!-- Refresh Button -->
+            <button
+              onclick="location.reload()"
+              class="w-9 h-9 rounded-xl border border-[#d6e0f2] flex items-center justify-center text-slate-600 hover:bg-slate-50 transition"
+              title="Refresh Page"
+            >
+              <i class="fa-solid fa-rotate-right text-xs"></i>
+            </button>
+
+            <!-- Logout Button (Styled exactly like image) -->
+            <button
+              onclick="window.location.href = '/login'"
+              class="px-3 py-1.5 rounded-lg bg-[#0d392e] hover:bg-[#145542] text-white text-xs font-semibold flex items-center space-x-1.5 shadow-sm"
+            >
+              <span>লগ আউট</span>
+            </button>
+
+            <!-- User Avatar (Dark green circle with OP/RH matching image) -->
+            <div
+              onclick="switchTab('profile')"
+              class="w-9 h-9 rounded-xl bg-[#0d392e] text-white flex items-center justify-center text-xs font-bold shadow-sm cursor-pointer border border-[#275b4d]"
+              title="নাগরিক প্রোফাইল"
+            >
+              RH
+            </div>
+          </div>
+        </header>
+
+        <!-- MAIN SCROLLABLE BODY -->
+        <main
+          class="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1480px] w-full mx-auto space-y-6"
+        >
+          <!-- ========================================== -->
+          <div id="tab-dashboard" class="tab-content block space-y-6">
+            <!-- 1. TOP DARK GREEN HERO BANNER (EXACTLY MATCHING SCREENSHOT) -->
+            <div
+              class="bg-[#0d392e] rounded-2xl p-6 text-white shadow-sm border border-[#275b4d] relative overflow-hidden"
+            >
+              <div class="space-y-1.5 max-w-3xl">
+                <span class="text-xs text-[#9fc7b1] font-semibold block"
+                  >আজ নাগরিক পোর্টাল — পাঁচ দরজা, এক রেকর্ড</span
+                >
+                <h2
+                  class="text-xl sm:text-2xl font-bold tracking-tight text-white"
+                >
+                  আবেদনকারীর নিয়ন্ত্রণে সহায়তাপ্রাপ্ত সেবা ।
+                </h2>
+                <p class="text-xs text-[#d1e7dd] leading-relaxed pt-1">
+                  NyaySetu DLAS নাগরিকের বক্তব্য লিপিবদ্ধ, অনুবাদ ও টাইপ করে;
+                  নাগরিকের সম্মতি বা আইনগত সিদ্ধান্তের বিকল্প নয়। Legal Aid
+                  Services Act, 2000 (২০২৬ সংশোধিত কাঠামো) অনুযায়ী পরিচালিত।
+                </p>
+              </div>
+            </div>
+
+            <!-- 2. FOUR KPI METRIC CARDS (EXACTLY MATCHING SCREENSHOT) -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <!-- Card 1: আজকের আবেদন -->
+              <div
+                class="bg-white p-4 rounded-2xl border border-[#d6e0f2] shadow-sm flex items-center justify-between card-hover cursor-pointer"
+                onclick="switchTab('saved-applications')"
+              >
+                <div>
+                  <span class="text-xs text-slate-500 font-medium block"
+                    >আজকের আবেদন</span
+                  >
+                  <h3 class="text-2xl font-bold text-slate-900 mt-1">১</h3>
+                </div>
+                <div
+                  class="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center text-base"
+                >
+                  <i class="fa-regular fa-file-lines"></i>
+                </div>
+              </div>
+
+              <!-- Card 2: অফলাইন সারি -->
+              <div
+                class="bg-white p-4 rounded-2xl border border-[#d6e0f2] shadow-sm flex items-center justify-between card-hover cursor-pointer"
+                onclick="switchTab('status-tracking')"
+              >
+                <div>
+                  <span class="text-xs text-slate-500 font-medium block"
+                    >অফলাইন সারি</span
+                  >
+                  <h3 class="text-2xl font-bold text-slate-900 mt-1">০</h3>
+                </div>
+                <div
+                  class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-base"
+                >
+                  <i class="fa-solid fa-arrows-rotate"></i>
+                </div>
+              </div>
+
+              <!-- Card 3: সম্মতির অপেক্ষায় -->
+              <div
+                class="bg-white p-4 rounded-2xl border border-[#d6e0f2] shadow-sm flex items-center justify-between card-hover cursor-pointer"
+                onclick="switchTab('hearings')"
+              >
+                <div>
+                  <span class="text-xs text-slate-500 font-medium block"
+                    >সম্মতির অপেক্ষায়</span
+                  >
+                  <h3 class="text-2xl font-bold text-slate-900 mt-1">১</h3>
+                </div>
+                <div
+                  class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-base"
+                >
+                  <i class="fa-regular fa-clock"></i>
+                </div>
+              </div>
+
+              <!-- Card 4: নথির সমস্যা -->
+              <div
+                class="bg-white p-4 rounded-2xl border border-[#d6e0f2] shadow-sm flex items-center justify-between card-hover cursor-pointer"
+                onclick="switchTab('documents')"
+              >
+                <div>
+                  <span class="text-xs text-slate-500 font-medium block"
+                    >নথির সমস্যা</span
+                  >
+                  <h3 class="text-2xl font-bold text-slate-900 mt-1">০</h3>
+                </div>
+                <div
+                  class="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-base"
+                >
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. TWO-COLUMN SPLIT SECTION (MATCHING USER SCREENSHOT) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              <!-- LEFT COLUMN (7 COLS): প্রধান কাজগুলো (PRIMARY ACTIONS 2x2 GRID) -->
+              <div class="lg:col-span-7 space-y-6">
+                <div
+                  class="bg-white rounded-2xl border border-[#d6e0f2] p-5 shadow-sm space-y-4"
+                >
+                  <h3 class="font-bold text-slate-900 text-sm">
+                    প্রধান কাজগুলো
+                  </h3>
+
+                  <!-- 2x2 Action Cards Grid (Exact design from screenshot) -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <!-- Action 1: নতুন সহায়তাপ্রাপ্ত আবেদন -->
+                    <div
+                      onclick="switchTab('apply-wizard')"
+                      class="p-4 rounded-xl border border-[#d6e0f2] hover:border-emerald-600 bg-white card-hover cursor-pointer flex flex-col justify-between space-y-3"
+                    >
+                      <span
+                        class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-800 flex items-center justify-center text-sm"
+                      >
+                        <i class="fa-solid fa-file-circle-plus"></i>
+                      </span>
+                      <div>
+                        <h4 class="font-bold text-slate-900 text-xs">
+                          নতুন সহায়তাপ্রাপ্ত আবেদন
+                        </h4>
+                        <p class="text-[11px] text-slate-500 mt-0.5">
+                          নতুন আইনি সহায়তার অনলাইন আবেদনপত্র শুরু করুন।
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- Action 2: আবেদনের অবস্থা -->
+                    <div
+                      onclick="switchTab('status-tracking')"
+                      class="p-4 rounded-xl border border-[#d6e0f2] hover:border-emerald-600 bg-white card-hover cursor-pointer flex flex-col justify-between space-y-3"
+                    >
+                      <span
+                        class="w-8 h-8 rounded-lg bg-sky-50 text-sky-800 flex items-center justify-center text-sm"
+                      >
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </span>
+                      <div>
+                        <h4 class="font-bold text-slate-900 text-xs">
+                          আবেদনের অবস্থা
+                        </h4>
+                        <p class="text-[11px] text-slate-500 mt-0.5">
+                          আবেদনের বর্তমান স্থিতি ও মানব ভেরিফিকেশন ট্র্যাক করুন।
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- Action 3: অফলাইন ও সমন্বয় / সংরক্ষিত ড্রাফট -->
+                    <div
+                      onclick="switchTab('saved-applications')"
+                      class="p-4 rounded-xl border border-[#d6e0f2] hover:border-emerald-600 bg-white card-hover cursor-pointer flex flex-col justify-between space-y-3"
+                    >
+                      <span
+                        class="w-8 h-8 rounded-lg bg-amber-50 text-amber-800 flex items-center justify-center text-sm"
+                      >
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                      </span>
+                      <div>
+                        <h4 class="font-bold text-slate-900 text-xs">
+                          অফলাইন ও সমন্বয়
+                        </h4>
+                        <p class="text-[11px] text-slate-500 mt-0.5">
+                          সংরক্ষিত খসড়া আবেদনসমূহ পুনরায় চালু করুন।
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- Action 4: আমার আবেদনসমূহ -->
+                    <div
+                      onclick="switchTab('documents')"
+                      class="p-4 rounded-xl border border-[#d6e0f2] hover:border-emerald-600 bg-white card-hover cursor-pointer flex flex-col justify-between space-y-3"
+                    >
+                      <span
+                        class="w-8 h-8 rounded-lg bg-purple-50 text-purple-800 flex items-center justify-center text-sm"
+                      >
+                        <i class="fa-solid fa-folder-open"></i>
+                      </span>
+                      <div>
+                        <h4 class="font-bold text-slate-900 text-xs">
+                          আমার আবেদনসমূহ
+                        </h4>
+                        <p class="text-[11px] text-slate-500 mt-0.5">
+                          সংরক্ষিত সকল নথি, সমন ও আদেশের তালিকা।
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ACTIVE CASE HIGHLIGHT (CASE-2026-0142) -->
+                <div
+                  class="bg-white rounded-2xl border-2 border-emerald-600/30 p-5 shadow-sm space-y-3"
+                >
+                  <div
+                    class="flex items-center justify-between border-b border-slate-100 pb-3"
+                  >
+                    <div class="flex items-center space-x-2">
+                      <span
+                        class="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-pulse"
+                      ></span>
+                      <span class="text-xs font-bold text-emerald-900 uppercase"
+                        >চলতি মামলা (Active Case)</span
+                      >
+                      <span class="font-mono font-bold text-slate-900 text-xs"
+                        >CASE-2026-0142</span
+                      >
+                    </div>
+                    <span
+                      class="text-[11px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded"
+                      >পারিবারিক ভরণপোষণ</span
+                    >
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                    <div class="bg-slate-50 p-2.5 rounded-xl border">
+                      <span class="text-slate-500 block text-[11px]"
+                        >পরবর্তী শুনানি:</span
+                      >
+                      <strong class="text-slate-800">২৯ সেপ্টেম্বর ২০২৬</strong>
+                    </div>
+                    <div class="bg-slate-50 p-2.5 rounded-xl border">
+                      <span class="text-slate-500 block text-[11px]"
+                        >প্যানেল আইনজীবী:</span
+                      >
+                      <strong class="text-slate-800">এডভোকেট এ. রহমান</strong>
+                    </div>
+                    <div class="bg-slate-50 p-2.5 rounded-xl border">
+                      <span class="text-slate-500 block text-[11px]"
+                        >মধ্যস্থতা (Mediation):</span
+                      >
+                      <strong class="text-emerald-700">০২ অক্টোবর ২০২৬</strong>
+                    </div>
+                  </div>
+
+                  <div class="pt-1 flex flex-wrap gap-2">
+                    <button
+                      onclick="switchTab('case-dashboard')"
+                      class="bg-[#0d392e] hover:bg-[#145542] text-white text-xs font-bold px-3 py-1.5 rounded-lg"
+                    >
+                      সম্পূর্ণ কেস ফাইল দেখুন
+                    </button>
+                    <button
+                      onclick="switchTab('hearings')"
+                      class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg"
+                    >
+                      শুনানি প্রস্তুতি
+                    </button>
+                    <button
+                      onclick="switchTab('documents')"
+                      class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-bold px-3 py-1.5 rounded-lg"
+                    >
+                      আয়ের সনদ জমা দিন
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- RIGHT COLUMN (5 COLS): কার্যক্রমের সূচক (ACTIVITY INDICATORS EXACT DESIGN) -->
+              <div class="lg:col-span-5 space-y-6">
+                <div
+                  class="bg-white rounded-2xl border border-[#d6e0f2] p-5 shadow-sm space-y-4"
+                >
+                  <h3 class="font-bold text-slate-900 text-sm">
+                    কার্যক্রমের সূচক
+                  </h3>
+
+                  <div class="space-y-3 text-xs">
+                    <div
+                      class="flex items-center justify-between py-2 border-b border-slate-100"
+                    >
+                      <span class="text-slate-700">অফলাইন নথি</span>
+                      <span class="font-bold text-slate-900 font-mono">০</span>
+                    </div>
+
+                    <div
+                      class="flex items-center justify-between py-2 border-b border-slate-100"
+                    >
+                      <span class="text-slate-700">সমন্বয়জনিত বিরোধ</span>
+                      <span class="font-bold text-slate-900 font-mono">০</span>
+                    </div>
+
+                    <div
+                      class="flex items-center justify-between py-2 border-b border-slate-100"
+                    >
+                      <span class="text-slate-700">ফেরত / সংশোধন প্রয়োজন</span>
+                      <span class="font-bold text-slate-900 font-mono">০</span>
+                    </div>
+
+                    <div
+                      class="flex items-center justify-between py-2 border-b border-slate-100"
+                    >
+                      <span class="text-slate-700">জমা দেওয়া আবেদন</span>
+                      <span
+                        class="font-bold text-emerald-700 font-mono font-bold"
+                        >০</span
+                      >
+                    </div>
+
+                    <div
+                      class="flex items-center justify-between py-2 border-b border-slate-100"
+                    >
+                      <span class="text-slate-700"
+                        >আবেদন যাচাইাধীন (Human Review)</span
+                      >
+                      <span class="font-bold text-blue-700 font-mono font-bold"
+                        >১</span
+                      >
+                    </div>
+
+                    <div
+                      class="flex items-center justify-between py-2 border-b border-slate-100"
+                    >
+                      <span class="text-slate-700">শুনানির দিন ধার্য</span>
+                      <span
+                        class="font-bold text-purple-700 font-mono font-bold"
+                        >১</span
+                      >
+                    </div>
+
+                    <div class="flex items-center justify-between py-2">
+                      <span class="text-slate-700"
+                        >আপোষ মধ্যস্থতা নির্ধারিত</span
+                      >
+                      <span
+                        class="font-bold text-emerald-700 font-mono font-bold"
+                        >১</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 16699 EMERGENCY DIRECT CARD -->
+                <div
+                  class="bg-gradient-to-br from-red-600 to-rose-700 text-white rounded-2xl p-5 shadow-sm space-y-3"
+                >
+                  <div class="flex items-center justify-between">
+                    <span
+                      class="text-[11px] font-bold uppercase tracking-wider bg-red-900/50 px-2.5 py-0.5 rounded-full border border-red-400/40"
+                      >টোল-ফ্রি জাতীয় হেল্পলাইন</span
+                    >
+                    <i class="fa-solid fa-phone-volume text-lg"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-2xl font-black">১৬৬৯৯</h4>
+                    <p class="text-xs text-red-100 mt-1 leading-relaxed">
+                      আইনগত সহায়তা, তাৎক্ষণিক পরামর্শ ও জীবনঝুঁকিতে বিনা খরচে
+                      সরাসরি লিগ্যাল এইড কর্মকর্তার সাথে কথা বলুন।
+                    </p>
+                  </div>
+                  <div class="pt-1 flex gap-2">
+                    <a
+                      href="tel:16699"
+                      class="w-full bg-white text-red-700 hover:bg-red-50 text-center font-bold py-2 rounded-xl text-xs shadow-sm flex items-center justify-center space-x-1.5"
+                    >
+                      <i class="fa-solid fa-phone"></i>
+                      <span>সরাসরি কল দিন</span>
+                    </a>
+                    <button
+                      onclick="switchTab('emergency')"
+                      class="bg-red-900/60 hover:bg-red-900 text-white font-semibold px-3 py-2 rounded-xl text-xs border border-red-400/40"
+                    >
+                      জরুরি সাহায্য
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- TAB 2: APPLY FOR LEGAL AID (7-STEP WIZARD) -->
+          <!-- ========================================== -->
+          <div id="tab-apply-wizard" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white rounded-2xl border border-[#d6e0f2] p-6 shadow-sm"
+            >
+              <div
+                class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-[#d6e0f2] gap-3"
+              >
+                <div>
+                  <div class="flex items-center space-x-2">
+                    <span
+                      class="bg-emerald-100 text-emerald-900 text-xs font-bold px-2.5 py-0.5 rounded"
+                      >ধারা ১৬ বিধান</span
+                    >
+                    <h2 class="text-xl font-bold text-slate-900">
+                      আইনগত সহায়তার অনলাইন আবেদনপত্র
+                    </h2>
+                  </div>
+                  <p class="text-xs text-slate-500 mt-1">
+                    Legal Aid Services Act, 2000 (২০২৬ সংশোধিত কাঠামো) অনুযায়ী
+                    সরকারি খরচে আইনজীবী ও আইনি সহায়তা প্রাপ্তির আবেদন।
+                  </p>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <button
+                    onclick="saveCurrentDraft()"
+                    class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3 py-1.5 rounded-lg flex items-center"
+                  >
+                    <i
+                      class="fa-regular fa-floppy-disk mr-1.5 text-amber-600"
+                    ></i>
+                    খসড়া সংরক্ষণ করুন (Save Draft)
+                  </button>
+                </div>
+              </div>
+
+              <!-- 6-STEP PROGRESS BAR -->
+              <div class="py-5 overflow-x-auto">
+                <div
+                  class="flex items-center justify-between min-w-[600px] text-xs"
+                >
+                  <div class="flex flex-col items-center">
+                    <div
+                      class="w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold bg-[#0d392e] text-white border-[#0f3322] mb-1"
+                      id="step-circle-1"
+                    >
+                      ১
+                    </div>
+                    <span class="font-medium text-slate-700">আবেদনকারী</span>
+                  </div>
+                  <div
+                    class="h-0.5 flex-1 bg-slate-200 mx-2"
+                    id="step-line-1"
+                  ></div>
+
+                  <div class="flex flex-col items-center">
+                    <div
+                      class="w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold bg-slate-100 text-slate-500 border-slate-300 mb-1"
+                      id="step-circle-2"
+                    >
+                      ২
+                    </div>
+                    <span class="font-medium text-slate-500">আইনগত সমস্যা</span>
+                  </div>
+                  <div
+                    class="h-0.5 flex-1 bg-slate-200 mx-2"
+                    id="step-line-2"
+                  ></div>
+
+                  <div class="flex flex-col items-center">
+                    <div
+                      class="w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold bg-slate-100 text-slate-500 border-slate-300 mb-1"
+                      id="step-circle-3"
+                    >
+                      ৩
+                    </div>
+                    <span class="font-medium text-slate-500"
+                      >নিরাপদ যোগাযোগ</span
+                    >
+                  </div>
+                  <div
+                    class="h-0.5 flex-1 bg-slate-200 mx-2"
+                    id="step-line-3"
+                  ></div>
+
+                  <div class="flex flex-col items-center">
+                    <div
+                      class="w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold bg-slate-100 text-slate-500 border-slate-300 mb-1"
+                      id="step-circle-4"
+                    >
+                      ৪
+                    </div>
+                    <span class="font-medium text-slate-500">দলিলপত্র</span>
+                  </div>
+                  <div
+                    class="h-0.5 flex-1 bg-slate-200 mx-2"
+                    id="step-line-4"
+                  ></div>
+
+                  <div class="flex flex-col items-center">
+                    <div
+                      class="w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold bg-slate-100 text-slate-500 border-slate-300 mb-1"
+                      id="step-circle-5"
+                    >
+                      ৫
+                    </div>
+                    <span class="font-medium text-slate-500"
+                      >রিভিউ ও ঘোষণা</span
+                    >
+                  </div>
+                  <div
+                    class="h-0.5 flex-1 bg-slate-200 mx-2"
+                    id="step-line-5"
+                  ></div>
+
+                  <div class="flex flex-col items-center">
+                    <div
+                      class="w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold bg-slate-100 text-slate-500 border-slate-300 mb-1"
+                      id="step-circle-6"
+                    >
+                      ৬
+                    </div>
+                    <span class="font-medium text-slate-500"
+                      >দাখিল ও নিশ্চিতকরণ</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- FORM STEPS -->
+              <form id="legalAidAppForm" onsubmit="handleFormSubmission(event)">
+                <!-- STEP 1: APPLICANT & REPRESENTATION -->
+                <div
+                  id="wizard-step-1"
+                  class="wizard-step block space-y-4 text-xs"
+                >
+                  <div
+                    class="bg-emerald-50/70 border border-emerald-200 p-4 rounded-xl text-xs text-emerald-950"
+                  >
+                    <p class="font-bold mb-1">
+                      <i
+                        class="fa-solid fa-circle-info mr-1.5 text-emerald-700"
+                      ></i>
+                      আবেদনকারীর পরিচিতি ও প্রতিনিধিত্ব (Representation):
+                    </p>
+                    <p>
+                      ধারা ১৬ অনুযায়ী বিচারপ্রার্থী নিজে অথবা তার পক্ষে কোনো
+                      অনুমোদিত প্রতিনিধি আবেদন করতে পারেন। প্রতিনিধি তথ্য প্রদান
+                      করলে তা পৃথকভাবে চিহ্নিত (Provenance Logged) থাকবে।
+                    </p>
+                  </div>
+
+                  <div class="space-y-2">
+                    <label class="block font-bold text-slate-700"
+                      >আবেদন কে দাখিল করছেন?
+                      <span class="text-red-500">*</span></label
+                    >
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <label
+                        class="flex items-center p-3 border rounded-xl cursor-pointer bg-emerald-50/40 border-emerald-600"
+                        id="label-self"
+                      >
+                        <input
+                          type="radio"
+                          name="applicant_type"
+                          value="self"
+                          checked
+                          class="text-emerald-700"
+                          onchange="toggleRepresentativeFields(false)"
+                        />
+                        <div class="ml-3">
+                          <span class="font-bold text-slate-900 block"
+                            >আমি নিজেই আবেদনকারী (Self)</span
+                          >
+                          <span class="text-slate-500"
+                            >আমার নিজের আইনি সমস্যার জন্য সরকারি সাহায্য
+                            চাই।</span
+                          >
+                        </div>
+                      </label>
+
+                      <label
+                        class="flex items-center p-3 border rounded-xl cursor-pointer hover:bg-slate-50 border-[#d6e0f2]"
+                        id="label-representative"
+                      >
+                        <input
+                          type="radio"
+                          name="applicant_type"
+                          value="representative"
+                          class="text-emerald-700"
+                          onchange="toggleRepresentativeFields(true)"
+                        />
+                        <div class="ml-3">
+                          <span class="font-bold text-slate-900 block"
+                            >অন্য কারো পক্ষে আবেদন (Representative)</span
+                          >
+                          <span class="text-slate-500"
+                            >অক্ষম, কারাবন্দি বা পরিবারের সদস্যের পক্ষে।</span
+                          >
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Representative Details (Hidden by default) -->
+                  <div
+                    id="representativeSection"
+                    class="hidden bg-slate-50 p-4 rounded-xl border space-y-3"
+                  >
+                    <h4 class="font-bold text-slate-800">
+                      <i
+                        class="fa-solid fa-user-group text-emerald-700 mr-1.5"
+                      ></i>
+                      প্রতিনিধির তথ্যাবলী (Representative Details)
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <div>
+                        <label class="block font-medium text-slate-600 mb-1"
+                          >প্রতিনিধির নাম</label
+                        >
+                        <input
+                          type="text"
+                          id="repName"
+                          placeholder="পূর্ণ নাম"
+                          class="w-full border rounded-lg p-2 text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label class="block font-medium text-slate-600 mb-1"
+                          >আবেদনকারীর সাথে সম্পর্ক</label
+                        >
+                        <select
+                          id="repRelation"
+                          class="w-full border rounded-lg p-2 text-xs"
+                        >
+                          <option value="parent">পিতা/মাতা</option>
+                          <option value="spouse">স্বামী/স্ত্রী</option>
+                          <option value="sibling">ভাই/বোন</option>
+                          <option value="child">সন্তান</option>
+                          <option value="legal_guardian">আইনগত অভিভাবক</option>
+                          <option value="authorized_agent">
+                            ক্ষমতাপ্রাপ্ত প্রতিনিধি
+                          </option>
+                        </select>
+                      </div>
+                      <div>
+                        <label class="block font-medium text-slate-600 mb-1"
+                          >প্রতিনিধির মোবাইল</label
+                        >
+                        <input
+                          type="tel"
+                          id="repPhone"
+                          placeholder="০১৭xxxxxxxx"
+                          class="w-full border rounded-lg p-2 text-xs"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Personal Info -->
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                      <label class="block font-bold text-slate-700 mb-1"
+                        >আবেদনকারীর পূর্ণ নাম
+                        <span class="text-red-500">*</span></label
+                      >
+                      <input
+                        type="text"
+                        id="applicantName"
+                        required
+                        value="মোছাঃ রহিমা খাতুন"
+                        class="w-full border rounded-lg p-2.5"
+                      />
+                    </div>
+                    <div>
+                      <label class="block font-bold text-slate-700 mb-1"
+                        >জাতীয় পরিচয়পত্র / জন্ম নিবন্ধন
+                        <span class="text-red-500">*</span></label
+                      >
+                      <input
+                        type="text"
+                        id="applicantNID"
+                        required
+                        value="19892691234568921"
+                        class="w-full border rounded-lg p-2.5"
+                      />
+                    </div>
+                    <div>
+                      <label class="block font-bold text-slate-700 mb-1"
+                        >জন্ম তারিখ ও বয়স</label
+                      >
+                      <input
+                        type="text"
+                        id="applicantDOB"
+                        value="15/04/1989 (বয়স ৩৭)"
+                        class="w-full border rounded-lg p-2.5"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block font-bold text-slate-700 mb-1"
+                        >বর্তমান ঠিকানা
+                        <span class="text-red-500">*</span></label
+                      >
+                      <textarea
+                        id="applicantAddress"
+                        rows="2"
+                        class="w-full border rounded-lg p-2.5"
+                      >
+গ্রাম: বাঘিয়া, ডাকঘর: মিরপুর, থানা: সাভার, জেলা: ঢাকা</textarea
+                      >
+                    </div>
+                    <div>
+                      <label class="block font-bold text-slate-700 mb-1"
+                        >বার্ষিক আয় ও আর্থিক অবস্থা</label
+                      >
+                      <select
+                        id="applicantIncome"
+                        class="w-full border rounded-lg p-2.5"
+                      >
+                        <option value="below_150k" selected>
+                          বার্ষিক আয় ১,৫০,০০০ টাকার নিচে (দরিদ্র/অস্বচ্ছল)
+                        </option>
+                        <option value="freedom_fighter">
+                          বীর মুক্তিযোদ্ধা বা তাদের সন্তান
+                        </option>
+                        <option value="disabled">প্রতিবন্ধী ব্যক্তি</option>
+                        <option value="victim_violence">
+                          নির্যাতিত নারী বা শিশু
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Opposing Party Details -->
+                  <div
+                    id="opposingPartySection"
+                    class="bg-slate-50 p-4 rounded-xl border space-y-3"
+                  >
+                    <h4 class="font-bold text-slate-800">
+                      <i
+                        class="fa-solid fa-user-group text-emerald-700 mr-1.5"
+                      ></i>
+                      বিপক্ষ দলের তথ্যাবলী (Opposing Party Details)
+                    </h4>
+
+                    <!-- Personal Info -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div>
+                        <label class="block font-bold text-slate-700 mb-1">
+                          বিপক্ষ দলের পূর্ণ নাম
+                          <span class="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="opposingPartyName"
+                          required
+                          placeholder="পূর্ণ নাম"
+                          class="w-full border rounded-lg p-2.5"
+                        />
+                      </div>
+
+                      <div>
+                        <label class="block font-bold text-slate-700 mb-1">
+                          জাতীয় পরিচয়পত্র / জন্ম নিবন্ধন
+                          <span class="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="opposingPartyNID"
+                          required
+                          placeholder="এনআইডি / জন্ম নিবন্ধন নম্বর"
+                          class="w-full border rounded-lg p-2.5"
+                        />
+                      </div>
+
+                      <div>
+                        <label class="block font-bold text-slate-700 mb-1">
+                          জন্ম তারিখ ও বয়স
+                        </label>
+                        <input
+                          type="text"
+                          id="opposingPartyDOB"
+                          placeholder="দিন/মাস/বছর (বয়স)"
+                          class="w-full border rounded-lg p-2.5"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- Address & Income -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label class="block font-bold text-slate-700 mb-1">
+                          বর্তমান ঠিকানা
+                          <span class="text-red-500">*</span>
+                        </label>
+                        <textarea
+                          id="opposingPartyAddress"
+                          rows="2"
+                          placeholder="গ্রাম, ডাকঘর, থানা, জেলা"
+                          class="w-full border rounded-lg p-2.5"
+                        ></textarea>
+                      </div>
+
+                      <div>
+                        <label class="block font-bold text-slate-700 mb-1">
+                          বার্ষিক আয় ও আর্থিক অবস্থা
+                        </label>
+                        <select
+                          id="opposingPartyIncome"
+                          class="w-full border rounded-lg p-2.5"
+                        >
+                          <option value="below_150k">
+                            বার্ষিক আয় ১,৫০,০০০ টাকার নিচে (দরিদ্র/অস্বচ্ছল)
+                          </option>
+                          <option value="freedom_fighter">
+                            বীর মুক্তিযোদ্ধা বা তাদের সন্তান
+                          </option>
+                          <option value="disabled">প্রতিবন্ধী ব্যক্তি</option>
+                          <option value="victim_violence">
+                            নির্যাতিত নারী বা শিশু
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex justify-end pt-4">
+                    <button
+                      type="button"
+                      onclick="goToStep(2)"
+                      class="bg-[#0d392e] hover:bg-[#145542] text-white font-bold px-6 py-2.5 rounded-xl flex items-center"
+                    >
+                      পরবর্তী ধাপ: আইনগত সমস্যা
+                      <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- STEP 2: LEGAL PROBLEM -->
+                <div
+                  id="wizard-step-2"
+                  class="wizard-step hidden space-y-4 text-xs"
+                >
+                  <div
+                    class="bg-blue-50/70 border border-blue-200 p-4 rounded-xl text-blue-950"
+                  >
+                    <p class="font-bold mb-1">
+                      <i
+                        class="fa-solid fa-scale-unbalanced-flip mr-1.5 text-blue-700"
+                      ></i>
+                      আপনার আইনি সমস্যা ও মামলার অবস্থা:
+                    </p>
+                    <p>
+                      আপনার সমস্যাটি কি এখনও আদালতে দায়ের হয়নি (নতুন বিরোধ /
+                      মধ্যস্থতা যোগ্য) নাকি ইতোমধ্যে আদালতে মামলা চলমান রয়েছে?
+                    </p>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block font-bold text-slate-700 mb-1"
+                        >সমস্যার বিষয়/ক্যাটাগরি
+                        <span class="text-red-500">*</span></label
+                      >
+                      <select
+                        id="legalCategory"
+                        class="w-full border rounded-lg p-2.5"
+                      >
+                        <option value="family_maintenance" selected>
+                          পারিবারিক — খোরপোশ ও দেনমোহর (Maintenance)
+                        </option>
+                        <option value="family_custody">
+                          পারিবারিক — সন্তানের অভিভাবকত্ব (Custody)
+                        </option>
+                        <option value="land_dispute">
+                          দেওয়ানি — জমিজমা ও স্বত্ব বিরোধ (Land Dispute)
+                        </option>
+                        <option value="labour_dispute">
+                          শ্রম আইন — বকেয়া বেতন ও চাকরিচ্যুতি (Labour)
+                        </option>
+                        <option value="domestic_violence">
+                          পারিবারিক সহিংসতা প্রতিরোধ (Protection)
+                        </option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label class="block font-bold text-slate-700 mb-1"
+                        >আদালতে মামলা চলমান কি?
+                        <span class="text-red-500">*</span></label
+                      >
+                      <div class="flex items-center space-x-4 mt-2">
+                        <label class="flex items-center">
+                          <input
+                            type="radio"
+                            name="has_existing_case"
+                            value="no"
+                            class="text-emerald-700"
+                            onchange="toggleCourtCaseFields(false)"
+                          />
+                          <span class="ml-2"
+                            >না, মামলা হয়নি (নতুন বিরোধ / মধ্যস্থতা চাই)</span
+                          >
+                        </label>
+                        <label class="flex items-center">
+                          <input
+                            type="radio"
+                            name="has_existing_case"
+                            value="yes"
+                            checked
+                            class="text-emerald-700"
+                            onchange="toggleCourtCaseFields(true)"
+                          />
+                          <span class="ml-2">হ্যাঁ, মামলা চলমান রয়েছে</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    id="courtCaseDetails"
+                    class="bg-slate-50 p-4 rounded-xl border grid grid-cols-1 sm:grid-cols-3 gap-3"
+                  >
+                    <div>
+                      <label class="block font-medium text-slate-600 mb-1"
+                        >আদালতের নাম</label
+                      >
+                      <input
+                        type="text"
+                        id="courtName"
+                        value="পারিবারিক আদালত, ঢাকা"
+                        class="w-full border rounded-lg p-2"
+                      />
+                    </div>
+                    <div>
+                      <label class="block font-medium text-slate-600 mb-1"
+                        >আদালতের মামলা নম্বর</label
+                      >
+                      <input
+                        type="text"
+                        id="courtCaseNo"
+                        value="পারিবারিক মামলা নং ৪৭/২০২৬"
+                        class="w-full border rounded-lg p-2"
+                      />
+                    </div>
+                    <div>
+                      <label class="block font-medium text-slate-600 mb-1"
+                        >বিপক্ষ পক্ষের নাম</label
+                      >
+                      <input
+                        type="text"
+                        id="opposingParty"
+                        value="মোঃ কামাল হোসেন"
+                        class="w-full border rounded-lg p-2"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="block font-bold text-slate-700 mb-1"
+                      >আইনগত সমস্যার সংক্ষিপ্ত বিবরণ
+                      <span class="text-red-500">*</span></label
+                    >
+                    <textarea
+                      id="caseDescription"
+                      rows="3"
+                      class="w-full border rounded-lg p-2.5"
+                      placeholder="ঘটনা ও বিরোধের বিবরণ লিখুন..."
+                    >
+গত আট মাস যাবত স্বামী কোনো ভরণপোষণ দিচ্ছেন না এবং সন্তানের খরচের দায়িত্ব অস্বীকার করছেন। পারিবারিক আদালতে মোকদ্দমা চলমান রয়েছে, কিন্তু অর্থনৈতিক অসচ্ছলতার কারণে আইনজীবী নিয়োগ করতে পারছি না। সরকারি প্যানেল আইনজীবী ও আইনি সহায়তা প্রার্থনা করছি।</textarea
+                    >
+                  </div>
+
+                  <div class="flex justify-between pt-4">
+                    <button
+                      type="button"
+                      onclick="goToStep(1)"
+                      class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-5 py-2.5 rounded-xl"
+                    >
+                      পূর্ববর্তী ধাপ
+                    </button>
+                    <button
+                      type="button"
+                      onclick="goToStep(3)"
+                      class="bg-[#0d392e] hover:bg-[#145542] text-white font-bold px-6 py-2.5 rounded-xl flex items-center"
+                    >
+                      পরবর্তী ধাপ: নিরাপদ যোগাযোগ
+                      <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- STEP 3: SAFE CONTACT (G3) -->
+                <div
+                  id="wizard-step-3"
+                  class="wizard-step hidden space-y-4 text-xs"
+                >
+                  <div
+                    class="bg-rose-50/70 border border-rose-200 p-4 rounded-xl text-rose-950"
+                  >
+                    <p class="font-bold mb-1">
+                      <i
+                        class="fa-solid fa-user-shield mr-1.5 text-rose-600"
+                      ></i>
+                      নিরাপদ যোগাযোগ নীতি (Safe Contact):
+                    </p>
+                    <p>
+                      পারিবারিক বা বিরোধপূর্ণ মামলার ক্ষেত্রে অনেক সময়
+                      আবেদনকারীর ফোনে মেসেজ যাওয়া বিপজ্জনক হতে পারে। আপনি
+                      নির্ধারণ করে দিন কোন চ্যানেলে ও কোন সময়ে যোগাযোগ নিরাপদ।
+                    </p>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block font-bold text-slate-700 mb-1"
+                        >নিরাপদ ফোন নম্বর
+                        <span class="text-red-500">*</span></label
+                      >
+                      <input
+                        type="tel"
+                        id="safePhone"
+                        required
+                        value="01712345678"
+                        class="w-full border rounded-lg p-2.5 font-mono"
+                      />
+                    </div>
+                    <div>
+                      <label class="block font-bold text-slate-700 mb-1"
+                        >যোগাযোগের নিরাপদ সময়সূচি</label
+                      >
+                      <select
+                        id="safeTimeWindow"
+                        class="w-full border rounded-lg p-2.5"
+                      >
+                        <option value="morning">সকাল ৯:০০ - দুপুর ১২:০০</option>
+                        <option value="afternoon" selected>
+                          দুপুর ২:০০ - বিকাল ৫:০০
+                        </option>
+                        <option value="evening">সন্ধ্যা ৬:০০ - রাত ৮:০০</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="space-y-2">
+                    <label class="block font-bold text-slate-700"
+                      >অনিরাপদ যোগাযোগ চ্যানেল (System Restrictions)</label
+                    >
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <label
+                        class="flex items-center p-3 border rounded-xl bg-slate-50 cursor-pointer"
+                      >
+                        <input
+                          type="checkbox"
+                          id="blockSMS"
+                          checked
+                          class="text-rose-600 rounded"
+                        />
+                        <span class="ml-2 font-medium"
+                          >মোবাইলে SMS পাঠাবেন না</span
+                        >
+                      </label>
+                      <label
+                        class="flex items-center p-3 border rounded-xl bg-slate-50 cursor-pointer"
+                      >
+                        <input
+                          type="checkbox"
+                          id="blockAutoCalls"
+                          checked
+                          class="text-rose-600 rounded"
+                        />
+                        <span class="ml-2 font-medium"
+                          >অটোমেটেড ভয়েস কল নয়</span
+                        >
+                      </label>
+                      <label
+                        class="flex items-center p-3 border rounded-xl bg-slate-50 cursor-pointer"
+                      >
+                        <input
+                          type="checkbox"
+                          id="webOnly"
+                          class="text-rose-600 rounded"
+                        />
+                        <span class="ml-2 font-medium"
+                          >শুধুমাত্র এই পোর্টালে বার্তা দিন</span
+                        >
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="flex justify-between pt-4">
+                    <button
+                      type="button"
+                      onclick="goToStep(2)"
+                      class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-5 py-2.5 rounded-xl"
+                    >
+                      পূর্ববর্তী ধাপ
+                    </button>
+                    <button
+                      type="button"
+                      onclick="goToStep(4)"
+                      class="bg-[#0d392e] hover:bg-[#145542] text-white font-bold px-6 py-2.5 rounded-xl flex items-center"
+                    >
+                      পরবর্তী ধাপ: দলিলপত্র
+                      <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- STEP 4: DOCUMENTS -->
+                <div
+                  id="wizard-step-4"
+                  class="wizard-step hidden space-y-4 text-xs"
+                >
+                  <div
+                    class="bg-teal-50/70 border border-teal-200 p-4 rounded-xl text-teal-950"
+                  >
+                    <p class="font-bold mb-1">
+                      <i
+                        class="fa-solid fa-file-shield mr-1.5 text-teal-700"
+                      ></i>
+                      প্রমাণক ও প্রাসঙ্গিক দলিলপত্র:
+                    </p>
+                    <p>
+                      আপনার জাতীয় পরিচয়পত্র ও প্রয়োজনীয় নথি সংযুক্ত করুন। (AI
+                      অপাঠ্য দলিলের তথ্য অনুমান করবে না; মানব কর্মকর্তা কর্তৃক
+                      যাচাই সম্পন্ন হবে)।
+                    </p>
+                  </div>
+
+                  <div class="space-y-3">
+                    <div
+                      class="p-3 border rounded-xl flex items-center justify-between bg-slate-50"
+                    >
+                      <div class="flex items-center space-x-3">
+                        <i
+                          class="fa-solid fa-id-card text-base text-slate-500"
+                        ></i>
+                        <div>
+                          <span class="font-bold text-slate-900 block"
+                            >জাতীয় পরিচয়পত্র / জন্ম সনদ</span
+                          >
+                          <span class="text-slate-500 text-[11px]"
+                            >NID_Rahima_Khatun.pdf (সংযুক্ত)</span
+                          >
+                        </div>
+                      </div>
+                      <span
+                        class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[10px]"
+                        >Verified ✓</span
+                      >
+                    </div>
+
+                    <div
+                      class="p-3 border rounded-xl flex items-center justify-between bg-slate-50"
+                    >
+                      <div class="flex items-center space-x-3">
+                        <i
+                          class="fa-solid fa-file-invoice-dollar text-base text-slate-500"
+                        ></i>
+                        <div>
+                          <span class="font-bold text-slate-900 block"
+                            >আয়ের সনদপত্র (Income Certificate)</span
+                          >
+                          <span class="text-amber-600 text-[11px]"
+                            >প্রয়োজনীয় (পরবর্তীতেও জমা দেওয়া যাবে)</span
+                          >
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onclick="alert('আয়ের সনদ ফাইল বাছাই করুন।')"
+                        class="border border-slate-300 hover:bg-slate-100 text-slate-700 px-3 py-1 rounded-lg text-xs font-semibold"
+                      >
+                        ফাইল নির্বাচন
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="flex justify-between pt-4">
+                    <button
+                      type="button"
+                      onclick="goToStep(3)"
+                      class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-5 py-2.5 rounded-xl"
+                    >
+                      পূর্ববর্তী ধাপ
+                    </button>
+                    <button
+                      type="button"
+                      onclick="goToStep(5)"
+                      class="bg-[#0d392e] hover:bg-[#145542] text-white font-bold px-6 py-2.5 rounded-xl flex items-center"
+                    >
+                      পরবর্তী ধাপ: রিভিউ ও ঘোষণা
+                      <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- STEP 5: REVIEW -->
+                <div
+                  id="wizard-step-5"
+                  class="wizard-step hidden space-y-4 text-xs"
+                >
+                  <div class="bg-slate-50 border p-4 rounded-xl space-y-3">
+                    <h3 class="font-bold text-slate-800 text-sm border-b pb-2">
+                      আবেদনপত্রের তথ্য সারসংক্ষেপ
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <span class="text-slate-500 block">আবেদনকারী:</span>
+                        <strong class="text-slate-900" id="revApplicantName"
+                          >মোছাঃ রহিমা খাতুন</strong
+                        >
+                      </div>
+                      <div>
+                        <span class="text-slate-500 block"
+                          >প্রতিনিধিত্বের ধরন:</span
+                        >
+                        <strong class="text-slate-900" id="revAppType"
+                          >নিজেই আবেদনকারী (Self)</strong
+                        >
+                      </div>
+                      <div>
+                        <span class="text-slate-500 block">বিরোধের ধরন:</span>
+                        <strong class="text-slate-900" id="revCategory"
+                          >পারিবারিক — খোরপোশ ও দেনমোহর</strong
+                        >
+                      </div>
+                      <div>
+                        <span class="text-slate-500 block">নিরাপদ ফোন:</span>
+                        <strong class="text-slate-900" id="revSafeContact"
+                          >01712345678 (SMS নিষিদ্ধ)</strong
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="p-4 bg-emerald-50/70 border border-emerald-200 rounded-xl space-y-2"
+                  >
+                    <label class="flex items-start cursor-pointer">
+                      <input
+                        type="checkbox"
+                        id="declarationConsent"
+                        required
+                        class="mt-0.5 text-emerald-800 rounded"
+                      />
+                      <span
+                        class="ml-2 text-slate-700 leading-relaxed font-medium"
+                      >
+                        আমি সজ্ঞানে ঘোষণা করছি যে, এই আবেদনে প্রদত্ত সকল তথ্য
+                        সম্পূর্ণ সত্য ও নির্ভুল। আমি সরকারি লিগ্যাল এইড পাওয়ার
+                        যোগ্য এবং আমার আবেদন যাচাই করার জন্য সংশ্লিষ্ট লিগ্যাল
+                        এইড অফিসারকে তথ্য সংগ্রহের অনুমতি দিচ্ছি।
+                      </span>
+                    </label>
+                  </div>
+
+                  <div class="flex justify-between pt-4">
+                    <button
+                      type="button"
+                      onclick="goToStep(4)"
+                      class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-5 py-2.5 rounded-xl"
+                    >
+                      পূর্ববর্তী ধাপ
+                    </button>
+                    <button
+                      type="submit"
+                      class="bg-[#0d392e] hover:bg-[#145542] text-white font-bold px-8 py-3 rounded-xl shadow-md flex items-center"
+                    >
+                      <i class="fa-solid fa-paper-plane mr-2"></i> আবেদন দাখিল
+                      করুন (Submit)
+                    </button>
+                  </div>
+                </div>
+
+                <!-- STEP 6: SUBMISSION SUCCESS & APP ID -->
+                <div
+                  id="wizard-step-6"
+                  class="wizard-step hidden space-y-5 text-center py-6 text-xs"
+                >
+                  <div
+                    class="w-16 h-16 bg-emerald-100 text-emerald-800 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner border border-emerald-200"
+                  >
+                    <i class="fa-solid fa-check"></i>
+                  </div>
+                  <div>
+                    <span
+                      class="bg-emerald-100 text-emerald-900 font-bold px-3 py-1 rounded-full uppercase tracking-wider"
+                      >আবেদন সফলভাবে দাখিল হয়েছে</span
+                    >
+                    <h3 class="text-2xl font-bold text-slate-900 mt-2">
+                      আপনার আবেদন নম্বর (Application ID)
+                    </h3>
+                    <div
+                      class="inline-block bg-slate-900 text-emerald-400 font-mono text-2xl font-bold px-6 py-2 rounded-xl my-3 shadow-inner tracking-widest border border-slate-700"
+                    >
+                      APP-2026-000342
+                    </div>
+                  </div>
+
+                  <div
+                    class="max-w-xl mx-auto bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 text-left space-y-2"
+                  >
+                    <div class="flex items-center text-amber-900 font-bold">
+                      <i
+                        class="fa-solid fa-triangle-exclamation mr-2 text-amber-600 text-base"
+                      ></i>
+                      গুরুত্বপূর্ণ স্থাপত্য নীতি: Application ID ≠ Case ID
+                    </div>
+                    <p class="text-amber-800 leading-relaxed">
+                      আপনার আবেদন দাখিলের পর এটি একটি
+                      <strong>Application ID</strong> হিসেবে নিবন্ধিত হয়েছে।
+                      জেলা লিগ্যাল এইড অফিসার (DLAO) কর্তৃক হিউম্যান ভেরিফিকেশন
+                      ও অনুমোদন সম্পন্ন হলে তবেই মূল
+                      <strong>Case ID</strong> ইস্যু করা হবে।
+                    </p>
+                  </div>
+
+                  <div class="flex justify-center gap-3 pt-3">
+                    <button
+                      type="button"
+                      onclick="switchTab('status-tracking')"
+                      class="bg-[#0d392e] hover:bg-[#145542] text-white font-bold px-6 py-2.5 rounded-xl"
+                    >
+                      আবেদনের স্থিতি দেখুন
+                    </button>
+                    <button
+                      type="button"
+                      onclick="switchTab('dashboard')"
+                      class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-5 py-2.5 rounded-xl"
+                    >
+                      ড্যাশবোর্ডে ফিরুন
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- TAB 3: SAVED APPLICATIONS -->
+          <!-- ========================================== -->
+          <div id="tab-saved-applications" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white rounded-2xl border border-[#d6e0f2] p-6 shadow-sm"
+            >
+              <div
+                class="flex items-center justify-between pb-4 border-b border-[#d6e0f2]"
+              >
+                <div>
+                  <h2 class="text-xl font-bold text-slate-900">
+                    সংরক্ষিত খসড়া আবেদনসমূহ (Saved Drafts)
+                  </h2>
+                  <p class="text-xs text-slate-500 mt-0.5">
+                    যেসব আবেদন শুরু হয়েছিল কিন্তু এখনও জমা দেওয়া হয়নি।
+                  </p>
+                </div>
+                <span
+                  class="text-xs bg-amber-50 text-amber-800 font-bold px-3 py-1 rounded-full border border-amber-200"
+                  >২টি ড্রাফট</span
+                >
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 text-xs">
+                <div class="bg-slate-50 rounded-2xl p-5 border space-y-4">
+                  <div class="flex justify-between items-center">
+                    <div>
+                      <span class="font-bold text-slate-800 font-mono text-sm"
+                        >Draft #1048</span
+                      >
+                      <span class="text-slate-400 block text-[11px]"
+                        >আপডেট: ২৪ সেপ্টেম্বর ২০২৬</span
+                      >
+                    </div>
+                    <span
+                      class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded"
+                      >৬৫% সম্পন্ন</span
+                    >
+                  </div>
+                  <div class="space-y-1.5 text-slate-600">
+                    <div>✓ আবেদনকারীর প্রাথমিক তথ্য সম্পন্ন</div>
+                    <div>✓ আইনগত সমস্যার বিবরণ সম্পন্ন</div>
+                    <div>✓ যোগাযোগের তথ্য ও নিরাপত্তা পছন্দ সম্পন্ন</div>
+                    <div class="text-amber-700 font-medium">
+                      ● দলিলপত্র আপলোড (৫০% বাকি)
+                    </div>
+                  </div>
+                  <div class="flex justify-between pt-2 border-t">
+                    <button
+                      onclick="resumeDraft(1048)"
+                      class="bg-[#0d392e] hover:bg-[#145542] text-white font-bold px-4 py-2 rounded-xl flex items-center space-x-1.5"
+                    >
+                      <i class="fa-solid fa-play text-amber-400 text-xs"></i>
+                      <span>চালিয়ে যান</span>
+                    </button>
+                    <button
+                      onclick="deleteDraft(1048)"
+                      class="text-red-600 hover:text-red-800 font-medium"
+                    >
+                      মুছে ফেলুন
+                    </button>
+                  </div>
+                </div>
+
+                <div class="bg-slate-50 rounded-2xl p-5 border space-y-4">
+                  <div class="flex justify-between items-center">
+                    <div>
+                      <span class="font-bold text-slate-800 font-mono text-sm"
+                        >Draft #1031</span
+                      >
+                      <span class="text-slate-400 block text-[11px]"
+                        >আপডেট: ২১ সেপ্টেম্বর ২০২৬</span
+                      >
+                    </div>
+                    <span
+                      class="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded"
+                      >৩৫% সম্পন্ন</span
+                    >
+                  </div>
+                  <div class="space-y-1.5 text-slate-600">
+                    <div>✓ আবেদনকারীর তথ্য সম্পন্ন</div>
+                    <div class="text-amber-700 font-medium">
+                      ● সমস্যার বিবরণ অসম্পূর্ণ
+                    </div>
+                    <div class="text-slate-400">○ দলিলপত্র বাকি</div>
+                  </div>
+                  <div class="flex justify-between pt-2 border-t">
+                    <button
+                      onclick="resumeDraft(1031)"
+                      class="bg-[#0d392e] hover:bg-[#145542] text-white font-bold px-4 py-2 rounded-xl flex items-center space-x-1.5"
+                    >
+                      <i class="fa-solid fa-play text-amber-400 text-xs"></i>
+                      <span>চালিয়ে যান</span>
+                    </button>
+                    <button
+                      onclick="deleteDraft(1031)"
+                      class="text-red-600 hover:text-red-800 font-medium"
+                    >
+                      মুছে ফেলুন
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- TAB 4: STATUS TRACKING (APP & CASE STATUS) -->
+          <!-- ========================================== -->
+          <div id="tab-status-tracking" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white rounded-2xl border border-[#d6e0f2] p-6 shadow-sm"
+            >
+              <div
+                class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-[#d6e0f2] gap-3"
+              >
+                <div>
+                  <h2 class="text-xl font-bold text-slate-900">
+                    আবেদন ও মামলার স্থিতি (Application & Case Status)
+                  </h2>
+                  <p class="text-xs text-slate-500 mt-0.5">
+                    “আমার আবেদন এখন কোন পর্যায়ে রয়েছে?” — লাইভ টাইমলাইন
+                    ট্র্যাকিং
+                  </p>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <input
+                    type="text"
+                    id="statusQueryId"
+                    value="APP-2026-000342"
+                    class="border rounded-lg px-3 py-1.5 text-xs font-mono font-bold w-44 uppercase"
+                  />
+                  <button
+                    onclick="alert('স্ট্যাটাস রিফ্রেশ সম্পন্ন।')"
+                    class="bg-[#0d392e] hover:bg-[#145542] text-white text-xs font-semibold px-3 py-1.5 rounded-lg"
+                  >
+                    খুঁজুন
+                  </button>
+                </div>
+              </div>
+
+              <div
+                class="bg-slate-50 rounded-2xl p-5 border mt-6 space-y-5 text-xs"
+              >
+                <div class="flex justify-between items-center border-b pb-3">
+                  <div>
+                    <span class="text-slate-500">আবেদন ট্র্যাকিং নম্বর:</span>
+                    <h4
+                      class="text-lg font-bold font-mono text-slate-900 flex items-center"
+                    >
+                      APP-2026-000342
+                      <span
+                        class="ml-2 text-xs bg-blue-100 text-blue-800 font-sans font-bold px-2 py-0.5 rounded"
+                        >Human Verification Pending</span
+                      >
+                    </h4>
+                  </div>
+                  <div class="text-right text-slate-500">
+                    <span>দাখিল: ২৩ সেপ্টেম্বর ২০২৬</span>
+                  </div>
+                </div>
+
+                <!-- TIMELINE -->
+                <div
+                  class="relative border-l-2 border-emerald-600 ml-4 space-y-6"
+                >
+                  <div class="relative pl-6">
+                    <div
+                      class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[9px] font-bold"
+                    >
+                      ✓
+                    </div>
+                    <h5 class="font-bold text-slate-800">
+                      ১. আবেদন দাখিল সম্পন্ন (Application Submitted)
+                    </h5>
+                    <p class="text-slate-500">
+                      অনলাইন পোর্টাল থেকে সফলভাবে জমা হয়েছে। ২৩ সেপ্টেম্বর ২০২৬
+                    </p>
+                  </div>
+
+                  <div class="relative pl-6">
+                    <div
+                      class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[9px] font-bold"
+                    >
+                      ✓
+                    </div>
+                    <h5 class="font-bold text-slate-800">
+                      ২. আবেদন আইডি সৃষ্টি (APP-2026-000342)
+                    </h5>
+                    <p class="text-slate-500">
+                      জেলা লিগ্যাল এইড অফিস, ঢাকা এর প্রাথমিক তালিকায়
+                      অন্তর্ভুক্ত।
+                    </p>
+                  </div>
+
+                  <div class="relative pl-6">
+                    <div
+                      class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center text-[9px] font-bold animate-pulse"
+                    >
+                      ●
+                    </div>
+                    <h5 class="font-bold text-blue-800">
+                      ৩. কর্মকর্তা কর্তৃক যাচাইকরণ (Human Verification in
+                      Progress)
+                    </h5>
+                    <p class="text-slate-600">
+                      দায়িত্বপ্রাপ্ত কর্মকর্তা আর্থিক যোগ্যতা ও বিরোধের প্রকৃতি
+                      নিরীক্ষা করছেন।
+                    </p>
+                  </div>
+
+                  <div class="relative pl-6 opacity-60">
+                    <div
+                      class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-slate-300"
+                    ></div>
+                    <h5 class="font-bold text-slate-700">
+                      ৪. কেস আইডি সৃষ্টি (Case ID Creation)
+                    </h5>
+                    <p class="text-slate-500">
+                      যাচাইকরণ সফল হলে মূল মামলা নম্বর (CASE-2026-0142) সক্রিয়
+                      হবে।
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Section 16(2) Appeal Route -->
+                <div
+                  class="p-4 bg-slate-100 border border-slate-300 rounded-xl space-y-1"
+                >
+                  <span class="font-bold text-slate-900 block"
+                    ><i class="fa-solid fa-gavel mr-1.5 text-emerald-800"></i>
+                    ধারা ১৬(২) অনুযায়ী আপিলের অধিকার:</span
+                  >
+                  <p class="text-slate-600 leading-relaxed">
+                    কোনো আবেদন লিগ্যাল এইড অফিস কর্তৃক অগ্রাহ্য হলে, সিদ্ধান্তের
+                    তারিখ থেকে <strong>৬০ (ষাট) দিনের মধ্যে</strong> জাতীয় আইনগত
+                    সহায়তা প্রদান সংস্থার মহাপরিচালক (DG)-এর কাছে আপিল করা যাবে
+                    এবং মহাপরিচালকের সিদ্ধান্ত চূড়ান্ত হবে।
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- TAB 5: ACTIVE CASE DASHBOARD -->
+          <!-- ========================================== -->
+          <div id="tab-case-dashboard" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white rounded-2xl border border-[#d6e0f2] p-6 shadow-sm"
+            >
+              <div
+                class="flex items-center justify-between pb-5 border-b border-[#d6e0f2]"
+              >
+                <div class="flex items-center space-x-2">
+                  <span
+                    class="bg-emerald-100 text-emerald-800 font-bold text-xs px-2.5 py-0.5 rounded-full"
+                    >ACTIVE CASE</span
+                  >
+                  <h2 class="text-xl font-bold font-mono text-slate-900">
+                    CASE-2026-0142
+                  </h2>
+                </div>
+                <span class="text-xs text-slate-500"
+                  >পারিবারিক আদালত নং ৩, ঢাকা</span
+                >
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 text-xs">
+                <div class="md:col-span-2 space-y-4">
+                  <div
+                    class="p-4 bg-purple-50/70 border border-purple-200 rounded-xl space-y-2"
+                  >
+                    <span class="font-bold text-purple-900 block"
+                      >আসন্ন শুনানি: ২৯ সেপ্টেম্বর ২০২৬ (১০:৩০ AM)</span
+                    >
+                    <p class="text-slate-600">
+                      পারিবারিক আদালত ৩, জেলা আদালত ভবন, কোর্ট হাউস স্ট্রিট,
+                      ঢাকা।
+                    </p>
+                    <p class="text-slate-800 font-semibold">
+                      নাগরিকের করণীয়: মূল জাতীয় পরিচয়পত্র ও খরচের রসিদ নিয়ে
+                      সকাল ১০:০০ টায় উপস্থিত থাকুন।
+                    </p>
+                  </div>
+
+                  <div class="p-4 bg-slate-50 border rounded-xl space-y-2">
+                    <span class="font-bold text-slate-800 block"
+                      >নিযুক্ত প্যানেল আইনজীবী: এডভোকেট এ. রহমান</span
+                    >
+                    <p class="text-slate-600">
+                      নিয়োগ গৃহীত ✓ (২৪ সেপ্টেম্বর আপডেট)। লিখিত আরজির জবাব
+                      প্রস্তুত করা হয়েছে।
+                    </p>
+                  </div>
+
+                  <div
+                    class="p-4 bg-emerald-50/70 border border-emerald-200 rounded-xl space-y-2"
+                  >
+                    <span class="font-bold text-emerald-900 block"
+                      >মধ্যস্থতা বৈঠক (Mediation): ০২ অক্টোবর ২০২৬</span
+                    >
+                    <p class="text-slate-600">
+                      এডিআর সেল, জেলা লিগ্যাল এইড অফিস, ঢাকা। মধ্যস্থতাকারী:
+                      জনাব কে. এম. আহমেদ।
+                    </p>
+                  </div>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
+                  <h4 class="font-bold text-slate-800 uppercase text-[11px]">
+                    কেস সামারি
+                  </h4>
+                  <div class="space-y-1.5 text-slate-600">
+                    <div><strong>মূল আবেদন:</strong> APP-2026-000342</div>
+                    <div><strong>বিষয়:</strong> খোরপোশ ও দেনমোহর</div>
+                    <div><strong>দায়িত্বশীল অফিস:</strong> DLAO, ঢাকা</div>
+                    <div><strong>নিরাপদ যোগাযোগ:</strong> সক্রিয় ✓</div>
+                  </div>
+                  <button
+                    onclick="switchTab('documents')"
+                    class="w-full bg-[#0d392e] hover:bg-[#145542] text-white font-bold py-2 rounded-lg text-xs mt-3"
+                  >
+                    দলিলপত্র দেখুন
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- TAB 6: DOCUMENTS & REQUIRED INFORMATION -->
+          <!-- ========================================== -->
+          <div id="tab-documents" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white rounded-2xl border border-[#d6e0f2] p-6 shadow-sm"
+            >
+              <div
+                class="flex items-center justify-between pb-5 border-b border-[#d6e0f2]"
+              >
+                <div>
+                  <h2 class="text-xl font-bold text-slate-900">
+                    তথ্য ও দলিলপত্র (Documents & Records)
+                  </h2>
+                  <p class="text-xs text-slate-500 mt-0.5">
+                    কেস সম্পর্কিত প্রমাণক, আপলোড স্ট্যাটাস ও ভেরিফিকেশন।
+                  </p>
+                </div>
+              </div>
+
+              <!-- Action Required Document Request -->
+              <div
+                class="p-4 bg-amber-50 border-2 border-amber-300 rounded-2xl space-y-3 mt-6 text-xs text-amber-950"
+              >
+                <div class="flex justify-between items-center">
+                  <span class="font-bold flex items-center text-sm">
+                    <i
+                      class="fa-solid fa-triangle-exclamation text-amber-600 mr-2"
+                    ></i>
+                    জরুরি তলব: আয়ের সনদ (Income Certificate) জমা দিন
+                  </span>
+                  <span
+                    class="bg-red-100 text-red-800 font-bold px-2 py-0.5 rounded text-[11px]"
+                    >শেষ সময়: ২৭ সেপ্টেম্বর ২০২৬</span
+                  >
+                </div>
+                <p class="leading-relaxed">
+                  জেলা লিগ্যাল এইড অফিসার (DLAO), ঢাকা কর্তৃক আপনার আর্থিক
+                  যোগ্যতা নিশ্চিতকরণের জন্য ইউপি চেয়ারম্যান বা ওয়ার্ড কাউন্সিলর
+                  প্রদত্ত আয়ের প্রত্যয়ন দাখিলের অনুরোধ করা হয়েছে।
+                </p>
+                <div class="flex items-center justify-between pt-1">
+                  <input
+                    type="file"
+                    id="incomeDocInput"
+                    class="text-xs text-slate-500"
+                  />
+                  <button
+                    onclick="
+                      alert(
+                        'আয়ের সনদ আপলোড সম্পন্ন হয়েছে। DLAO হিউম্যান ভেরিফিকেশনে পাঠানো হলো।',
+                      )
+                    "
+                    class="bg-[#0d392e] hover:bg-[#145542] text-white font-bold px-4 py-2 rounded-xl"
+                  >
+                    দাখিল করুন
+                  </button>
+                </div>
+              </div>
+
+              <!-- Uploaded Documents Table -->
+              <div class="mt-6">
+                <h3 class="font-bold text-slate-800 text-sm mb-3">
+                  সংরক্ষিত নথিপত্র
+                </h3>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr class="bg-slate-50 border-b text-slate-600">
+                        <th class="p-3">নথির নাম</th>
+                        <th class="p-3">ক্যাটাগরি</th>
+                        <th class="p-3">উৎস</th>
+                        <th class="p-3">তারিখ</th>
+                        <th class="p-3">অবস্থা</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                      <tr>
+                        <td class="p-3 font-bold text-slate-800">
+                          📄 NID_Rahima_Khatun.pdf
+                        </td>
+                        <td class="p-3 text-slate-600">জাতীয় পরিচয়পত্র</td>
+                        <td class="p-3 text-slate-600">নাগরিক স্বয়ং</td>
+                        <td class="p-3 text-slate-500">২৩ সেপ ২০২৬</td>
+                        <td class="p-3">
+                          <span
+                            class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[10px]"
+                            >Verified ✓</span
+                          >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="p-3 font-bold text-slate-800">
+                          📄 Court_Notice_Case47.pdf
+                        </td>
+                        <td class="p-3 text-slate-600">আদালতের সমন</td>
+                        <td class="p-3 text-slate-600">নাগরিক আপলোড</td>
+                        <td class="p-3 text-slate-500">২৩ সেপ ২০২৬</td>
+                        <td class="p-3">
+                          <span
+                            class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[10px]"
+                            >Verified ✓</span
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- TAB 7: HEARINGS & NEXT STEPS -->
+          <!-- ========================================== -->
+          <div id="tab-hearings" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white rounded-2xl border border-[#d6e0f2] p-6 shadow-sm"
+            >
+              <div
+                class="flex items-center justify-between pb-5 border-b border-[#d6e0f2]"
+              >
+                <div>
+                  <h2 class="text-xl font-bold text-slate-900">
+                    শুনানির তারিখ ও প্রস্তুতি (Hearing Docket)
+                  </h2>
+                  <p class="text-xs text-slate-500 mt-0.5">
+                    আদালতে শুনানির সময়সূচি এবং বিচারপ্রার্থী ও আইনজীবীর
+                    প্রস্তুতি।
+                  </p>
+                </div>
+                <span
+                  class="bg-purple-100 text-purple-800 font-bold px-3 py-1 rounded-full text-xs"
+                  >২৯ সেপ্টেম্বর ২০২৬</span
+                >
+              </div>
+
+              <div
+                class="bg-purple-50/70 border border-purple-200 rounded-2xl p-5 mt-6 space-y-4 text-xs"
+              >
+                <div class="flex justify-between items-center">
+                  <div>
+                    <span
+                      class="text-[10px] font-bold text-purple-800 uppercase tracking-wider block"
+                      >আসন্ন শুনানি</span
+                    >
+                    <h4 class="text-base font-bold text-slate-900">
+                      CASE-2026-0142 (ভরণপোষণ মোকদ্দমা)
+                    </h4>
+                  </div>
+                  <span
+                    class="bg-white px-3 py-1.5 rounded-lg border font-bold text-purple-900 shadow-sm"
+                    >১০:৩০ AM</span
+                  >
+                </div>
+                <div
+                  class="p-3 bg-white rounded-xl border border-purple-100 space-y-1"
+                >
+                  <div><strong>আদালত:</strong> পারিবারিক আদালত নং ৩, ঢাকা</div>
+                  <div>
+                    <strong>আইনজীবী:</strong> এডভোকেট এ. রহমান (উপস্থিত থাকবেন)
+                  </div>
+                </div>
+                <div class="space-y-1">
+                  <span class="font-bold text-purple-950 block"
+                    >নাগরিকের করণীয়:</span
+                  >
+                  <p class="text-slate-700 bg-white p-2.5 rounded border">
+                    মূল জাতীয় পরিচয়পত্র ও প্রয়োজনীয় কাগজপত্র সাথে নিয়ে সকাল
+                    ১০:০০ টায় আদালতের লিগ্যাল এইড বুথে উপস্থিত থাকুন।
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- TAB 8: MEDIATION HUB (ধারা ২১খ) -->
+          <!-- ========================================== -->
+          <div id="tab-mediation" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white rounded-2xl border border-[#d6e0f2] p-6 shadow-sm"
+            >
+              <div
+                class="flex items-center justify-between pb-5 border-b border-[#d6e0f2]"
+              >
+                <div>
+                  <div class="flex items-center space-x-2">
+                    <span
+                      class="bg-emerald-100 text-emerald-800 font-bold text-xs px-2.5 py-0.5 rounded"
+                      >ধারা ২১খ - ২১ঘ</span
+                    >
+                    <h2 class="text-xl font-bold text-slate-900">
+                      আপোষ মধ্যস্থতা কেন্দ্র (Mediation Hub)
+                    </h2>
+                  </div>
+                  <p class="text-xs text-slate-500 mt-0.5">
+                    সরকারি মধ্যস্থতাকারীর সহায়তায় আদালতের বাইরে বিরোধ নিষ্পত্তি।
+                  </p>
+                </div>
+              </div>
+
+              <div
+                class="bg-slate-50 border rounded-2xl p-5 mt-6 space-y-4 text-xs"
+              >
+                <div class="flex justify-between items-center border-b pb-3">
+                  <h4 class="font-bold text-slate-900 text-sm">
+                    পারিবারিক ভরণপোষণ আপোষ বৈঠক (MED-2026-0082)
+                  </h4>
+                  <span
+                    class="bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-full"
+                    >সেশন ধার্যকৃত</span
+                  >
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div>
+                    <span class="text-slate-500 block">তারিখ ও সময়:</span>
+                    <strong>০২ অক্টোবর ২০২৬ (বিকাল ৩:০০)</strong>
+                  </div>
+                  <div>
+                    <span class="text-slate-500 block">স্থান:</span>
+                    <strong>এডিআর কনফারেন্স রুম, ঢাকা</strong>
+                  </div>
+                  <div>
+                    <span class="text-slate-500 block">মধ্যস্থতাকারী:</span>
+                    <strong>জনাব কে. এম. আহমেদ</strong>
+                  </div>
+                </div>
+
+                <div
+                  class="p-3 bg-white rounded-xl border flex items-center justify-between"
+                >
+                  <div>
+                    <span class="font-bold text-slate-800 block"
+                      >আপনার অংশগ্রহণ নিশ্চিত করুন:</span
+                    >
+                    <span class="text-slate-500 text-[11px]"
+                      >আপনি কি নির্ধারিত তারিখে অংশ নিচ্ছেন?</span
+                    >
+                  </div>
+                  <button
+                    onclick="alert('অংশগ্রহণ নিশ্চিত করা হয়েছে।')"
+                    class="bg-[#0d392e] hover:bg-[#145542] text-white font-bold px-4 py-2 rounded-xl"
+                  >
+                    উপস্থিত থাকব ✓
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- TAB 9: PANEL LAWYER & LAWYER CHANGE -->
+          <!-- ========================================== -->
+          <div id="tab-lawyer" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white rounded-2xl border border-[#d6e0f2] p-6 shadow-sm"
+            >
+              <div
+                class="flex items-center justify-between pb-5 border-b border-[#d6e0f2]"
+              >
+                <div>
+                  <h2 class="text-xl font-bold text-slate-900">
+                    প্যানেল আইনজীবী তথ্য (My Lawyer)
+                  </h2>
+                  <p class="text-xs text-slate-500 mt-0.5">
+                    সরকারি খরচে নিয়োজিত আইনজীবীর পরিচিতি ও অগ্রগতি।
+                  </p>
+                </div>
+                <button
+                  onclick="showLawyerChangeForm()"
+                  class="bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 text-xs font-bold px-3 py-1.5 rounded-lg"
+                >
+                  আইনজীবী পরিবর্তনের আবেদন
+                </button>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 text-xs">
+                <div
+                  class="bg-slate-50 p-5 rounded-2xl border text-center space-y-3"
+                >
+                  <div
+                    class="w-16 h-16 bg-[#0d392e] text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto"
+                  >
+                    <i class="fa-solid fa-user-tie"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-slate-900 text-sm">
+                      এডভোকেট এ. রহমান
+                    </h3>
+                    <span class="text-slate-500 text-[11px]"
+                      >ঢাকা বার সমিতি (প্যানেল তালিকাভুক্ত)</span
+                    >
+                  </div>
+                  <div
+                    class="bg-white p-3 rounded-xl border text-left space-y-1"
+                  >
+                    <div><strong>নিয়োগ:</strong> ২২ সেপ্টেম্বর ২০২৬</div>
+                    <div><strong>স্ট্যাটাস:</strong> Accepted ✓</div>
+                  </div>
+                </div>
+
+                <div class="md:col-span-2 space-y-4">
+                  <div class="bg-slate-50 p-4 rounded-xl border space-y-2">
+                    <span class="font-bold text-slate-800 block"
+                      >আইনজীবীর সর্বশেষ অগ্রগতি নোট (২৪ সেপ্টেম্বর):</span
+                    >
+                    <p class="text-slate-700 leading-relaxed font-medium">
+                      "বিপক্ষ পক্ষের খোরপোশ অস্বীকৃতির বিপরীতে আবেদনকারীর ব্যাংক
+                      রসিদ ও নথিপত্র নথিজাত করার খসড়া প্রস্তুত করা হয়েছে। ২৯
+                      সেপ্টেম্বর শুনানিতে হাজিরা নিশ্চিত করা হবে।"
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Lawyer change request form (Hidden by default) -->
+              <div
+                id="lawyerChangeBox"
+                class="hidden mt-6 p-5 bg-rose-50/70 border border-rose-200 rounded-2xl space-y-3 text-xs"
+              >
+                <h4 class="font-bold text-rose-950 text-sm">
+                  আইনজীবী পরিবর্তনের আবেদন দাখিল
+                </h4>
+                <p class="text-slate-600">
+                  যৌক্তিক কারণে আবেদন দাখিল করা হলে জেলা লিগ্যাল এইড অফিসার
+                  (DLAO) শুনানির ভিত্তিতে সিদ্ধান্ত প্রদান করবেন।
+                </p>
+                <textarea
+                  id="lawyerChangeReason"
+                  rows="3"
+                  class="w-full border rounded-xl p-2.5 text-xs"
+                  placeholder="পরিবর্তনের কারণ লিখুন..."
+                ></textarea>
+                <div class="flex justify-end gap-2">
+                  <button
+                    onclick="
+                      document
+                        .getElementById('lawyerChangeBox')
+                        .classList.add('hidden')
+                    "
+                    class="px-4 py-2 border rounded-xl bg-white"
+                  >
+                    বাতিল
+                  </button>
+                  <button
+                    onclick="
+                      alert(
+                        'আইনজীবী পরিবর্তনের আবেদন DLAO দপ্তরে দাখিল হয়েছে।',
+                      );
+                      document
+                        .getElementById('lawyerChangeBox')
+                        .classList.add('hidden');
+                    "
+                    class="bg-rose-700 text-white font-bold px-4 py-2 rounded-xl"
+                  >
+                    দাখিল করুন
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- TAB 10: REFERRAL TRACKING -->
+          <!-- ========================================== -->
+          <div id="tab-referral" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white rounded-2xl border border-[#d6e0f2] p-6 shadow-sm"
+            >
+              <div
+                class="flex items-center justify-between pb-5 border-b border-[#d6e0f2]"
+              >
+                <div>
+                  <h2 class="text-xl font-bold text-slate-900">
+                    রেফারেল ট্র্যাকিং (Referral Tracking)
+                  </h2>
+                  <p class="text-xs text-slate-500 mt-0.5">
+                    অন্য অফিস বা সেবা সংস্থায় স্থানান্তরিত কেসের বর্তমান
+                    অবস্থান।
+                  </p>
+                </div>
+                <span
+                  class="font-mono font-bold text-slate-700 text-xs bg-slate-100 px-3 py-1 rounded-full"
+                  >REF-2026-0028</span
+                >
+              </div>
+
+              <div
+                class="bg-slate-50 rounded-2xl p-5 border mt-6 space-y-4 text-xs"
+              >
+                <div class="flex justify-between items-center border-b pb-2">
+                  <span class="font-bold text-slate-900"
+                    >রেফারেল স্থিতি: গৃহীত ও স্বীকৃত (Acknowledged) ✓</span
+                  >
+                  <span class="text-slate-400">২৪ সেপ্টেম্বর ২০২৬</span>
+                </div>
+                <div
+                  class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-white p-3 rounded-xl border"
+                >
+                  <div>
+                    <strong>প্রেরক দপ্তর:</strong> জাতীয় হেল্পলাইন ১৬৬৯৯ সমন্বয়
+                    সেল
+                  </div>
+                  <div>
+                    <strong>দায়িত্বপ্রাপ্ত অফিস:</strong> জেলা লিগ্যাল এইড অফিস
+                    (DLAO), ঢাকা
+                  </div>
+                </div>
+                <p class="text-slate-600">
+                  আপনার কেসটি এখন সরাসরি জেলা লিগ্যাল এইড অফিস, ঢাকা-এর তদারকিতে
+                  রয়েছে।
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- TAB 11: LEGAL ADVICE & FAQ -->
+          <!-- ========================================== -->
+          <div id="tab-legal-advice" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white rounded-2xl border border-[#d6e0f2] p-6 shadow-sm"
+            >
+              <div
+                class="flex items-center justify-between pb-5 border-b border-[#d6e0f2]"
+              >
+                <div>
+                  <h2 class="text-xl font-bold text-slate-900">
+                    আইনগত পরামর্শ ও তথ্য (Legal Advice)
+                  </h2>
+                  <p class="text-xs text-slate-500 mt-0.5">
+                    আইনি অধিকার সম্পর্কিত সাধারণ তথ্য ও কর্মকর্তার পরামর্শের
+                    আবেদন।
+                  </p>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 text-xs">
+                <div class="space-y-3">
+                  <h4 class="font-bold text-slate-800 text-sm">
+                    সাধারণ আইনি প্রশ্নোত্তর
+                  </h4>
+                  <div class="p-3 bg-slate-50 border rounded-xl space-y-1">
+                    <strong class="text-slate-900 block"
+                      >পারিবারিক ভরণপোষণ কীভাবে দাবি করতে হয়?</strong
+                    >
+                    <p class="text-slate-600">
+                      পারিবারিক আদালত বা লিগ্যাল এইড অফিসে মধ্যস্থতার আবেদন
+                      দাখিল করে সরকারি সহায়তায় খোরপোশ দাবি করা যায়।
+                    </p>
+                  </div>
+                  <div class="p-3 bg-slate-50 border rounded-xl space-y-1">
+                    <strong class="text-slate-900 block"
+                      >সরকারি খরচে আইনজীবী পাওয়ার শর্তাবলি</strong
+                    >
+                    <p class="text-slate-600">
+                      বাৎসরিক আয় ১,৫০,০০০ টাকার নিচে হলে অথবা নির্যাতিত
+                      নারী/শিশু হলে আবেদনকারী বিনামূল্যে আইনজীবী পাওয়ার যোগ্য।
+                    </p>
+                  </div>
+                </div>
+
+                <div class="bg-slate-50 p-5 rounded-2xl border space-y-3">
+                  <h4 class="font-bold text-slate-900 text-sm">
+                    কর্মকর্তার লিখিত পরামর্শ চান
+                  </h4>
+                  <textarea
+                    id="adviceQuestionInput"
+                    rows="4"
+                    class="w-full border rounded-xl p-2.5 text-xs"
+                    placeholder="আপনার সমস্যা বা প্রশ্ন সংক্ষেপে লিখুন..."
+                  ></textarea>
+                  <button
+                    onclick="
+                      alert(
+                        'আপনার প্রশ্নটি জমা হয়েছে। কর্মকর্তা দ্রুত জবাব প্রদান করবেন।',
+                      );
+                      document.getElementById('adviceQuestionInput').value = '';
+                    "
+                    class="w-full bg-[#0d392e] hover:bg-[#145542] text-white font-bold py-2 rounded-xl"
+                  >
+                    পরামর্শের আবেদন পাঠান
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- TAB 12: NOTIFICATIONS (কাজ ও সতর্কতা) -->
+          <!-- ========================================== -->
+          <div id="tab-notifications" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white rounded-2xl border border-[#d6e0f2] p-6 shadow-sm"
+            >
+              <div
+                class="flex items-center justify-between pb-5 border-b border-[#d6e0f2]"
+              >
+                <div>
+                  <h2 class="text-xl font-bold text-slate-900">
+                    কাজ ও সতর্কতা (Action & Notifications)
+                  </h2>
+                  <p class="text-xs text-slate-500 mt-0.5">
+                    জরুরি পদক্ষেপ, শুনানির রিমাইন্ডার ও আইনি নোটিশ।
+                  </p>
+                </div>
+              </div>
+
+              <div class="space-y-3 mt-6 text-xs">
+                <div
+                  class="p-4 rounded-xl border border-red-200 bg-red-50/70 flex justify-between items-center gap-3"
+                >
+                  <div>
+                    <span
+                      class="bg-red-200 text-red-900 font-bold px-2 py-0.5 rounded text-[10px]"
+                      >Action Required</span
+                    >
+                    <h4 class="font-bold text-slate-900 mt-1">
+                      আয়ের সনদপত্র (Income Certificate) জমা দিন
+                    </h4>
+                    <p class="text-slate-600 mt-0.5">
+                      শেষ সময়: ২৭ সেপ্টেম্বর ২০২৬। DLAO যাচাইকরণের জন্য আবশ্যক।
+                    </p>
+                  </div>
+                  <button
+                    onclick="switchTab('documents')"
+                    class="bg-red-600 text-white font-bold px-3 py-1.5 rounded-lg shrink-0"
+                  >
+                    দলিল দিন
+                  </button>
+                </div>
+
+                <div
+                  class="p-4 rounded-xl border border-purple-200 bg-purple-50/70 flex justify-between items-center gap-3"
+                >
+                  <div>
+                    <span
+                      class="bg-purple-200 text-purple-900 font-bold px-2 py-0.5 rounded text-[10px]"
+                      >Hearing Reminder</span
+                    >
+                    <h4 class="font-bold text-slate-900 mt-1">
+                      আসন্ন শুনানি: ২৯ সেপ্টেম্বর ২০২৬ (১০:৩০ AM)
+                    </h4>
+                    <p class="text-slate-600 mt-0.5">
+                      পারিবারিক আদালত ৩, ঢাকা। আইনজীবী এডভোকেট এ. রহমান উপস্থিত
+                      থাকবেন।
+                    </p>
+                  </div>
+                  <button
+                    onclick="switchTab('hearings')"
+                    class="bg-purple-700 text-white font-bold px-3 py-1.5 rounded-lg shrink-0"
+                  >
+                    বিবরণ
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- TAB 13: SAFE CONTACT & PRIVACY -->
+          <!-- ========================================== -->
+          <div id="tab-safe-contact" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white rounded-2xl border border-[#d6e0f2] p-6 shadow-sm"
+            >
+              <div
+                class="flex items-center justify-between pb-5 border-b border-[#d6e0f2]"
+              >
+                <div>
+                  <h2 class="text-xl font-bold text-slate-900">
+                    প্রবেশাধিকার ও গোপনীয়তা (Safe Contact & Privacy)
+                  </h2>
+                  <p class="text-xs text-slate-500 mt-0.5">
+                    Golden Thread G3: সংবেদনশীল নোটিফিকেশন যেন অনাকাঙ্ক্ষিত হাতে
+                    না পৌঁছায়।
+                  </p>
+                </div>
+                <span
+                  class="text-xs bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full"
+                  >নিরাপদ মোড সক্রিয় ✓</span
+                >
+              </div>
+
+              <div class="max-w-2xl space-y-4 mt-6 text-xs">
+                <div
+                  class="p-4 bg-emerald-50/70 border border-emerald-200 rounded-xl text-emerald-950"
+                >
+                  পারিবারিক বা বিরোধপূর্ণ মামলার ক্ষেত্রে আবেদনকারীর সুরক্ষার্থে
+                  সিস্টেম কোনো অনিরাপদ এসএমএস বা কল পাঠাবে না।
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block font-bold text-slate-700 mb-1"
+                      >নির্ধারিত নিরাপদ ফোন</label
+                    >
+                    <input
+                      type="tel"
+                      value="01712345678"
+                      class="w-full border rounded-xl p-2.5 font-mono"
+                    />
+                  </div>
+                  <div>
+                    <label class="block font-bold text-slate-700 mb-1"
+                      >নিরাপদ সময়সূচি</label
+                    >
+                    <select class="w-full border rounded-xl p-2.5">
+                      <option selected>দুপুর ২:০০ - বিকাল ৫:০০</option>
+                      <option>সকাল ৯:০০ - দুপুর ১২:০০</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="space-y-2 pt-2">
+                  <label
+                    class="flex items-center p-3 border rounded-xl bg-slate-50"
+                  >
+                    <input
+                      type="checkbox"
+                      checked
+                      class="text-emerald-700 rounded"
+                    />
+                    <span class="ml-2 font-medium"
+                      >মোবাইলে সাধারণ SMS পাঠাবেন না (Web Only)</span
+                    >
+                  </label>
+                  <label
+                    class="flex items-center p-3 border rounded-xl bg-slate-50"
+                  >
+                    <input
+                      type="checkbox"
+                      checked
+                      class="text-emerald-700 rounded"
+                    />
+                    <span class="ml-2 font-medium"
+                      >অটোমেটেড ভয়েস কল সম্পূর্ণ নিষিদ্ধ</span
+                    >
+                  </label>
+                </div>
+
+                <button
+                  onclick="alert('নিরাপত্তা পছন্দসমূহ সফলভাবে সংরক্ষিত হয়েছে।')"
+                  class="bg-[#0d392e] hover:bg-[#145542] text-white font-bold px-5 py-2.5 rounded-xl shadow-sm"
+                >
+                  পছন্দ সংরক্ষণ করুন
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- TAB 14: AUDIT ACTIVITY LOG -->
+          <!-- ========================================== -->
+          <div id="tab-activity" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white rounded-2xl border border-[#d6e0f2] p-6 shadow-sm"
+            >
+              <div
+                class="flex items-center justify-between pb-5 border-b border-[#d6e0f2]"
+              >
+                <div>
+                  <h2 class="text-xl font-bold text-slate-900">
+                    নিরীক্ষা ইতিহাস (Activity Audit Log)
+                  </h2>
+                  <p class="text-xs text-slate-500 mt-0.5">
+                    কেসে গৃহীত সকল প্রাতিষ্ঠানিক পদক্ষেপের অপরিবর্তনীয় লগ।
+                  </p>
+                </div>
+              </div>
+
+              <div
+                class="relative pl-6 space-y-4 border-l-2 border-[#d6e0f2] ml-3 text-xs mt-6"
+              >
+                <div class="relative">
+                  <span
+                    class="absolute -left-[31px] top-1 w-3.5 h-3.5 rounded-full bg-emerald-600 border-2 border-white"
+                  ></span>
+                  <span class="font-mono text-slate-400 text-[11px] block"
+                    >২৪ সেপ্টেম্বর ২০২৬, বিকাল ৪:১৫</span
+                  >
+                  <p class="text-slate-800 font-medium mt-0.5">
+                    প্যানেল আইনজীবী এডভোকেট এ. রহমান মামলার অগ্রগতি নোট দাখিল
+                    করেছেন।
+                  </p>
+                </div>
+
+                <div class="relative">
+                  <span
+                    class="absolute -left-[31px] top-1 w-3.5 h-3.5 rounded-full bg-amber-500 border-2 border-white"
+                  ></span>
+                  <span class="font-mono text-slate-400 text-[11px] block"
+                    >২৩ সেপ্টেম্বর ২০২৬, দুপুর ১২:৩০</span
+                  >
+                  <p class="text-slate-800 font-medium mt-0.5">
+                    DLAO কর্মকর্তা কর্তৃক আয়ের প্রত্যয়ন দাখিলের আনুষ্ঠানিক তলব
+                    জারি।
+                  </p>
+                </div>
+
+                <div class="relative">
+                  <span
+                    class="absolute -left-[31px] top-1 w-3.5 h-3.5 rounded-full bg-blue-600 border-2 border-white"
+                  ></span>
+                  <span class="font-mono text-slate-400 text-[11px] block"
+                    >২২ সেপ্টেম্বর ২০২৬, সকাল ১১:০০</span
+                  >
+                  <p class="text-slate-800 font-medium mt-0.5">
+                    আবেদন APP-2026-000342 যাচাইকরণ সম্পন্ন করে CASE-2026-0142
+                    অনুমোদিত।
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- TAB 15: EMERGENCY & 16699 -->
+          <!-- ========================================== -->
+          <div id="tab-emergency" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white rounded-2xl border border-[#d6e0f2] p-6 shadow-sm"
+            >
+              <div
+                class="flex items-center justify-between pb-5 border-b border-[#d6e0f2]"
+              >
+                <div>
+                  <h2 class="text-xl font-bold text-slate-900">
+                    সহায়তা ও যোগাযোগ (Help & Helpline)
+                  </h2>
+                  <p class="text-xs text-slate-500 mt-0.5">
+                    জরুরি আইনগত সহায়তা ও হেল্পলাইনের সরাসরি যোগাযোগ।
+                  </p>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 text-xs">
+                <div
+                  class="bg-gradient-to-br from-red-600 to-rose-700 text-white rounded-2xl p-6 shadow-md flex flex-col justify-between"
+                >
+                  <div>
+                    <span
+                      class="text-[11px] font-bold uppercase tracking-wider bg-red-900/50 px-3 py-1 rounded-full border border-red-400/40"
+                      >২৪/৭ জাতীয় লিগ্যাল এইড কল সেন্টার</span
+                    >
+                    <h3 class="text-3xl font-black mt-3">১৬৬৯৯</h3>
+                    <p class="text-red-100 mt-2 leading-relaxed">
+                      বাংলাদেশ সরকারের জাতীয় আইনগত সহায়তা প্রদান সংস্থার
+                      টোল-ফ্রি হটলাইন। যেকোনো মোবাইল বা টেলিফোন থেকে কোনো খরচ
+                      ছাড়াই সরাসরি কথা বলুন।
+                    </p>
+                  </div>
+                  <a
+                    href="tel:16699"
+                    class="mt-4 w-full bg-white text-red-700 font-bold py-2.5 rounded-xl text-center flex items-center justify-center space-x-2"
+                  >
+                    <i class="fa-solid fa-phone"></i>
+                    <span>সরাসরি কল দিন (16699)</span>
+                  </a>
+                </div>
+
+                <div class="bg-slate-50 p-5 rounded-2xl border space-y-3">
+                  <h4 class="font-bold text-slate-800 text-sm">
+                    জরুরি মানবিক সহায়তার অনুরোধ
+                  </h4>
+                  <p class="text-slate-600">
+                    আপনি যদি জীবনঝুঁকি বা আশু শারীরিক ক্ষতির আশঙ্কায় থাকেন, তবে
+                    জরুরি ফ্লাগ পাঠান:
+                  </p>
+                  <select
+                    id="emergencyReasonSelect"
+                    class="w-full border rounded-xl p-2.5"
+                  >
+                    <option>তাৎক্ষণিক জীবনঝুঁকি বা সহিংসতার আশঙ্কা</option>
+                    <option>বেআইনি আটক বা গ্রেফতারের শিকার</option>
+                    <option>আগামীকালই আদালতের জরুরি শুনানি</option>
+                  </select>
+                  <button
+                    onclick="
+                      alert(
+                        'জরুরি সহায়তা সংকেত রেসপন্স সেলে পাঠানো হয়েছে। কর্মকর্তা আপনার নিরাপদ নম্বরে সতর্কভাবে যোগাযোগ করবেন।',
+                      )
+                    "
+                    class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl"
+                  >
+                    জরুরি ফ্লাগ পাঠান (Trigger Urgent Alert)
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- TAB 16: PROFILE (নাগরিক প্রোফাইল) -->
+          <!-- ========================================== -->
+          <div id="tab-profile" class="tab-content hidden space-y-6">
+            <div
+              class="bg-white rounded-2xl border border-[#d6e0f2] p-6 shadow-sm"
+            >
+              <div
+                class="flex items-center justify-between pb-5 border-b border-[#d6e0f2]"
+              >
+                <div>
+                  <h2 class="text-xl font-bold text-slate-900">
+                    নাগরিক পরিচিতি (My Profile)
+                  </h2>
+                  <p class="text-xs text-slate-500 mt-0.5">
+                    NID ভিত্তিক ভেরিফাইড তথ্য ও অ্যাক্সেসিবিলিটি সেটিংস।
+                  </p>
+                </div>
+                <span
+                  class="bg-emerald-100 text-emerald-800 font-bold text-xs px-3 py-1 rounded-full"
+                  >NID Verified ✓</span
+                >
+              </div>
+
+              <div
+                class="bg-slate-50 p-5 rounded-2xl border mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs"
+              >
+                <div>
+                  <span class="text-slate-500 block">নাম:</span>
+                  <strong class="text-slate-800 text-sm"
+                    >মোছাঃ রহিমা খাতুন</strong
+                  >
+                </div>
+                <div>
+                  <span class="text-slate-500 block">জাতীয় পরিচয়পত্র:</span>
+                  <strong class="text-slate-800 font-mono"
+                    >19892691234568921</strong
+                  >
+                </div>
+                <div>
+                  <span class="text-slate-500 block">মোবাইল:</span>
+                  <strong class="text-slate-800 font-mono">01712345678</strong>
+                </div>
+                <div>
+                  <span class="text-slate-500 block">ঠিকানা:</span>
+                  <strong class="text-slate-800">সাভার, ঢাকা</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer
+          class="bg-white border-t border-[#d6e0f2] px-6 py-4 text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-2"
+        >
+          <p>
+            © ২০২৬ জাতীয় আইনগত সহায়তা প্রদান সংস্থা (NLASO) — “পাঁচ দরজা, এক
+            রেকর্ড”
+          </p>
+          <div class="flex space-x-4">
+            <a
+              href="https://db.nlaso.gov.bd/Pages/OnlineApplications.aspx"
+              target="_blank"
+              class="hover:text-emerald-700"
+              >সরকারি NLASO পোর্টাল</a
+            >
+            <button
+              onclick="switchTab('safe-contact')"
+              class="hover:text-emerald-700"
+            >
+              নিরাপদ যোগাযোগ
+            </button>
+            <button
+              onclick="switchTab('emergency')"
+              class="text-red-600 font-bold"
+            >
+              ১৬৬৯৯ হেল্পলাইন
+            </button>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- JAVASCRIPT CONTROLLERS -->
+    <script>
+      // State management
+      const state = {
+        currentTab: "dashboard",
+        currentStep: 1,
+        fontSizeDelta: 0,
+        highContrast: false,
+        readingAloud: false,
+      };
+
+      // Tab Titles Mapping for Header
+      const tabTitles = {
+        dashboard: "ড্যাশবোর্ড",
+        "apply-wizard": "নতুন আবেদন",
+        "saved-applications": "আমার আবেদনসমূহ (খসড়া)",
+        "status-tracking": "আবেদনের অবস্থা",
+        "case-dashboard": "চলতি মামলা (CASE-0142)",
+        documents: "তথ্য ও দলিলপত্র",
+        hearings: "শুনানি ও পদক্ষেপ",
+        mediation: "মধ্যস্থতা (Mediation)",
+        lawyer: "প্যানেল আইনজীবী",
+        referral: "রেফারেল ও সমন্বয়",
+        "legal-advice": "আইনি পরামর্শ ও তথ্য",
+        notifications: "কাজ ও সতর্কতা",
+        "safe-contact": "প্রবেশাধিকার ও গোপনীয়তা",
+        activity: "নিরীক্ষা ইতিহাস",
+        emergency: "সহায়তা ও যোগাযোগ",
+        profile: "নাগরিক প্রোফাইল",
+      };
+
+      function switchTab(tabId) {
+        state.currentTab = tabId;
+
+        // Hide all tabs
+        document.querySelectorAll(".tab-content").forEach((el) => {
+          el.classList.add("hidden");
+          el.classList.remove("block");
+        });
+
+        // Show target tab
+        const target = document.getElementById("tab-" + tabId);
+        if (target) {
+          target.classList.remove("hidden");
+          target.classList.add("block");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        // Update Header Title
+        const titleEl = document.getElementById("topBarTitle");
+        if (titleEl && tabTitles[tabId]) {
+          titleEl.innerText = tabTitles[tabId];
+        }
+
+        // Update Sidebar Active state
+        document.querySelectorAll(".sidebar-item").forEach((btn) => {
+          btn.classList.remove("sidebar-active", "text-white");
+          btn.classList.add("text-[#d1e7dd]");
+        });
+
+        const activeNav = document.getElementById("nav-" + tabId);
+        if (activeNav) {
+          activeNav.classList.add("sidebar-active", "text-white");
+          activeNav.classList.remove("text-[#d1e7dd]");
+        }
+
+        // Close mobile drawer on selection
+        toggleSidebar(false);
+      }
+
+      // Mobile Sidebar Drawer Toggle
+      function toggleSidebar(open) {
+        const drawer = document.getElementById("sidebarDrawer");
+        const backdrop = document.getElementById("sidebarBackdrop");
+        if (open) {
+          drawer.classList.remove("-translate-x-full");
+          backdrop.classList.remove("hidden");
+        } else {
+          drawer.classList.add("-translate-x-full");
+          backdrop.classList.add("hidden");
+        }
+      }
+
+      // Multi-step Wizard
+      function goToStep(stepNum) {
+        state.currentStep = stepNum;
+
+        document.querySelectorAll(".wizard-step").forEach((panel) => {
+          panel.classList.add("hidden");
+          panel.classList.remove("block");
+        });
+
+        const target = document.getElementById("wizard-step-" + stepNum);
+        if (target) {
+          target.classList.remove("hidden");
+          target.classList.add("block");
+        }
+
+        for (let i = 1; i <= 6; i++) {
+          const circle = document.getElementById("step-circle-" + i);
+          if (circle) {
+            circle.className =
+              "w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold mb-1";
+            if (i < stepNum) {
+              circle.classList.add(
+                "bg-emerald-100",
+                "text-emerald-800",
+                "border-emerald-300",
+              );
+              circle.innerText = "✓";
+            } else if (i === stepNum) {
+              circle.classList.add(
+                "bg-[#0f3322]",
+                "text-white",
+                "border-[#0f3322]",
+              );
+              circle.innerText = i;
+            } else {
+              circle.classList.add(
+                "bg-slate-100",
+                "text-slate-500",
+                "border-slate-300",
+              );
+              circle.innerText = i;
+            }
+          }
+        }
+
+        if (stepNum === 5) {
+          document.getElementById("revApplicantName").innerText =
+            document.getElementById("applicantName").value;
+          const isRep =
+            document.querySelector('input[name="applicant_type"]:checked')
+              .value === "representative";
+          document.getElementById("revAppType").innerText = isRep
+            ? "প্রতিনিধি কর্তৃক দাখিল (Representative)"
+            : "নিজেই আবেদনকারী (Self)";
+        }
+      }
+
+      function toggleRepresentativeFields(isRep) {
+        const sec = document.getElementById("representativeSection");
+        const labelSelf = document.getElementById("label-self");
+        const labelRep = document.getElementById("label-representative");
+        if (isRep) {
+          sec.classList.remove("hidden");
+          labelRep.classList.add("border-emerald-600", "bg-emerald-50/40");
+          labelSelf.classList.remove("border-emerald-600", "bg-emerald-50/40");
+        } else {
+          sec.classList.add("hidden");
+          labelSelf.classList.add("border-emerald-600", "bg-emerald-50/40");
+          labelRep.classList.remove("border-emerald-600", "bg-emerald-50/40");
+        }
+      }
+
+      function toggleCourtCaseFields(hasCase) {
+        const details = document.getElementById("courtCaseDetails");
+        if (hasCase) details.classList.remove("hidden");
+        else details.classList.add("hidden");
+      }
+
+      function handleFormSubmission(e) {
+        e.preventDefault();
+        if (!document.getElementById("declarationConsent").checked) {
+          alert("অনুগ্রহ করে আইনি ঘোষণা ও সম্মতিতে টিক দিন।");
+          return;
+        }
+        goToStep(6);
+      }
+
+      function saveCurrentDraft() {
+        alert("খসড়া ড্রাফট সফলভাবে সংরক্ষিত হয়েছে।");
+      }
+
+      function resumeDraft(id) {
+        switchTab("apply-wizard");
+        goToStep(id === 1048 ? 4 : 2);
+      }
+
+      function deleteDraft(id) {
+        if (confirm("খসড়া #" + id + " মুছে ফেলতে চান?")) {
+          alert("খসড়া মুছে ফেলা হয়েছে।");
+        }
+      }
+
+      function showLawyerChangeForm() {
+        document.getElementById("lawyerChangeBox").classList.remove("hidden");
+      }
+
+      // function confirmCitizenLogout() {
+      //   if (confirm("আপনি কি নিশ্চিত যে নাগরিক সেশন থেকে লগ আউট করতে চান?")) {
+      //     alert("সফলভাবে লগ আউট হয়েছে।");
+      //     location.reload();
+      //   }
+      // }
+
+      // Accessibility handlers
+      function changeFontSize(delta) {
+        state.fontSizeDelta += delta;
+        if (state.fontSizeDelta > 4) state.fontSizeDelta = 4;
+        if (state.fontSizeDelta < -2) state.fontSizeDelta = -2;
+        document.getElementById("portalBody").style.fontSize =
+          16 + state.fontSizeDelta + "px";
+      }
+
+      function resetFontSize() {
+        state.fontSizeDelta = 0;
+        document.getElementById("portalBody").style.fontSize = "16px";
+      }
+
+      function toggleHighContrast() {
+        state.highContrast = !state.highContrast;
+        const b = document.getElementById("portalBody");
+        if (state.highContrast) b.classList.add("high-contrast");
+        else b.classList.remove("high-contrast");
+      }
+
+      function readAloudPage() {
+        state.readingAloud = !state.readingAloud;
+        const btn = document.getElementById("readAloudBtn");
+        if (state.readingAloud) {
+          btn.classList.add("text-amber-500", "animate-pulse");
+          alert(
+            "ভয়েস রিড-আউট সক্রিয়: পর্দার তথ্যাবলী অডিও মাধ্যমে পাঠ শুরু হলো...",
+          );
+        } else {
+          btn.classList.remove("text-amber-500", "animate-pulse");
+        }
+      }
+    </script>
+  </body>
+</html>

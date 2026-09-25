@@ -1,0 +1,2687 @@
+<!doctype html>
+<html lang="bn" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Legal Aid Lawyer Workbench (LALW) — প্যানেল আইনজীবী পোর্টাল</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts: Hind Siliguri for Bangla & Inter for English -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              bangla: ['"Hind Siliguri"', "sans-serif"],
+              sans: ['"Hind Siliguri"', '"Inter"', "sans-serif"],
+            },
+            colors: {
+              lawgreen: {
+                50: "#f0fdf4",
+                100: "#dcfce7",
+                700: "#15803d",
+                800: "#166534",
+                900: "#0f3322" /* Exact deep forest green from user image */,
+                950: "#0a2418",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Noto Sans Bengali", sans-serif;
+      }
+      .high-contrast {
+        background-color: #000 !important;
+        color: #ff0 !important;
+      }
+      .high-contrast * {
+        background-color: #000 !important;
+        color: #ff0 !important;
+        border-color: #ff0 !important;
+      }
+      .high-contrast button,
+      .high-contrast a {
+        color: #0ff !important;
+        text-decoration: underline !important;
+      }
+      /* Match the main Legal Aid dashboard. */
+      :root {
+        --legal-green: #0d392e;
+        --legal-border: #d6e0f2;
+      }
+      body:not(.high-contrast) .sidebar-active {
+        background: #29574a !important;
+        box-shadow: inset 3px 0 0 #f97316;
+      }
+      body:not(.high-contrast) #pageContainer [class~="bg-[#0f3322]"] {
+        background-color: var(--legal-green) !important;
+      }
+      body:not(.high-contrast) #pageContainer [class~="border-slate-200/90"] {
+        border-color: var(--legal-border) !important;
+      }
+      body:not(.high-contrast) #pageContainer .bg-white.rounded-2xl {
+        box-shadow: 0 8px 30px rgba(19, 48, 92, 0.055);
+      }
+      body:not(.high-contrast) #pageContainer .card-hover:hover {
+        transform: none;
+      }
+      body:not(.high-contrast)
+        :is(button, a, input, select, textarea):focus-visible {
+        outline: 2px solid #f97316;
+        outline-offset: 2px;
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+      .sidebar-active {
+        background-color: #29574a !important;
+        color: #ffffff !important;
+        font-weight: 600;
+      }
+      .card-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px -5px rgba(15, 51, 34, 0.08);
+        transition: all 0.2s ease-in-out;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-[#f6f9ff] text-slate-800 antialiased min-h-screen flex flex-col"
+    id="appBody"
+  >
+    <!-- ========================================== -->
+    <!-- 2. MAIN APPLICATION WORKSPACE -->
+    <!-- ========================================== -->
+    <div id="mainApp" class="flex-1 flex min-h-screen overflow-x-hidden">
+      <!-- DESKTOP & MOBILE SIDEBAR (MATCHING USER SCREENSHOT) -->
+      <aside
+        id="sidebarDrawer"
+        class="w-72 bg-[#0d392e] text-[#d1e7dd] flex flex-col justify-between shrink-0 fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 md:static transition-transform duration-200 ease-in-out shadow-xl md:shadow-none border-r border-[#275b4d]"
+      >
+        <!-- Top Sidebar Brand / Header -->
+        <div>
+          <div
+            class="min-h-[76px] flex items-center px-5 border-b border-[#275b4d] space-x-3"
+          >
+            <div
+              class="w-9 h-9 rounded-lg bg-orange-500 text-white flex items-center justify-center font-bold text-base shadow-sm"
+            >
+              <i class="fa-solid fa-scale-balanced"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h1 class="text-sm font-bold text-white tracking-tight truncate">
+                আইনজীবী পোর্টাল
+              </h1>
+              <p class="text-[10px] text-emerald-200/90 truncate">
+                বাংলাদেশ আইনগত সহায়তা অধিদপ্তর
+              </p>
+            </div>
+            <!-- Close button on mobile -->
+            <button
+              onclick="toggleSidebar(false)"
+              class="md:hidden text-emerald-200 hover:text-white p-1"
+            >
+              <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+          </div>
+
+          <!-- Sidebar Navigation List -->
+          <nav
+            class="p-4 space-y-1 text-sm font-medium overflow-y-auto max-h-[calc(100vh-210px)]"
+          >
+            <button
+              onclick="navigate('dashboard')"
+              id="nav-dashboard"
+              class="sidebar-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-white sidebar-active transition"
+            >
+              <i
+                class="fa-solid fa-table-cells-large w-4 text-center text-sm"
+              ></i
+              ><span>ড্যাশবোর্ড</span>
+            </button>
+
+            <button
+              onclick="navigate('assignments')"
+              id="nav-assignments"
+              class="sidebar-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i class="fa-solid fa-inbox w-4 text-center text-sm"></i
+              ><span>নতুন অ্যাসাইনমেন্ট</span>
+            </button>
+
+            <button
+              onclick="navigate('cases')"
+              id="nav-cases"
+              class="sidebar-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i class="fa-solid fa-briefcase w-4 text-center text-sm"></i
+              ><span>আমার মামলাসমূহ</span>
+            </button>
+
+            <button
+              onclick="navigate('hearings')"
+              id="nav-hearings"
+              class="sidebar-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i
+                class="fa-regular fa-calendar-check w-4 text-center text-sm"
+              ></i
+              ><span>শুনানির কার্যতালিকা</span>
+            </button>
+
+            <button
+              onclick="navigate('deadlines')"
+              id="nav-deadlines"
+              class="sidebar-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i class="fa-regular fa-clock w-4 text-center text-sm"></i
+              ><span>সময়সীমা ও ডেডলাইন</span>
+            </button>
+
+            <button
+              onclick="navigate('documents')"
+              id="nav-documents"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i class="fa-solid fa-file-shield w-4 text-center text-sm"></i
+              ><span>মামলার নথি ও আদেশ</span>
+            </button>
+
+            <button
+              onclick="navigate('updates')"
+              id="nav-updates"
+              class="sidebar-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i class="fa-solid fa-file-pen w-4 text-center text-sm"></i
+              ><span>অগ্রগতি রিপোর্ট দাখিল</span>
+            </button>
+
+            <button
+              onclick="navigate('communications')"
+              id="nav-communications"
+              class="sidebar-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i class="fa-solid fa-comment-sms w-4 text-center text-sm"></i
+              ><span>ক্লায়েন্ট যোগাযোগ</span>
+            </button>
+
+            <button
+              onclick="navigate('notifications')"
+              id="nav-notifications"
+              class="sidebar-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i class="fa-solid fa-bell w-4 text-center text-sm"></i
+              ><span>কাজ ও সতর্কতা</span>
+            </button>
+
+            <button
+              onclick="navigate('calendar')"
+              id="nav-calendar"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i class="fa-regular fa-calendar-days w-4 text-center text-sm"></i
+              ><span>ক্যালেন্ডার ডকেট</span>
+            </button>
+
+            <button
+              onclick="navigate('activity')"
+              id="nav-activity"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i
+                class="fa-solid fa-clock-rotate-left w-4 text-center text-sm"
+              ></i
+              ><span>নিরীক্ষা ও কার্যক্রম লগ</span>
+            </button>
+
+            <button
+              onclick="navigate('profile')"
+              id="nav-profile"
+              class="sidebar-item w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-[#d1e7dd] hover:bg-[#185241] hover:text-white transition"
+            >
+              <i class="fa-solid fa-user-shield w-4 text-center text-sm"></i
+              ><span>প্রোফাইল ও RBAC</span>
+            </button>
+          </nav>
+        </div>
+
+        <!-- Bottom Principle Card (Matching Screenshot "ইউডিসির মূলনীতি" box) -->
+        <div class="p-3">
+          <div
+            class="bg-[#082c25] rounded-xl p-3 border border-[#275b4d] text-[11px] text-[#9fc7b1] space-y-1"
+          >
+            <span class="font-bold text-white text-xs block"
+              >আইনজীবীর মূলনীতি</span
+            >
+            <p class="leading-snug text-[10px]">
+              দায়িত্বশীল আইনি প্রতিনিধিত্ব, সময়মতো শুনানির রিপোর্ট এবং
+              ক্লায়েন্টের তথ্যের পূর্ণ গোপনীয়তা রক্ষা করুন।
+            </p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- BACKDROP FOR MOBILE SIDEBAR -->
+      <div
+        id="sidebarBackdrop"
+        onclick="toggleSidebar(false)"
+        class="fixed inset-0 bg-black/50 z-40 hidden md:hidden"
+      ></div>
+
+      <!-- MAIN RIGHT CONTENT COLUMN -->
+      <div class="flex-1 flex flex-col min-w-0">
+        <!-- TOP WHITE HEADER BAR (MATCHING SCREENSHOT) -->
+        <header
+          class="min-h-[76px] bg-white border-b border-[#d6e0f2] px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30"
+        >
+          <div class="flex items-center space-x-3">
+            <!-- Mobile Sidebar Toggle -->
+            <button
+              onclick="toggleSidebar(true)"
+              class="md:hidden text-slate-700 hover:text-slate-900 p-1.5 rounded-lg border border-[#d6e0f2]"
+            >
+              <i class="fa-solid fa-bars text-base"></i>
+            </button>
+            <h2
+              id="topBarTitle"
+              class="text-xl sm:text-2xl font-bold text-slate-900"
+            >
+              ড্যাশবোর্ড
+            </h2>
+          </div>
+
+          <!-- Right Utilities: Demo Button, Accessibility, Refresh, Logout & User Avatar -->
+          <div class="flex items-center space-x-2 sm:space-x-3">
+            <!-- Quick B5 Evidence Demo Button -->
+            <button
+              onclick="runB5DemoFlow()"
+              class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs px-3 py-1.5 rounded-lg shadow-sm flex items-center space-x-1.5 border border-amber-300 transition"
+            >
+              <i class="fa-solid fa-bolt text-slate-950"></i>
+              <span class="hidden sm:inline">Run B5 Demo</span>
+            </button>
+
+            <!-- Accessibility Toolbar -->
+            <!-- <div class="hidden lg:flex items-center space-x-1 bg-slate-100 p-1 rounded-lg text-xs font-semibold text-slate-700">
+            <button onclick="changeFontSize(-1)" class="px-1.5 py-0.5 hover:bg-white rounded">A-</button>
+            <button onclick="resetFontSize()" class="px-1.5 py-0.5 hover:bg-white rounded">A</button>
+            <button onclick="changeFontSize(1)" class="px-1.5 py-0.5 hover:bg-white rounded">A+</button>
+            <button onclick="toggleHighContrast()" class="px-1.5 py-0.5 hover:bg-white rounded text-slate-600" title="High Contrast"><i class="fa-solid fa-circle-half-stroke"></i></button>
+          </div> -->
+
+            <!-- Refresh Button -->
+            <button
+              onclick="location.reload()"
+              class="w-9 h-9 rounded-xl border border-[#d6e0f2] flex items-center justify-center text-slate-600 hover:bg-slate-50 transition"
+              title="Refresh Page"
+            >
+              <i class="fa-solid fa-rotate-right text-xs"></i>
+            </button>
+
+            <!-- Logout Button (Styled exactly like image) -->
+            <button
+              onclick="window.location.href = '/login'"
+              class="px-3 py-1.5 rounded-lg bg-[#0d392e] hover:bg-[#145542] text-white text-xs font-semibold flex items-center space-x-1.5 shadow-sm"
+            >
+              <span>লগ আউট</span>
+            </button>
+
+            <!-- User Avatar (Dark green circle with AR matching image) -->
+            <div
+              onclick="navigate('profile')"
+              class="w-9 h-9 rounded-xl bg-[#0d392e] text-white flex items-center justify-center text-xs font-bold shadow-sm cursor-pointer border border-[#275b4d]"
+              title="আইনজীবী প্রোফাইল"
+            >
+              AR
+            </div>
+          </div>
+        </header>
+
+        <!-- MAIN SCROLLABLE BODY -->
+        <main
+          class="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1480px] w-full mx-auto space-y-6"
+          id="pageContainer"
+        >
+          <!-- Rendered dynamically via JavaScript -->
+        </main>
+
+        <!-- FOOTER -->
+        <footer
+          class="bg-white border-t border-[#d6e0f2] px-6 py-4 text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-2"
+        >
+          <p>
+            © ২০২৬ জাতীয় আইনগত সহায়তা প্রদান সংস্থা (NLASO) — Legal Aid Lawyer
+            Workbench (LALW)
+          </p>
+          <div class="flex space-x-4">
+            <button
+              onclick="showDlaoAlertModal()"
+              class="text-blue-700 font-semibold hover:underline"
+            >
+              DLAO ওভারডিউ অ্যালার্ট ভিউ
+            </button>
+            <button
+              onclick="navigate('communications')"
+              class="hover:text-emerald-700"
+            >
+              ক্লায়েন্ট যোগাযোগ
+            </button>
+            <button
+              onclick="runB5DemoFlow()"
+              class="text-amber-700 font-bold hover:underline"
+            >
+              B5 এভিডেন্স ডেমো
+            </button>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- MODAL DIALOG CONTAINER -->
+    <div
+      id="modalContainer"
+      class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto"
+    >
+      <div
+        id="modalBox"
+        class="bg-white rounded-3xl border border-[#d6e0f2] shadow-2xl max-w-xl w-full p-6 text-xs max-h-[90vh] overflow-y-auto transform transition-all"
+      >
+        <!-- Injected modal content -->
+      </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div
+      id="toastNotification"
+      class="fixed bottom-6 right-6 bg-slate-900 text-white text-xs font-semibold px-4 py-3 rounded-2xl shadow-xl z-50 hidden flex items-center space-x-2 border border-slate-700 transition-all max-w-sm"
+    >
+      <i class="fa-solid fa-circle-check text-emerald-400"></i>
+      <span id="toastMessage">Success</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC & STATE CONTROLLER -->
+    <script>
+      const SEED_CASES = [
+        {
+          id: "LA-001",
+          title: "পারিবারিক ভরণপোষণ ও খোরপোশ মোকদ্দমা",
+          client: "ময়ূরী আক্তার (Moyuri Akter)",
+          clientPhone: "01712-345678",
+          court: "পারিবারিক আদালত, জয়পুরহাট (Family Court)",
+          courtCaseNo: "FC-2026-00145",
+          assignedDate: "2026-09-24",
+          status: "Active",
+          assignmentStatus: "Accepted",
+          nextHearing: "2026-09-30",
+          stage: "Pre-trial (প্রাথমিক জবাব)",
+          priority: "High",
+          matter: "Maintenance & Custody",
+          dlao: "জেলা লিগ্যাল এইড অফিসার, জয়পুরহাট",
+          safeContact: true,
+          safeChannel: "ভয়েস কল (Verified Safe)",
+          safeTime: "সকাল ১০:০০ - দুপুর ১২:০০",
+          documents: [
+            {
+              name: "Legal_Aid_Application.pdf",
+              type: "Application",
+              by: "DLAO Joypurhat",
+              date: "2026-09-24",
+            },
+            {
+              name: "Court_Petition_FC145.pdf",
+              type: "Court Record",
+              by: "DLAO Joypurhat",
+              date: "2026-09-24",
+            },
+            {
+              name: "NID_Identity_Note.pdf",
+              type: "Identification",
+              by: "DLAO Joypurhat",
+              date: "2026-09-24",
+            },
+            {
+              name: "Previous_Court_Order.pdf",
+              type: "Judicial Order",
+              by: "Adv. Atikur Rahman",
+              date: "2026-09-25",
+            },
+          ],
+          tasks: [
+            {
+              id: "T1",
+              title: "শুনানিতে হাজিরা ও ফলাফল দাখিল",
+              due: "2026-09-30",
+              status: "Pending",
+              overdue: false,
+            },
+            {
+              id: "T2",
+              title: "শুনানি-পরবর্তী অগ্রগতি রিপোর্ট DLAO-তে দাখিল",
+              due: "2026-10-05",
+              status: "Pending",
+              overdue: false,
+            },
+          ],
+          updates: [
+            {
+              date: "2026-09-24",
+              stage: "Pre-trial",
+              text: "মামলার প্রাথমিক নথিপত্র পর্যালোচনা সম্পন্ন। বিবাহ রেজিস্ট্রি ও অনাদায়ি খোরপোশের হিসাব যাচাইকৃত।",
+              by: "Adv. Atikur Rahman",
+            },
+          ],
+          communications: [
+            {
+              date: "2026-09-25",
+              channel: "Voice Call",
+              purpose: "Hearing Preparation",
+              status: "Delivered",
+              notes:
+                "৩০ সেপ্টেম্বর শুনানির তারিখ ও প্রয়োজনীয় প্রমাণক সম্পর্কে মক্কেলকে অবহিত করা হয়েছে।",
+            },
+          ],
+        },
+        {
+          id: "LA-002",
+          title: "যৌতুক নিরোধ ও দাম্পত্য অধিকার পুনরুদ্ধার",
+          client: "রহিম উদ্দিন (Rahim Uddin)",
+          clientPhone: "01811-987654",
+          court: "পারিবারিক আদালত, জয়পুরহাট",
+          courtCaseNo: "FC-2026-00152",
+          assignedDate: "2026-09-20",
+          status: "Active",
+          assignmentStatus: "Accepted",
+          nextHearing: "2026-10-02",
+          stage: "Written Statement",
+          priority: "Normal",
+          matter: "Family / Dowry",
+          dlao: "জেলা লিগ্যাল এইড অফিসার, জয়পুরহাট",
+          safeContact: true,
+          safeChannel: "Voice Call",
+          safeTime: "যেকোনো সরকারি সময়",
+          documents: [
+            {
+              name: "Application_Doc.pdf",
+              type: "Application",
+              by: "DLAO Joypurhat",
+              date: "2026-09-20",
+            },
+          ],
+          tasks: [
+            {
+              id: "T3",
+              title: "লিখিত জবাব আরজি প্রস্তুত",
+              due: "2026-10-01",
+              status: "Pending",
+              overdue: false,
+            },
+          ],
+          updates: [],
+          communications: [],
+        },
+        {
+          id: "LA-003",
+          title: "দেওয়ানি স্বত্ব ঘোষণা ও সীমানা বিরোধ",
+          client: "জান্নাত আরা (Jannat Ara)",
+          clientPhone: "01922-334455",
+          court: "জেলা ও দায়রা জজ আদালত, জয়পুরহাট",
+          courtCaseNo: "CS-2026-0089",
+          assignedDate: "2026-09-18",
+          status: "Active",
+          assignmentStatus: "Accepted",
+          nextHearing: "2026-10-08",
+          stage: "Evidence",
+          priority: "Normal",
+          matter: "Civil Land Dispute",
+          dlao: "জেলা লিগ্যাল এইড অফিসার, জয়পুরহাট",
+          safeContact: true,
+          safeChannel: "SMS / Voice",
+          safeTime: "বিকাল",
+          documents: [
+            {
+              name: "Land_Deed_Khatian.pdf",
+              type: "Evidence",
+              by: "Client",
+              date: "2026-09-19",
+            },
+          ],
+          tasks: [
+            {
+              id: "T4",
+              title: "সার্ভে খতিয়ান আদালতের নথিতে উপস্থাপন",
+              due: "2026-10-06",
+              status: "Pending",
+              overdue: false,
+            },
+          ],
+          updates: [],
+          communications: [],
+        },
+        {
+          id: "LA-004",
+          title: "ফৌজদারি অসচ্ছল আসামির জামিন আবেদন",
+          client: "কামাল হোসেন (Kamal Hossain)",
+          clientPhone: "01533-445566",
+          court: "চিফ জুডিসিয়াল ম্যাজিস্ট্রেট আদালত",
+          courtCaseNo: "GR-2026-0412",
+          assignedDate: "2026-09-22",
+          status: "Active",
+          assignmentStatus: "Accepted",
+          nextHearing: "2026-10-10",
+          stage: "Bail Hearing",
+          priority: "High",
+          matter: "Criminal Defense",
+          dlao: "জেলা লিগ্যাল এইড অফিসার, জয়পুরহাট",
+          safeContact: false, // UNSAFE CHANNEL! Sending restricted.
+          safeChannel: "Restricted / Unsafe (অনিরাপদ)",
+          safeTime: "সরাসরি যোগাযোগ নিষিদ্ধ",
+          documents: [
+            {
+              name: "FIR_ChargeSheet_Copy.pdf",
+              type: "Police Record",
+              by: "DLAO Joypurhat",
+              date: "2026-09-22",
+            },
+          ],
+          tasks: [
+            {
+              id: "T5",
+              title: "জামিন পিটিশন ও বন্ড প্রস্তুতকরণ",
+              due: "2026-10-05",
+              status: "Pending",
+              overdue: false,
+            },
+          ],
+          updates: [],
+          communications: [],
+        },
+        {
+          id: "LA-005",
+          title: "শ্রম আইন — বকেয়া বেতন ও ক্ষতিপূরণ আদায়",
+          client: "শীলা বেগম (Shila Begum)",
+          clientPhone: "01744-556677",
+          court: "শ্রম আদালত, রাজশাহী",
+          courtCaseNo: "LC-2026-0041",
+          assignedDate: "2026-08-10",
+          status: "Closed",
+          assignmentStatus: "Accepted",
+          nextHearing: "",
+          stage: "Concluded (নিষ্পত্তিকৃত)",
+          priority: "Normal",
+          matter: "Labour Rights",
+          dlao: "জেলা লিগ্যাল এইড অফিসার, জয়পুরহাট",
+          safeContact: true,
+          safeChannel: "Voice Call",
+          safeTime: "সকাল",
+          documents: [
+            {
+              name: "Final_Settlement_Order.pdf",
+              type: "Final Judgment",
+              by: "Labour Court",
+              date: "2026-09-15",
+            },
+          ],
+          tasks: [],
+          updates: [
+            {
+              date: "2026-09-15",
+              stage: "Settled",
+              text: "শ্রমিককে পূর্ণ বকেয়া ৮৫,০০০ টাকা পরিশোধ নিশ্চিত করা হয়েছে। মামলা নিষ্পত্তিপূর্বক সমাপ্ত।",
+              by: "Adv. Atikur Rahman",
+            },
+          ],
+          communications: [],
+        },
+        {
+          id: "LA-NEW-01",
+          title: "অসচ্ছল প্রবীণ নাগরিকের সুরক্ষা ও ভরণপোষণ",
+          client: "আব্দুল গফুর (Abdul Gafur)",
+          clientPhone: "01788-990011",
+          court: "সিনিয়র জুডিসিয়াল ম্যাজিস্ট্রেট আদালত",
+          courtCaseNo: "MP-2026-0201",
+          assignedDate: "2026-09-25",
+          status: "Pending Acceptance",
+          assignmentStatus: "Pending",
+          nextHearing: "2026-10-04",
+          stage: "নতুন বরাদ্দ",
+          priority: "High",
+          matter: "Senior Citizen Support",
+          dlao: "জেলা লিগ্যাল এইড অফিসার, জয়পুরহাট",
+          safeContact: true,
+          safeChannel: "Voice Call",
+          safeTime: "সকাল",
+          documents: [
+            {
+              name: "Assignment_Letter_DLAO.pdf",
+              type: "Official Letter",
+              by: "DLAO Joypurhat",
+              date: "2026-09-25",
+            },
+          ],
+          tasks: [
+            {
+              id: "T6",
+              title: "অ্যাসাইনমেন্টে সম্মতি/প্রত্যাখ্যান প্রদান",
+              due: "2026-09-27",
+              status: "Pending",
+              overdue: false,
+            },
+          ],
+          updates: [],
+          communications: [],
+        },
+        {
+          id: "LA-NEW-02",
+          title: "সন্তানের আইনগত অভিভাবকত্ব ও হেফাজত মোকদ্দমা",
+          client: "তাসলিমা খাতুন (Taslima Khatun)",
+          clientPhone: "01977-889900",
+          court: "পারিবারিক আদালত, জয়পুরহাট",
+          courtCaseNo: "FC-2026-00160",
+          assignedDate: "2026-09-25",
+          status: "Pending Acceptance",
+          assignmentStatus: "Pending",
+          nextHearing: "2026-10-09",
+          stage: "নতুন বরাদ্দ",
+          priority: "Normal",
+          matter: "Family / Custody",
+          dlao: "জেলা লিগ্যাল এইড অফিসার, জয়পুরহাট",
+          safeContact: true,
+          safeChannel: "Voice Call",
+          safeTime: "দুপুর",
+          documents: [
+            {
+              name: "Assignment_Letter_DLAO.pdf",
+              type: "Official Letter",
+              by: "DLAO Joypurhat",
+              date: "2026-09-25",
+            },
+          ],
+          tasks: [
+            {
+              id: "T7",
+              title: "অ্যাসাইনমেন্টে সম্মতি প্রদান",
+              due: "2026-09-27",
+              status: "Pending",
+              overdue: false,
+            },
+          ],
+          updates: [],
+          communications: [],
+        },
+      ];
+
+      const STORAGE_KEY = "LALW_SITE_MATCHED_STATE_V1";
+
+      let state = {
+        currentPage: "dashboard",
+        selectedCaseId: "LA-001",
+        currentCaseTab: "overview",
+        cases: [],
+        fontSizeDelta: 0,
+        highContrast: false,
+        notifications: [
+          {
+            id: 1,
+            type: "OVERDUE",
+            caseId: "LA-001",
+            text: "অগ্রগতি রিপোর্ট ওভারডিউ: শুনানিপূর্বে অগ্রগতি আপডেট দাখিল করুন।",
+            date: "2026-09-25 10:15",
+          },
+          {
+            id: 2,
+            type: "HEARING",
+            caseId: "LA-001",
+            text: "আসন্ন শুনানি: ৩০ সেপ্টেম্বর ২০২৬, পারিবারিক আদালত, জয়পুরহাট।",
+            date: "2026-09-24 16:30",
+          },
+          {
+            id: 3,
+            type: "ASSIGNMENT",
+            caseId: "LA-NEW-01",
+            text: "DLAO জয়পুরহাট থেকে নতুন মামলা বরাদ্দ: আব্দুল গফুর।",
+            date: "2026-09-25 09:00",
+          },
+          {
+            id: 4,
+            type: "DOCUMENT",
+            caseId: "LA-002",
+            text: "Case LA-002 এর অতিরিক্ত আরজি নথি আপলোড হয়েছে।",
+            date: "2026-09-23 14:00",
+          },
+        ],
+        activityLog: [
+          {
+            date: "2026-09-25 10:15",
+            text: "সিস্টেম ওভারডিউ ইঞ্জিন: Case LA-001 এর অগ্রগতি রিপোর্ট অপেক্ষমাণ হিসেবে চিহ্নিত। DLAO স্বয়ংক্রিয় অ্যালার্ট প্রেরিত।",
+          },
+          {
+            date: "2026-09-25 09:00",
+            text: "নতুন অ্যাসাইনমেন্ট LA-NEW-01 জয়পুরহাট DLAO কর্তৃক প্যানেল আইনজীবীকে বরাদ্দ।",
+          },
+          {
+            date: "2026-09-24 16:30",
+            text: "Case LA-001: পরবর্তী শুনানির তারিখ সিঙ্ক সম্পন্ন (৩০ সেপ্টেম্বর ২০২৬)।",
+          },
+          {
+            date: "2026-09-24 10:35",
+            text: "আইনজীবী কর্তৃক Case LA-001 (ময়ূরী আক্তার) এর আইনি সহায়তা দায়িত্ব গ্রহণ। স্বার্থের সংঘাত মুক্ত।",
+          },
+        ],
+      };
+
+      function init() {
+        try {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          if (saved) {
+            state = JSON.parse(saved);
+          } else {
+            state.cases = JSON.parse(JSON.stringify(SEED_CASES));
+          }
+        } catch (e) {
+          state.cases = JSON.parse(JSON.stringify(SEED_CASES));
+        }
+        persist();
+      }
+
+      function persist() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+
+      function toast(msg) {
+        const el = document.getElementById("toastNotification");
+        document.getElementById("toastMessage").innerText = msg;
+        el.classList.remove("hidden");
+        setTimeout(() => el.classList.add("hidden"), 3200);
+      }
+
+      function showModal(contentHtml) {
+        document.getElementById("modalBox").innerHTML = contentHtml;
+        document.getElementById("modalContainer").classList.remove("hidden");
+      }
+
+      function closeModal() {
+        document.getElementById("modalContainer").classList.add("hidden");
+      }
+
+      function logAction(text) {
+        const timestamp = new Date()
+          .toISOString()
+          .replace("T", " ")
+          .slice(0, 16);
+        state.activityLog.unshift({ date: timestamp, text });
+        persist();
+      }
+
+      function getCase(id) {
+        return state.cases.find((c) => c.id === id) || state.cases[0];
+      }
+
+      // Top Navigation & Page Switcher
+      const pageTitles = {
+        dashboard: "ড্যাশবোর্ড",
+        assignments: "নতুন অ্যাসাইনমেন্ট",
+        cases: "আমার মামলাসমূহ",
+        caseDetails: "মামলার বিস্তারিত নথি",
+        hearings: "শুনানির কার্যতালিকা",
+        deadlines: "সময়সীমা ও ডেডলাইন",
+        documents: "মামলার নথি ও আদেশ",
+        updates: "অগ্রগতি রিপোর্ট দাখিল",
+        communications: "ক্লায়েন্ট যোগাযোগ (G3 Safe)",
+        notifications: "কাজ ও সতর্কতা",
+        calendar: "ক্যালেন্ডার ডকেট",
+        activity: "নিরীক্ষা ও কার্যক্রম লগ",
+        profile: "প্রোফাইল ও RBAC",
+      };
+
+      function navigate(page, caseId = null, tab = "overview") {
+        state.currentPage = page;
+        if (caseId) state.selectedCaseId = caseId;
+        if (tab) state.currentCaseTab = tab;
+
+        // Update Topbar Title
+        const titleEl = document.getElementById("topBarTitle");
+        if (titleEl && pageTitles[page]) {
+          titleEl.innerText = pageTitles[page];
+        }
+
+        // Update Sidebar styling
+        document.querySelectorAll(".sidebar-item").forEach((btn) => {
+          btn.classList.remove("sidebar-active", "text-white");
+          btn.classList.add("text-[#d1e7dd]");
+        });
+        const activeBtn = document.getElementById("nav-" + page);
+        if (activeBtn) {
+          activeBtn.classList.add("sidebar-active", "text-white");
+          activeBtn.classList.remove("text-[#d1e7dd]");
+        }
+
+        toggleSidebar(false);
+        renderPage();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function toggleSidebar(open) {
+        const drawer = document.getElementById("sidebarDrawer");
+        const backdrop = document.getElementById("sidebarBackdrop");
+        if (open) {
+          drawer.classList.remove("-translate-x-full");
+          backdrop.classList.remove("hidden");
+        } else {
+          drawer.classList.add("-translate-x-full");
+          backdrop.classList.add("hidden");
+        }
+      }
+
+      // ==========================================
+      // VIEW 1: DASHBOARD (MATCHING USER SCREENSHOT)
+      // ==========================================
+      function viewDashboard() {
+        const activeCount = state.cases.filter(
+          (c) => c.status === "Active",
+        ).length;
+        const pendingCount = state.cases.filter(
+          (c) => c.assignmentStatus === "Pending",
+        ).length;
+        const hearingCount = state.cases.filter(
+          (c) => c.nextHearing && c.status === "Active",
+        ).length;
+        const overdueCount = state.cases
+          .flatMap((c) => c.tasks)
+          .filter((t) => t.overdue).length;
+
+        return `
+        <div class="space-y-6">
+
+          <!-- 1. TOP DARK GREEN HERO BANNER (EXACTLY MATCHING SCREENSHOT) -->
+          <div class="bg-[#0f3322] rounded-2xl p-6 text-white shadow-sm border border-[#1b4b35] relative overflow-hidden">
+            <div class="space-y-1.5 max-w-3xl">
+              <span class="text-xs text-[#9fc7b1] font-semibold block">আজ আইনজীবী পোর্টাল — জয়পুরহাট জেলা বার ও ডিএলএও</span>
+              <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-white">
+                প্যানেল আইনজীবীর কর্মক্ষেত্র ও সময়সীমা ব্যবস্থাপনা ।
+              </h2>
+              <p class="text-xs text-[#d1e7dd] leading-relaxed pt-1">
+                Legal Aid Services Act, 2000 (২০২৬ সংশোধিত কাঠামো) অনুযায়ী সরকারি খরচে বিচারপ্রার্থীদের আইনি সহায়তা প্রদান, শুনানির অগ্রগতি দাখিল এবং ডিএলএও তদারকি।
+              </p>
+            </div>
+          </div>
+
+          <!-- 2. FOUR KPI METRIC CARDS (EXACTLY MATCHING SCREENSHOT) -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            
+            <!-- Card 1: সক্রিয় মামলা -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-sm flex items-center justify-between card-hover cursor-pointer" onclick="navigate('cases')">
+              <div>
+                <span class="text-xs text-slate-500 font-medium block">সক্রিয় মামলা</span>
+                <h3 class="text-2xl font-bold text-slate-900 mt-1">${activeCount}</h3>
+              </div>
+              <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center text-base">
+                <i class="fa-solid fa-briefcase"></i>
+              </div>
+            </div>
+
+            <!-- Card 2: নতুন অ্যাসাইনমেন্ট -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-sm flex items-center justify-between card-hover cursor-pointer" onclick="navigate('assignments')">
+              <div>
+                <span class="text-xs text-slate-500 font-medium block">নতুন বরাদ্দ</span>
+                <h3 class="text-2xl font-bold text-indigo-700 mt-1">${pendingCount}</h3>
+              </div>
+              <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-base">
+                <i class="fa-solid fa-inbox"></i>
+              </div>
+            </div>
+
+            <!-- Card 3: আসন্ন শুনানি -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-sm flex items-center justify-between card-hover cursor-pointer" onclick="navigate('hearings')">
+              <div>
+                <span class="text-xs text-slate-500 font-medium block">আসন্ন শুনানি</span>
+                <h3 class="text-2xl font-bold text-slate-900 mt-1">${hearingCount}</h3>
+              </div>
+              <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-base">
+                <i class="fa-regular fa-calendar-check"></i>
+              </div>
+            </div>
+
+            <!-- Card 4: মেয়াদোত্তীর্ণ রিপোর্ট -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-sm flex items-center justify-between card-hover cursor-pointer" onclick="navigate('deadlines')">
+              <div>
+                <span class="text-xs text-red-600 font-bold block">মেয়াদোত্তীর্ণ</span>
+                <h3 class="text-2xl font-bold text-red-700 mt-1">${overdueCount}</h3>
+              </div>
+              <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-base">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 3. TWO-COLUMN SPLIT SECTION (MATCHING USER SCREENSHOT) -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- LEFT COLUMN (7 COLS): প্রধান কাজগুলো (PRIMARY ACTIONS 2x2 GRID) -->
+            <div class="lg:col-span-7 space-y-6">
+              
+              <div class="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-900 text-sm">প্রধান কাজগুলো</h3>
+
+                <!-- 2x2 Action Cards Grid (Exact design from screenshot) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  
+                  <!-- Action 1: নতুন অ্যাসাইনমেন্ট পর্যালোচনা -->
+                  <div onclick="navigate('assignments')" class="p-4 rounded-xl border border-slate-200 hover:border-emerald-600 bg-white card-hover cursor-pointer flex flex-col justify-between space-y-3">
+                    <span class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-800 flex items-center justify-center text-sm">
+                      <i class="fa-solid fa-inbox"></i>
+                    </span>
+                    <div>
+                      <h4 class="font-bold text-slate-900 text-xs">নতুন অ্যাসাইনমেন্ট পর্যালোচনা</h4>
+                      <p class="text-[11px] text-slate-500 mt-0.5">DLAO কর্তৃক বরাদ্দকৃত মামলার সম্মতি বা প্রত্যাখ্যান দিন।</p>
+                    </div>
+                  </div>
+
+                  <!-- Action 2: মামলার কার্যতালিকা -->
+                  <div onclick="navigate('cases')" class="p-4 rounded-xl border border-slate-200 hover:border-emerald-600 bg-white card-hover cursor-pointer flex flex-col justify-between space-y-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-50 text-sky-800 flex items-center justify-center text-sm">
+                      <i class="fa-solid fa-briefcase"></i>
+                    </span>
+                    <div>
+                      <h4 class="font-bold text-slate-900 text-xs">মামলার কার্যতালিকা ও ফাইল</h4>
+                      <p class="text-[11px] text-slate-500 mt-0.5">চলমান সকল আইনি সহায়তা মামলার পূর্ণ বিবরণ ও আরজি।</p>
+                    </div>
+                  </div>
+
+                  <!-- Action 3: শুনানির ফলাফল দাখিল -->
+                  <div onclick="navigate('hearings')" class="p-4 rounded-xl border border-slate-200 hover:border-emerald-600 bg-white card-hover cursor-pointer flex flex-col justify-between space-y-3">
+                    <span class="w-8 h-8 rounded-lg bg-purple-50 text-purple-800 flex items-center justify-center text-sm">
+                      <i class="fa-regular fa-calendar-check"></i>
+                    </span>
+                    <div>
+                      <h4 class="font-bold text-slate-900 text-xs">শুনানির ফলাফল ও তারিখ</h4>
+                      <p class="text-[11px] text-slate-500 mt-0.5">আদালতে হাজিরা শেষে আদেশ ও পরবর্তী তারিখ আপডেট করুন।</p>
+                    </div>
+                  </div>
+
+                  <!-- Action 4: অগ্রগতি রিপোর্ট দাখিল -->
+                  <div onclick="navigate('updates')" class="p-4 rounded-xl border border-slate-200 hover:border-emerald-600 bg-white card-hover cursor-pointer flex flex-col justify-between space-y-3">
+                    <span class="w-8 h-8 rounded-lg bg-amber-50 text-amber-800 flex items-center justify-center text-sm">
+                      <i class="fa-solid fa-file-pen"></i>
+                    </span>
+                    <div>
+                      <h4 class="font-bold text-slate-900 text-xs">অগ্রগতি রিপোর্ট দাখিল</h4>
+                      <p class="text-[11px] text-slate-500 mt-0.5">DLAO দপ্তরের জন্য নিয়মিত অগ্রগতি নোট প্রেরণ করুন।</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- ACTIVE CASE HIGHLIGHT (LA-001) -->
+              <div class="bg-white rounded-2xl border-2 border-emerald-600/30 p-5 shadow-sm space-y-3">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <div class="flex items-center space-x-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-pulse"></span>
+                    <span class="text-xs font-bold text-emerald-900 uppercase">অগ্রাধিকার মামলা</span>
+                    <span class="font-mono font-bold text-slate-900 text-xs">LA-001</span>
+                  </div>
+                  <span class="text-[11px] bg-emerald-50 text-emerald-800 font-bold px-2 py-0.5 rounded border border-emerald-200">
+                    Assignment Accepted ✓
+                  </span>
+                </div>
+
+                <div class="space-y-1">
+                  <h4 class="font-bold text-slate-900 text-sm">পারিবারিক ভরণপোষণ ও খোরপোশ মোকদ্দমা</h4>
+                  <p class="text-xs text-slate-500">মক্কেল: ময়ূরী আক্তার · পারিবারিক আদালত, জয়পুরহাট (FC-2026-00145)</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1">
+                  <div class="bg-slate-50 p-2.5 rounded-xl border">
+                    <span class="text-slate-500 block text-[11px]">পরবর্তী শুনানি:</span>
+                    <strong class="text-slate-800">৩০ সেপ্টেম্বর ২০২৬</strong>
+                  </div>
+                  <div class="bg-slate-50 p-2.5 rounded-xl border">
+                    <span class="text-slate-500 block text-[11px]">অগ্রগতি রিপোর্ট ডিউ:</span>
+                    <strong class="text-red-700">০৫ অক্টোবর ২০২৬</strong>
+                  </div>
+                  <div class="bg-slate-50 p-2.5 rounded-xl border">
+                    <span class="text-slate-500 block text-[11px]">নিরাপদ যোগাযোগ:</span>
+                    <strong class="text-emerald-700">ভয়েস কল (Verified)</strong>
+                  </div>
+                </div>
+
+                <div class="pt-2 flex flex-wrap gap-2">
+                  <button onclick="navigate('caseDetails', 'LA-001', 'overview')" class="bg-[#0f3322] hover:bg-[#16442f] text-white text-xs font-bold px-3 py-1.5 rounded-lg">
+                    কেস ফাইল খুলুন
+                  </button>
+                  <button onclick="showHearingOutcomeModal('LA-001')" class="bg-purple-700 hover:bg-purple-800 text-white text-xs font-semibold px-3 py-1.5 rounded-lg">
+                    শুনানি রেকর্ড করুন
+                  </button>
+                  <button onclick="showUpdateModal('LA-001')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg">
+                    রিপোর্ট জমা দিন
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN (5 COLS): কার্যক্রমের সূচক (ACTIVITY INDICATORS EXACT DESIGN) -->
+            <div class="lg:col-span-5 space-y-6">
+
+              <div class="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-900 text-sm">কার্যক্রমের সূচক</h3>
+
+                <div class="space-y-3 text-xs">
+                  <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                    <span class="text-slate-700">নতুন বরাদ্দ (Pending Acceptance)</span>
+                    <span class="font-bold text-indigo-700 font-mono text-sm">${pendingCount}</span>
+                  </div>
+
+                  <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                    <span class="text-slate-700">চলমান সক্রিয় মামলা</span>
+                    <span class="font-bold text-slate-900 font-mono text-sm">${activeCount}</span>
+                  </div>
+
+                  <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                    <span class="text-slate-700">শুনানির দিন ধার্য</span>
+                    <span class="font-bold text-purple-700 font-mono text-sm">${hearingCount}</span>
+                  </div>
+
+                  <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                    <span class="text-slate-700">সময়সীমা আসন্ন (Deadlines Due Soon)</span>
+                    <span class="font-bold text-amber-700 font-mono text-sm">৪</span>
+                  </div>
+
+                  <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                    <span class="text-slate-700">মেয়াদোত্তীর্ণ রিপোর্ট (Overdue Alerts)</span>
+                    <span class="font-bold text-red-700 font-mono text-sm animate-pulse">${overdueCount}</span>
+                  </div>
+
+                  <div class="flex items-center justify-between py-2">
+                    <span class="text-slate-700">নিষ্পত্তি / সমাপ্ত মামলা</span>
+                    <span class="font-bold text-slate-700 font-mono text-sm">১</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DLAO ZERO-CHASE TELEMETRY CARD -->
+              <div class="bg-slate-900 text-white rounded-2xl p-5 shadow-sm space-y-3 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800">
+                    Zero Chase Policy
+                  </span>
+                  <i class="fa-solid fa-tower-broadcast text-blue-400"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-sm text-white">DLAO স্বয়ংক্রিয় তদারকি ইঞ্জিন</h4>
+                  <p class="text-slate-300 text-[11px] mt-1 leading-relaxed">
+                    মামলার শুনানির রিপোর্ট বা অগ্রগতিতে বিলম্ব হলে সিস্টেম স্বয়ংক্রিয়ভাবে DLAO ড্যাশবোর্ডে অ্যালার্ট পাঠায়। ফলে ফোন করে তাগাদা দেওয়ার প্রয়োজন পড়ে না।
+                  </p>
+                </div>
+                <div class="pt-1">
+                  <button onclick="showDlaoAlertModal()" class="w-full bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 rounded-xl text-xs shadow flex items-center justify-center space-x-1.5">
+                    <i class="fa-solid fa-eye"></i>
+                    <span>DLAO ওভারডিউ অ্যালার্ট ভিউ দেখুন</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 2: ASSIGNMENTS INBOX (ACCEPT / DECLINE)
+      // ==========================================
+      function viewAssignments() {
+        const pendingList = state.cases.filter(
+          (c) => c.assignmentStatus === "Pending",
+        );
+        const acceptedList = state.cases.filter(
+          (c) => c.assignmentStatus === "Accepted",
+        );
+
+        return `
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 gap-3">
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="bg-emerald-100 text-emerald-900 text-xs font-bold px-2.5 py-0.5 rounded">ধারা ১৫ বিধান</span>
+                <h2 class="text-xl font-bold text-slate-900">আইনগত সহায়তা অ্যাসাইনমেন্ট ইনবক্স</h2>
+              </div>
+              <p class="text-xs text-slate-500 mt-1">DLAO জয়পুরহাট দপ্তর থেকে বরাদ্দকৃত নতুন মামলা গ্রহণ বা যুক্তিসঙ্গত কারণে প্রত্যাখ্যান।</p>
+            </div>
+            <span class="text-xs bg-indigo-50 text-indigo-900 font-bold px-3 py-1.5 rounded-xl border border-indigo-200">
+              ${pendingList.length} টি নতুন বরাদ্দ অপেক্ষমাণ
+            </span>
+          </div>
+
+          <!-- Pending Acceptance List -->
+          <div>
+            <h3 class="font-bold text-slate-800 text-sm mb-3">সম্মতির অপেক্ষায় (${pendingList.length})</h3>
+
+            ${
+              pendingList.length === 0
+                ? `
+              <div class="p-6 bg-slate-50 rounded-2xl border text-center text-slate-500 text-xs">
+                <i class="fa-solid fa-check-circle text-emerald-600 text-xl mb-1 block"></i>
+                বর্তমানে কোনো নতুন মামলা সম্মতির জন্য অপেক্ষমাণ নেই।
+              </div>
+            `
+                : `
+              <div class="space-y-4">
+                ${pendingList
+                  .map(
+                    (c) => `
+                  <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 card-hover flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div class="space-y-1.5 text-xs">
+                      <div class="flex items-center space-x-2">
+                        <span class="font-mono font-bold text-slate-900 text-sm">${c.id}</span>
+                        <span class="bg-rose-50 text-rose-700 border border-rose-200 font-bold px-2 py-0.5 rounded text-[10px]">High Priority</span>
+                        <span class="bg-amber-100 text-amber-800 font-bold text-[10px] px-2 py-0.5 rounded">Action Required</span>
+                      </div>
+                      <h4 class="font-bold text-slate-900 text-sm">${c.title}</h4>
+                      <div class="flex flex-wrap gap-x-4 gap-y-1 text-slate-600 text-xs pt-1">
+                        <span><strong>মক্কেল:</strong> ${c.client}</span>
+                        <span><strong>আদালত:</strong> ${c.court}</span>
+                        <span><strong>বরাদ্দকারী:</strong> ${c.dlao}</span>
+                        <span><strong>শুনানি:</strong> ${c.nextHearing}</span>
+                      </div>
+                    </div>
+
+                    <div class="flex flex-wrap sm:flex-nowrap gap-2 shrink-0">
+                      <button onclick="navigate('caseDetails', '${c.id}', 'overview')" class="px-3 py-2 border rounded-xl font-bold text-slate-700 hover:bg-slate-100 text-xs">
+                        বিস্তারিত দেখুন
+                      </button>
+                      <button onclick="showAcceptModal('${c.id}')" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-xs shadow-sm flex items-center space-x-1">
+                        <i class="fa-solid fa-check"></i>
+                        <span>অ্যাসাইনমেন্ট গ্রহণ</span>
+                      </button>
+                      <button onclick="showDeclineModal('${c.id}')" class="px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-bold rounded-xl text-xs">
+                        প্রত্যাখ্যান
+                      </button>
+                    </div>
+                  </div>
+                `,
+                  )
+                  .join("")}
+              </div>
+            `
+            }
+          </div>
+
+          <!-- Accepted List -->
+          <div class="pt-4 border-t border-slate-200">
+            <h3 class="font-bold text-slate-800 text-sm mb-3">সম্প্রতি গৃহীত মামলাসমূহ</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr class="bg-slate-50 border-b text-slate-600">
+                    <th class="p-3">মামলা নম্বর</th>
+                    <th class="p-3">বিষয় ও মক্কেল</th>
+                    <th class="p-3">আদালত</th>
+                    <th class="p-3">বরাদ্দের তারিখ</th>
+                    <th class="p-3">স্ট্যাটাস</th>
+                    <th class="p-3">অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  ${acceptedList
+                    .map(
+                      (c) => `
+                    <tr>
+                      <td class="p-3 font-mono font-bold text-slate-900">${c.id}</td>
+                      <td class="p-3">
+                        <div class="font-bold text-slate-800">${c.title}</div>
+                        <div class="text-slate-500 text-[11px]">${c.client}</div>
+                      </td>
+                      <td class="p-3 text-slate-600">${c.court}</td>
+                      <td class="p-3 text-slate-500">${c.assignedDate}</td>
+                      <td class="p-3"><span class="bg-emerald-100 text-emerald-800 font-bold text-[10px] px-2 py-0.5 rounded">Accepted ✓</span></td>
+                      <td class="p-3">
+                        <button onclick="navigate('caseDetails', '${c.id}', 'overview')" class="text-emerald-800 font-bold hover:underline">
+                          ফাইল খুলুন
+                        </button>
+                      </td>
+                    </tr>
+                  `,
+                    )
+                    .join("")}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      `;
+      }
+
+      // Modal: Accept Assignment
+      function showAcceptModal(caseId) {
+        const c = getCase(caseId);
+        showModal(`
+        <div class="space-y-4 text-xs">
+          <div class="flex items-center justify-between border-b pb-3">
+            <h3 class="text-base font-bold text-slate-900 flex items-center">
+              <i class="fa-solid fa-file-signature text-emerald-700 mr-2"></i>
+              মামলার আইনি সহায়তা দায়িত্ব গ্রহণ নিশ্চিতকরণ
+            </h3>
+            <span class="font-mono font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded">${c.id}</span>
+          </div>
+
+          <p class="text-slate-600 leading-relaxed">
+            আপনি বিচারপ্রার্থী <strong>${c.client}</strong> এর পক্ষে <em>${c.title}</em> (${c.court}) মোকদ্দমায় সরকারি প্যানেল আইনজীবী হিসেবে দায়িত্ব গ্রহণে সম্মত হচ্ছেন।
+          </p>
+
+          <div class="bg-slate-50 p-4 rounded-2xl border space-y-2.5">
+            <label class="flex items-start cursor-pointer">
+              <input type="checkbox" id="acceptCheck1" checked class="mt-0.5 rounded text-emerald-700">
+              <span class="ml-2 font-medium text-slate-800">আমি মামলার প্রাথমিক তথ্য ও আরজি পর্যালোচনা করেছি।</span>
+            </label>
+            <label class="flex items-start cursor-pointer">
+              <input type="checkbox" id="acceptCheck2" checked class="mt-0.5 rounded text-emerald-700">
+              <span class="ml-2 font-medium text-slate-800">আমি শুনানির তারিখে আদালতে উপস্থিত থেকে আইনি সেবা প্রদানে প্রস্তুত।</span>
+            </label>
+            <label class="flex items-start cursor-pointer">
+              <input type="checkbox" id="acceptCheck3" checked class="mt-0.5 rounded text-emerald-700">
+              <span class="ml-2 font-medium text-slate-800">বিপক্ষ পক্ষের সাথে আমার কোনো প্রকার স্বার্থের সংঘাত (Conflict of Interest) নেই।</span>
+            </label>
+            <label class="flex items-start cursor-pointer">
+              <input type="checkbox" id="acceptCheck4" checked class="mt-0.5 rounded text-emerald-700">
+              <span class="ml-2 font-medium text-slate-800">আমি শুনানির ফলাফল ও অগ্রগতি রিপোর্ট নিয়মিত DLAO দপ্তরে দাখিলে অঙ্গীকারবদ্ধ।</span>
+            </label>
+          </div>
+
+          <div class="flex justify-end space-x-2 pt-2">
+            <button onclick="closeModal()" class="px-4 py-2 border rounded-xl font-bold text-slate-700 hover:bg-slate-50">বাতিল</button>
+            <button onclick="executeAcceptAssignment('${c.id}')" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-sm">
+              গ্রহণ নিশ্চিত করুন (Confirm Acceptance)
+            </button>
+          </div>
+        </div>
+      `);
+      }
+
+      function executeAcceptAssignment(caseId) {
+        const c = getCase(caseId);
+        c.assignmentStatus = "Accepted";
+        c.status = "Active";
+        logAction(
+          `প্যানেল আইনজীবী কর্তৃক Case ${c.id} (${c.client}) এর দায়িত্ব গ্রহণ নিশ্চিত করা হলো। স্বার্থের সংঘাত মুক্ত।`,
+        );
+        closeModal();
+        persist();
+        renderPage();
+        toast(`অ্যাসাইনমেন্ট ${c.id} সফলভাবে গৃহীত হয়েছে।`);
+      }
+
+      // Modal: Decline Assignment
+      function showDeclineModal(caseId) {
+        const c = getCase(caseId);
+        showModal(`
+        <div class="space-y-4 text-xs">
+          <div class="flex items-center justify-between border-b pb-3">
+            <h3 class="text-base font-bold text-slate-900 flex items-center">
+              <i class="fa-solid fa-triangle-exclamation text-rose-600 mr-2"></i>
+              মামলা বরাদ্দ প্রত্যাখ্যান (Decline Assignment)
+            </h3>
+            <span class="font-mono font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded">${c.id}</span>
+          </div>
+
+          <div class="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-950">
+            প্রাতিষ্ঠানিক বিধান: প্যানেল আইনজীবী কোনো যুক্তিসঙ্গত ও আইনি কারণ ব্যতীত সরকারি মামলা প্রত্যাখ্যান করতে পারেন না। কারণটি DLAO দপ্তরে লিপিবদ্ধ হবে।
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">প্রত্যাখ্যানের মূল কারণ <span class="text-red-500">*</span></label>
+            <select id="declineReasonSelect" class="w-full border rounded-xl p-2.5 text-xs">
+              <option value="স্বার্থের সংঘাত (Conflict of Interest)">বিপক্ষ পক্ষের আইনজীবী বা পূর্ব পরিচয়জনিত স্বার্থের সংঘাত</option>
+              <option value="পেশাগত সময়সূচির জটিলতা">উচ্চ আদালতে একই দিনে নির্ধারিত শুনানি</option>
+              <option value="চিকিৎসাজনিত অনুপলব্ধতা">চিকিৎসাজনিত অসুস্থতা বা সাময়িক অক্ষমতা</option>
+              <option value="অন্যান্য আইনগত কারণ">অন্যান্য আইনগত বা ব্যক্তিগত কারণ</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">কারণটির বিস্তারিত ব্যাখ্যা লিখুন <span class="text-red-500">*</span></label>
+            <textarea id="declineExplanation" rows="3" class="w-full border rounded-xl p-2.5 text-xs" placeholder="কেন আপনি মামলাটি পরিচালনা করতে পারছেন না তা লিখুন..."></textarea>
+          </div>
+
+          <div class="flex justify-end space-x-2 pt-2">
+            <button onclick="closeModal()" class="px-4 py-2 border rounded-xl font-bold text-slate-700 hover:bg-slate-50">বাতিল</button>
+            <button onclick="executeDeclineAssignment('${c.id}')" class="px-5 py-2 bg-rose-700 hover:bg-rose-800 text-white font-bold rounded-xl shadow-sm">
+              DLAO-তে দাখিল করুন
+            </button>
+          </div>
+        </div>
+      `);
+      }
+
+      function executeDeclineAssignment(caseId) {
+        const reason = document.getElementById("declineReasonSelect").value;
+        const details = document
+          .getElementById("declineExplanation")
+          .value.trim();
+        if (!details) {
+          toast("অনুগ্রহ করে বিস্তারিত কারণ উল্লেখ করুন।");
+          return;
+        }
+        const c = getCase(caseId);
+        c.assignmentStatus = "Declined";
+        c.status = "Declined";
+        c.declineReason = `${reason}: ${details}`;
+        logAction(
+          `প্যানেল আইনজীবী কর্তৃক Case ${c.id} প্রত্যাখ্যান। কারণ: ${reason}। DLAO-কে অবহিত করা হয়েছে।`,
+        );
+        closeModal();
+        persist();
+        renderPage();
+        toast(
+          `মামলা ${c.id} প্রত্যাখ্যান সম্পন্ন। DLAO দপ্তরে অন্য আইনজীবী বরাদ্দের জন্য নোটিশ গেছে।`,
+        );
+      }
+
+      // ==========================================
+      // VIEW 3: MY CASES WORKLIST (SEARCH & FILTER)
+      // ==========================================
+      function viewCases() {
+        return `
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 gap-3">
+            <div>
+              <h2 class="text-xl font-bold text-slate-900">বরাদ্দকৃত মামলাসমূহের কার্যতালিকা</h2>
+              <p class="text-xs text-slate-500 mt-0.5">আপনার পরিচালনায় থাকা সকল লিগ্যাল এইড মামলার পূর্ণাঙ্গ রোস্টার।</p>
+            </div>
+            <button onclick="navigate('assignments')" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold px-3 py-2 rounded-xl flex items-center space-x-1.5">
+              <i class="fa-solid fa-inbox text-indigo-600"></i>
+              <span>অ্যাসাইনমেন্ট ইনবক্স</span>
+            </button>
+          </div>
+
+          <!-- Multi-Search & Filter Toolbar -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">মামলা খুঁজুন (Search)</label>
+              <div class="relative">
+                <input type="text" id="caseSearchInput" oninput="applyCaseFilters()" placeholder="Case ID, মক্কেল, আদালত, বিষয়..." class="w-full border rounded-xl pl-8 pr-3 py-2 text-xs focus:ring-2 focus:ring-emerald-700 border-slate-300">
+                <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">স্ট্যাটাস ফিল্টার</label>
+              <select id="caseStatusFilter" onchange="applyCaseFilters()" class="w-full border rounded-xl p-2 text-xs border-slate-300">
+                <option value="ALL">সকল স্ট্যাটাস</option>
+                <option value="Active" selected>সক্রিয় (Active)</option>
+                <option value="Pending Acceptance">অপেক্ষমাণ (Pending)</option>
+                <option value="Closed">নিষ্পত্তিকৃত (Closed)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">অগ্রাধিকার (Priority)</label>
+              <select id="casePriorityFilter" onchange="applyCaseFilters()" class="w-full border rounded-xl p-2 text-xs border-slate-300">
+                <option value="ALL">সকল অগ্রাধিকার</option>
+                <option value="High">উচ্চ অগ্রাধিকার (High)</option>
+                <option value="Normal">সাধারণ (Normal)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Cases Table Container -->
+          <div id="casesTableMount" class="overflow-x-auto">
+            <!-- Rendered by applyCaseFilters() -->
+          </div>
+        </div>
+      `;
+      }
+
+      function applyCaseFilters() {
+        const q = (
+          document.getElementById("caseSearchInput")?.value || ""
+        ).toLowerCase();
+        const s = document.getElementById("caseStatusFilter")?.value || "ALL";
+        const p = document.getElementById("casePriorityFilter")?.value || "ALL";
+
+        const filtered = state.cases.filter((c) => {
+          const matchesQ =
+            !q ||
+            (
+              c.id +
+              " " +
+              c.client +
+              " " +
+              c.court +
+              " " +
+              c.title +
+              " " +
+              c.matter
+            )
+              .toLowerCase()
+              .includes(q);
+          const matchesS = s === "ALL" || c.status === s;
+          const matchesP = p === "ALL" || c.priority === p;
+          return matchesQ && matchesS && matchesP;
+        });
+
+        const mount = document.getElementById("casesTableMount");
+        if (!mount) return;
+
+        mount.innerHTML = `
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="bg-slate-50 border-b text-slate-600">
+              <th class="p-3">মামলা নম্বর</th>
+              <th class="p-3">বিষয় ও মক্কেল</th>
+              <th class="p-3">আদালত / ট্রাইব্যুনাল</th>
+              <th class="p-3">পরবর্তী শুনানি</th>
+              <th class="p-3">অগ্রাধিকার</th>
+              <th class="p-3">স্ট্যাটাস</th>
+              <th class="p-3">অ্যাকশন</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            ${
+              filtered.length === 0
+                ? `
+              <tr><td colspan="7" class="p-6 text-center text-slate-400">কোনো মামলা পাওয়া যায়নি।</td></tr>
+            `
+                : filtered
+                    .map(
+                      (c) => `
+              <tr class="hover:bg-slate-50 transition">
+                <td class="p-3 font-mono font-bold text-slate-900">${c.id}</td>
+                <td class="p-3">
+                  <div class="font-bold text-slate-800">${c.title}</div>
+                  <div class="text-slate-500 text-[11px]">${c.client} (${c.matter})</div>
+                </td>
+                <td class="p-3 text-slate-600">${c.court}</td>
+                <td class="p-3">
+                  ${c.nextHearing ? `<span class="bg-purple-50 text-purple-800 font-bold px-2 py-0.5 rounded text-[11px]">${c.nextHearing}</span>` : '<span class="text-slate-400">—</span>'}
+                </td>
+                <td class="p-3">
+                  ${c.priority === "High" ? '<span class="bg-rose-50 text-rose-700 font-bold px-2 py-0.5 rounded border border-rose-200">High</span>' : '<span class="bg-slate-100 text-slate-600 px-2 py-0.5 rounded">Normal</span>'}
+                </td>
+                <td class="p-3">
+                  <span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full text-[10px]">${c.status}</span>
+                </td>
+                <td class="p-3">
+                  <button onclick="navigate('caseDetails', '${c.id}', 'overview')" class="bg-[#0f3322] hover:bg-[#16442f] text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-sm">
+                    ফাইল খুলুন
+                  </button>
+                </td>
+              </tr>
+            `,
+                    )
+                    .join("")
+            }
+          </tbody>
+        </table>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 4: CASE DETAILS (7 TABS)
+      // ==========================================
+      function viewCaseDetails() {
+        const c = getCase(state.selectedCaseId);
+
+        return `
+        <div class="space-y-6">
+          <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 gap-3">
+              <div>
+                <button onclick="navigate('cases')" class="text-xs text-slate-500 hover:text-slate-800 font-bold flex items-center mb-2">
+                  <i class="fa-solid fa-arrow-left mr-1.5"></i> সকল মামলার তালিকায় ফিরুন
+                </button>
+                <div class="flex items-center space-x-2.5">
+                  <h2 class="text-xl font-bold text-slate-900 font-mono">${c.id}</h2>
+                  <span class="bg-emerald-100 text-emerald-800 font-bold text-xs px-2.5 py-0.5 rounded-full">${c.status}</span>
+                  <span class="bg-rose-50 text-rose-700 border border-rose-200 font-bold px-2 py-0.5 rounded text-[10px]">${c.priority} Priority</span>
+                </div>
+                <h3 class="text-sm font-bold text-slate-800 mt-1">${c.title}</h3>
+                <p class="text-xs text-slate-500">${c.client} · ${c.court} · আরজি নং: ${c.courtCaseNo || "Pending"}</p>
+              </div>
+
+              <div class="flex flex-wrap gap-2 shrink-0">
+                <button onclick="showUpdateModal('${c.id}')" class="bg-[#0f3322] hover:bg-[#16442f] text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-sm flex items-center space-x-1.5">
+                  <i class="fa-solid fa-file-pen"></i>
+                  <span>রিপোর্ট দাখিল</span>
+                </button>
+                <button onclick="showHearingOutcomeModal('${c.id}')" class="bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-sm flex items-center space-x-1.5">
+                  <i class="fa-regular fa-calendar-check"></i>
+                  <span>শুনানি রেকর্ড</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 7 SUBTABS -->
+            <div class="flex overflow-x-auto space-x-1 pt-4 border-b border-slate-200 text-xs font-bold scrollbar-none">
+              <button onclick="switchCaseTab('overview')" id="ctab-overview" class="case-subtab px-3.5 py-2 border-b-2 ${state.currentCaseTab === "overview" ? "border-emerald-700 text-emerald-800" : "border-transparent text-slate-500 hover:text-slate-800"}">সারসংক্ষেপ</button>
+              <button onclick="switchCaseTab('documents')" id="ctab-documents" class="case-subtab px-3.5 py-2 border-b-2 ${state.currentCaseTab === "documents" ? "border-emerald-700 text-emerald-800" : "border-transparent text-slate-500 hover:text-slate-800"}">নথিপত্র (${c.documents.length})</button>
+              <button onclick="switchCaseTab('hearings')" id="ctab-hearings" class="case-subtab px-3.5 py-2 border-b-2 ${state.currentCaseTab === "hearings" ? "border-emerald-700 text-emerald-800" : "border-transparent text-slate-500 hover:text-slate-800"}">শুনানি</button>
+              <button onclick="switchCaseTab('tasks')" id="ctab-tasks" class="case-subtab px-3.5 py-2 border-b-2 ${state.currentCaseTab === "tasks" ? "border-emerald-700 text-emerald-800" : "border-transparent text-slate-500 hover:text-slate-800"}">ডেডলাইন (${c.tasks.length})</button>
+              <button onclick="switchCaseTab('updates')" id="ctab-updates" class="case-subtab px-3.5 py-2 border-b-2 ${state.currentCaseTab === "updates" ? "border-emerald-700 text-emerald-800" : "border-transparent text-slate-500 hover:text-slate-800"}">অগ্রগতি রিপোর্ট (${c.updates.length})</button>
+              <button onclick="switchCaseTab('communication')" id="ctab-communication" class="case-subtab px-3.5 py-2 border-b-2 ${state.currentCaseTab === "communication" ? "border-emerald-700 text-emerald-800" : "border-transparent text-slate-500 hover:text-slate-800"}">মক্কেল যোগাযোগ</button>
+              <button onclick="switchCaseTab('activity')" id="ctab-activity" class="case-subtab px-3.5 py-2 border-b-2 ${state.currentCaseTab === "activity" ? "border-emerald-700 text-emerald-800" : "border-transparent text-slate-500 hover:text-slate-800"}">কার্যক্রম লগ</button>
+            </div>
+
+            <div class="pt-5" id="caseTabContent">
+              ${renderCaseTabContent(c)}
+            </div>
+          </div>
+        </div>
+      `;
+      }
+
+      function switchCaseTab(tabKey) {
+        state.currentCaseTab = tabKey;
+        document.querySelectorAll(".case-subtab").forEach((btn) => {
+          btn.classList.remove("border-emerald-700", "text-emerald-800");
+          btn.classList.add("border-transparent", "text-slate-500");
+        });
+        const active = document.getElementById("ctab-" + tabKey);
+        if (active) {
+          active.classList.add("border-emerald-700", "text-emerald-800");
+          active.classList.remove("border-transparent", "text-slate-500");
+        }
+        const c = getCase(state.selectedCaseId);
+        document.getElementById("caseTabContent").innerHTML =
+          renderCaseTabContent(c);
+      }
+
+      function renderCaseTabContent(c) {
+        switch (state.currentCaseTab) {
+          case "overview":
+            return `
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+              <div class="bg-slate-50 p-4 rounded-2xl border space-y-2">
+                <h4 class="font-bold text-slate-800 uppercase text-[11px] border-b pb-1">মামলার মূল বিবরণ</h4>
+                <div class="flex justify-between py-1 border-b border-slate-200"><span>লিগ্যাল এইড কেস আইডি:</span><strong class="font-mono text-slate-900">${c.id}</strong></div>
+                <div class="flex justify-between py-1 border-b border-slate-200"><span>আদালত:</span><strong>${c.court}</strong></div>
+                <div class="flex justify-between py-1 border-b border-slate-200"><span>আদালতের মামলা নম্বর:</span><strong class="font-mono">${c.courtCaseNo}</strong></div>
+                <div class="flex justify-between py-1 border-b border-slate-200"><span>বর্তমান পর্যায়:</span><strong class="text-emerald-800">${c.stage}</strong></div>
+                <div class="flex justify-between py-1 border-b border-slate-200"><span>পরবর্তী শুনানির তারিখ:</span><strong class="text-purple-800">${c.nextHearing || "—"}</strong></div>
+                <div class="flex justify-between py-1"><span>দায়িত্বশীল কর্মকর্তা:</span><strong>${c.dlao}</strong></div>
+              </div>
+
+              <div class="bg-slate-50 p-4 rounded-2xl border space-y-2">
+                <h4 class="font-bold text-slate-800 uppercase text-[11px] border-b pb-1">মক্কেল ও নিরাপত্তা নীতি (G3)</h4>
+                <div class="flex justify-between py-1 border-b border-slate-200"><span>মক্কেলের নাম:</span><strong>${c.client}</strong></div>
+                <div class="flex justify-between py-1 border-b border-slate-200"><span>নিরাপদ যোগাযোগের মাধ্যম:</span><strong>${c.safeChannel}</strong></div>
+                <div class="flex justify-between py-1 border-b border-slate-200"><span>অনুমোদিত সময়:</span><strong>${c.safeTime}</strong></div>
+                <div class="flex justify-between py-1"><span>নিরাপত্তা ভেরিফিকেশন:</span><span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[10px]">Verified Safe ✓</span></div>
+              </div>
+            </div>
+          `;
+
+          case "documents":
+            return `
+            <div class="space-y-4 text-xs">
+              <div class="flex justify-between items-center">
+                <h4 class="font-bold text-slate-800">অনুমোদিত নথিপত্র ভল্ট (RBAC Protected)</h4>
+                <button onclick="showAddDocModal('${c.id}')" class="bg-[#0f3322] hover:bg-[#16442f] text-white font-bold px-3 py-1.5 rounded-lg text-xs">
+                  + নতুন নথি যুক্ত করুন
+                </button>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr class="bg-slate-50 border-b text-slate-600">
+                      <th class="p-3">নথির শিরোনাম</th>
+                      <th class="p-3">ধরন</th>
+                      <th class="p-3">আপলোডকারী</th>
+                      <th class="p-3">তারিখ</th>
+                      <th class="p-3">অ্যাকশন</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100">
+                    ${c.documents
+                      .map(
+                        (d) => `
+                      <tr>
+                        <td class="p-3 font-bold text-slate-800">📄 ${d.name}</td>
+                        <td class="p-3 text-slate-600">${d.type}</td>
+                        <td class="p-3 text-slate-600">${d.by}</td>
+                        <td class="p-3 text-slate-500">${d.date}</td>
+                        <td class="p-3">
+                          <button onclick="alert('নথিটি প্রদর্শন করা হচ্ছে: ' + '${d.name}');" class="text-emerald-800 font-bold hover:underline">দেখুন</button>
+                        </td>
+                      </tr>
+                    `,
+                      )
+                      .join("")}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          `;
+
+          case "hearings":
+            return `
+            <div class="space-y-4 text-xs">
+              <div class="p-4 bg-purple-50/70 border border-purple-200 rounded-2xl flex justify-between items-center">
+                <div>
+                  <span class="text-[10px] font-bold text-purple-800 uppercase block">ধার্যকৃত শুনানির তারিখ</span>
+                  <h4 class="text-base font-bold text-slate-900">${c.nextHearing || "—"} (১০:৩০ AM)</h4>
+                  <span class="text-slate-500 text-[11px]">${c.court}</span>
+                </div>
+                <button onclick="showHearingOutcomeModal('${c.id}')" class="bg-purple-700 hover:bg-purple-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs">
+                  শুনানি ফলাফল দাখিল
+                </button>
+              </div>
+            </div>
+          `;
+
+          case "tasks":
+            return `
+            <div class="space-y-3 text-xs">
+              ${c.tasks
+                .map(
+                  (t) => `
+                <div class="p-4 rounded-2xl border ${t.overdue ? "bg-red-50/60 border-red-300" : "bg-slate-50 border-slate-200"} flex justify-between items-center">
+                  <div>
+                    <div class="flex items-center space-x-2">
+                      <span class="font-bold text-slate-900">${t.title}</span>
+                      ${t.overdue ? '<span class="bg-red-600 text-white font-bold text-[10px] px-2 py-0.5 rounded">OVERDUE</span>' : `<span class="bg-blue-100 text-blue-800 font-bold text-[10px] px-2 py-0.5 rounded">${t.status}</span>`}
+                    </div>
+                    <span class="text-slate-500 text-[11px] block mt-1">শেষ সময়: <strong>${t.due}</strong></span>
+                  </div>
+                  ${
+                    t.status === "Pending"
+                      ? `
+                    <button onclick="markTaskComplete('${c.id}', '${t.id}')" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs">সম্পন্ন চিহ্নিত করুন</button>
+                  `
+                      : '<span class="text-emerald-700 font-bold">সম্পন্ন ✓</span>'
+                  }
+                </div>
+              `,
+                )
+                .join("")}
+            </div>
+          `;
+
+          case "updates":
+            return `
+            <div class="space-y-3 text-xs">
+              <div class="flex justify-between items-center">
+                <h4 class="font-bold text-slate-800">DLAO দপ্তরে প্রেরিত অগ্রগতি রিপোর্টসমূহ</h4>
+                <button onclick="showUpdateModal('${c.id}')" class="bg-[#0f3322] hover:bg-[#16442f] text-white font-bold px-3 py-1.5 rounded-lg text-xs">+ নতুন রিপোর্ট</button>
+              </div>
+              ${c.updates
+                .map(
+                  (u) => `
+                <div class="p-3 bg-white border rounded-xl space-y-1">
+                  <div class="flex justify-between text-slate-400 text-[11px]">
+                    <span class="font-bold text-emerald-800">${u.stage}</span>
+                    <span>${u.date}</span>
+                  </div>
+                  <p class="text-slate-800 font-medium">${u.text}</p>
+                </div>
+              `,
+                )
+                .join("")}
+            </div>
+          `;
+
+          case "communication":
+            return `
+            <div class="space-y-4 text-xs">
+              <div class="p-4 rounded-xl border ${c.safeContact ? "bg-emerald-50 border-emerald-200 text-emerald-950" : "bg-red-50 border-red-200 text-red-950"}">
+                <span class="font-bold block">G3 Safe Contact Protocol:</span>
+                ${c.safeContact ? `নিরাপদ চ্যানেল: ${c.safeChannel} (${c.safeTime})। বার্তা প্রেরণ অনুমোদিত।` : "মক্কেলের সুরক্ষার্থে সরাসরি যোগাযোগ নিষিদ্ধ ও অবরুদ্ধ।"}
+              </div>
+              <button onclick="showSendCommModal('${c.id}')" class="bg-[#0f3322] hover:bg-[#16442f] text-white font-bold px-4 py-2 rounded-xl text-xs">
+                নিরাপদ বার্তা পাঠান
+              </button>
+            </div>
+          `;
+
+          case "activity":
+            const logs = state.activityLog.filter((l) => l.text.includes(c.id));
+            return `
+            <div class="space-y-3 text-xs">
+              <h4 class="font-bold text-slate-800">মামলা সংক্রান্ত প্রাতিষ্ঠানিক কার্যক্রম লগ</h4>
+              <div class="relative pl-6 space-y-3 border-l-2 border-slate-200 ml-2">
+                ${logs
+                  .map(
+                    (l) => `
+                  <div class="relative">
+                    <span class="absolute -left-[31px] top-1 w-3 h-3 rounded-full bg-emerald-700 border-2 border-white"></span>
+                    <span class="text-slate-400 text-[10px] font-mono">${l.date}</span>
+                    <p class="text-slate-800 font-medium">${l.text}</p>
+                  </div>
+                `,
+                  )
+                  .join("")}
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      // ==========================================
+      // VIEW 5: HEARINGS GLOBAL VIEW
+      // ==========================================
+      function viewHearings() {
+        const activeHearings = state.cases.filter((c) => c.nextHearing);
+        return `
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-6">
+          <div class="flex items-center justify-between pb-5 border-b border-slate-200">
+            <div>
+              <h2 class="text-xl font-bold text-slate-900">আদালতে শুনানির সময়সূচি (Court Hearing Docket)</h2>
+              <p class="text-xs text-slate-500 mt-0.5">জয়পুরহাট জেলার আদালতসমূহে আপনার নির্ধারিত মামলাসমূহের তালিকা।</p>
+            </div>
+            <span class="bg-purple-100 text-purple-800 font-bold px-3 py-1 rounded-full text-xs">
+              ${activeHearings.length} টি শুনানি নির্ধারিত
+            </span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-slate-50 border-b text-slate-600">
+                  <th class="p-3">শুনানির তারিখ</th>
+                  <th class="p-3">মামলা ও বিষয়</th>
+                  <th class="p-3">মক্কেল</th>
+                  <th class="p-3">আদালত</th>
+                  <th class="p-3">পর্যায়</th>
+                  <th class="p-3">অ্যাকশন</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                ${activeHearings
+                  .map(
+                    (c) => `
+                  <tr>
+                    <td class="p-3">
+                      <span class="bg-purple-100 text-purple-900 font-bold px-2.5 py-1 rounded-lg text-xs block text-center">${c.nextHearing}</span>
+                    </td>
+                    <td class="p-3 font-mono font-bold text-slate-900">
+                      ${c.id}
+                      <span class="font-sans font-normal text-slate-500 block text-[11px]">${c.title}</span>
+                    </td>
+                    <td class="p-3 text-slate-800 font-semibold">${c.client}</td>
+                    <td class="p-3 text-slate-600">${c.court}</td>
+                    <td class="p-3 text-slate-600">${c.stage}</td>
+                    <td class="p-3">
+                      <button onclick="navigate('caseDetails', '${c.id}', 'hearings')" class="bg-purple-700 hover:bg-purple-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs">
+                        শুনানি ফাইল
+                      </button>
+                    </td>
+                  </tr>
+                `,
+                  )
+                  .join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 6: DEADLINES HUB
+      // ==========================================
+      function viewDeadlines() {
+        const allTasks = state.cases.flatMap((c) =>
+          c.tasks.map((t) => ({ ...t, caseId: c.id, client: c.client })),
+        );
+        const overdueTasks = allTasks.filter((t) => t.overdue);
+        const pendingTasks = allTasks.filter(
+          (t) => t.status === "Pending" && !t.overdue,
+        );
+
+        return `
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 gap-3">
+            <div>
+              <h2 class="text-xl font-bold text-slate-900">মামলার সময়সীমা ও ডেডলাইন পর্যবেক্ষণ</h2>
+              <p class="text-xs text-slate-500 mt-0.5">স্বয়ংক্রিয় ডেডলাইন ইঞ্জিন। সময় পার হলে DLAO দপ্তরে নোটিশ প্রেরিত হয়।</p>
+            </div>
+            <button onclick="runB5DemoFlow()" class="bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold px-3.5 py-2 rounded-xl text-xs flex items-center space-x-1.5 shadow-sm">
+              <i class="fa-solid fa-bolt"></i>
+              <span>B5 এভিডেন্স ডেমো টেস্ট</span>
+            </button>
+          </div>
+
+          <!-- Section 16 & 17 Overdue Protocol Callout -->
+          <div class="p-4 bg-[#0f3322] text-white rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
+            <div class="space-y-1">
+              <span class="text-amber-400 font-bold text-[10px] uppercase tracking-wider flex items-center">
+                <i class="fa-solid fa-shield-halved mr-1.5"></i> Challenge Minimum Evidence Rule
+              </span>
+              <h4 class="font-bold text-sm">স্বয়ংক্রিয় ওভারডিউ অ্যালার্ট ইঞ্জিন (Zero Chase Call)</h4>
+              <p class="text-[#d1e7dd] text-[11px] leading-relaxed max-w-2xl">
+                শুনানি শেষে নির্ধারিত ৫ দিনের মধ্যে অগ্রগতি রিপোর্ট জমা না দিলে সিস্টেম স্বয়ংক্রিয়ভাবে কেসটিকে <strong>OVERDUE</strong> মার্ক করে DLAO মনিটরিং পেজে পাঠিয়ে দেয়। DLAO-কে আলাদা করে ফোনে তাগাদা দিতে হয় না।
+              </p>
+            </div>
+            <button onclick="showDlaoAlertModal()" class="bg-white text-emerald-950 hover:bg-slate-100 font-bold px-4 py-2 rounded-xl text-xs shrink-0 shadow">
+              DLAO ভিউ দেখুন
+            </button>
+          </div>
+
+          <!-- Overdue List -->
+          <div class="space-y-3">
+            <div class="flex items-center space-x-2">
+              <span class="w-3 h-3 rounded-full bg-red-600 animate-ping"></span>
+              <h3 class="font-bold text-red-950 text-sm">জরুরি ওভারডিউ ডেডলাইন (${overdueTasks.length})</h3>
+            </div>
+
+            ${
+              overdueTasks.length === 0
+                ? `
+              <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 text-emerald-800 text-xs">
+                ✓ কোনো ওভারডিউ নেই। সকল মামলার অগ্রগতি রিপোর্ট সময়মতো দাখিল রয়েছে।
+              </div>
+            `
+                : `
+              <div class="space-y-3">
+                ${overdueTasks
+                  .map(
+                    (t) => `
+                  <div class="p-4 bg-red-50 border-2 border-red-300 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                    <div class="space-y-1">
+                      <div class="flex items-center space-x-2">
+                        <span class="font-mono font-bold text-red-950">${t.caseId}</span>
+                        <span class="text-slate-600">(${t.client})</span>
+                        <span class="bg-red-600 text-white font-bold text-[10px] px-2 py-0.5 rounded">OVERDUE</span>
+                      </div>
+                      <h4 class="font-bold text-slate-900">${t.title}</h4>
+                      <span class="text-red-700 text-[11px] block">
+                        শেষ সময় ছিল: <strong>${t.due}</strong> · DLAO স্বয়ংক্রিয় অ্যালার্ট কার্যকর রয়েছে
+                      </span>
+                    </div>
+
+                    <div class="flex gap-2">
+                      <button onclick="navigate('caseDetails', '${t.caseId}', 'updates')" class="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-sm">
+                        রিপোর্ট দাখিল করুন
+                      </button>
+                      <button onclick="showDlaoAlertModal()" class="bg-white border border-red-300 text-red-700 font-bold px-3 py-2 rounded-xl text-xs hover:bg-red-50">
+                        DLAO কার্ড দেখুন
+                      </button>
+                    </div>
+                  </div>
+                `,
+                  )
+                  .join("")}
+              </div>
+            `
+            }
+          </div>
+
+          <!-- Pending Deadlines -->
+          <div class="pt-4 border-t border-slate-200">
+            <h3 class="font-bold text-slate-800 text-sm mb-3">আসন্ন সময়সীমা (Pending Milestones)</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr class="bg-slate-50 border-b text-slate-600">
+                    <th class="p-3">মামলা নং</th>
+                    <th class="p-3">মক্কেল</th>
+                    <th class="p-3">করণীয় কাজ</th>
+                    <th class="p-3">শেষ তারিখ</th>
+                    <th class="p-3">স্ট্যাটাস</th>
+                    <th class="p-3">অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  ${pendingTasks
+                    .map(
+                      (t) => `
+                    <tr>
+                      <td class="p-3 font-mono font-bold text-slate-900">${t.caseId}</td>
+                      <td class="p-3 font-medium text-slate-800">${t.client}</td>
+                      <td class="p-3 text-slate-700">${t.title}</td>
+                      <td class="p-3 font-bold text-slate-900">${t.due}</td>
+                      <td class="p-3"><span class="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded text-[10px]">Pending</span></td>
+                      <td class="p-3">
+                        <button onclick="markTaskComplete('${t.caseId}', '${t.id}')" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1 rounded text-xs shadow-sm">
+                          সম্পন্ন
+                        </button>
+                      </td>
+                    </tr>
+                  `,
+                    )
+                    .join("")}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 7: GLOBAL DOCUMENTS
+      // ==========================================
+      function viewDocuments() {
+        const allDocs = state.cases.flatMap((c) =>
+          c.documents.map((d) => ({ ...d, caseId: c.id, client: c.client })),
+        );
+        return `
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-6">
+          <div class="flex items-center justify-between pb-5 border-b border-slate-200">
+            <div>
+              <h2 class="text-xl font-bold text-slate-900">মামলার সকল নথি ও আদালতের আদেশ</h2>
+              <p class="text-xs text-slate-500 mt-0.5">অনুমোদিত নথিপত্র ভল্ট। শুধুমাত্র নিযুক্ত আইনজীবী ও DLAO কর্মকর্তা এক্সেসযোগ্য।</p>
+            </div>
+            <span class="bg-teal-100 text-teal-800 font-bold px-3 py-1 rounded-full text-xs">
+              ${allDocs.length} টি নথি সংরক্ষিত
+            </span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-slate-50 border-b text-slate-600">
+                  <th class="p-3">নথির শিরোনাম</th>
+                  <th class="p-3">মামলা নং</th>
+                  <th class="p-3">মক্কেল</th>
+                  <th class="p-3">ক্যাটাগরি</th>
+                  <th class="p-3">আপলোডকারী</th>
+                  <th class="p-3">তারিখ</th>
+                  <th class="p-3">অ্যাকশন</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                ${allDocs
+                  .map(
+                    (d) => `
+                  <tr>
+                    <td class="p-3 font-bold text-slate-800">📄 ${d.name}</td>
+                    <td class="p-3 font-mono font-bold text-slate-900">${d.caseId}</td>
+                    <td class="p-3 text-slate-700">${d.client}</td>
+                    <td class="p-3 text-slate-600">${d.type}</td>
+                    <td class="p-3 text-slate-600">${d.by}</td>
+                    <td class="p-3 text-slate-500">${d.date}</td>
+                    <td class="p-3">
+                      <button onclick="alert('নথিটি প্রদর্শন করা হচ্ছে: ' + '${d.name}');" class="text-emerald-800 font-bold hover:underline">
+                        নথি দেখুন
+                      </button>
+                    </td>
+                  </tr>
+                `,
+                  )
+                  .join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 8: PROGRESS UPDATES HUB
+      // ==========================================
+      function viewUpdates() {
+        const allUpdates = state.cases.flatMap((c) =>
+          c.updates.map((u) => ({ ...u, caseId: c.id, client: c.client })),
+        );
+        return `
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-6">
+          <div class="flex items-center justify-between pb-5 border-b border-slate-200">
+            <div>
+              <h2 class="text-xl font-bold text-slate-900">অগ্রগতি রিপোর্ট দাখিল ও ইতিহাস</h2>
+              <p class="text-xs text-slate-500 mt-0.5">DLAO জয়পুরহাট দপ্তরে প্রেরিত আনুষ্ঠানিক অগ্রগতি প্রতিবেদনসমূহ।</p>
+            </div>
+            <button onclick="navigate('caseDetails', 'LA-001', 'updates')" class="bg-[#0f3322] hover:bg-[#16442f] text-white font-bold px-3.5 py-2 rounded-xl text-xs">
+              + নতুন রিপোর্ট
+            </button>
+          </div>
+
+          <div class="space-y-3">
+            ${allUpdates
+              .map(
+                (u) => `
+              <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2 text-xs">
+                <div class="flex justify-between border-b pb-1.5 text-slate-500">
+                  <div class="flex items-center space-x-2">
+                    <span class="font-mono font-bold text-slate-900">${u.caseId}</span>
+                    <span class="text-slate-600 font-medium">(${u.client})</span>
+                    <span class="bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded text-[10px]">${u.stage}</span>
+                  </div>
+                  <span class="font-mono">${u.date}</span>
+                </div>
+                <p class="text-slate-800 font-medium leading-relaxed">${u.text}</p>
+                <div class="text-right text-[11px] text-emerald-800 font-semibold">
+                  ✓ DLAO দপ্তরে সিঙ্ক সম্পন্ন
+                </div>
+              </div>
+            `,
+              )
+              .join("")}
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 9: CLIENT COMMUNICATIONS HUB
+      // ==========================================
+      function viewCommunications() {
+        return `
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-6">
+          <div class="flex items-center justify-between pb-5 border-b border-slate-200">
+            <div>
+              <h2 class="text-xl font-bold text-slate-900">নিরাপদ মক্কেল যোগাযোগ (G3 Safe Contact)</h2>
+              <p class="text-xs text-slate-500 mt-0.5">মক্কেলের সুরক্ষার্থে সংবেদনশীল মামলার ক্ষেত্রে অনিরাপদ মাধ্যমে যোগাযোগ অবরুদ্ধ থাকে।</p>
+            </div>
+            <span class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full text-xs">
+              G3 Safe Guardrails Active
+            </span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-slate-50 border-b text-slate-600">
+                  <th class="p-3">মামলা নং</th>
+                  <th class="p-3">মক্কেল</th>
+                  <th class="p-3">মোবাইল</th>
+                  <th class="p-3">নিরাপদ যোগাযোগের মাধ্যম</th>
+                  <th class="p-3">অনুমোদিত সময়</th>
+                  <th class="p-3">অ্যাকশন</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                ${state.cases
+                  .map(
+                    (c) => `
+                  <tr>
+                    <td class="p-3 font-mono font-bold text-slate-900">${c.id}</td>
+                    <td class="p-3 font-semibold text-slate-800">${c.client}</td>
+                    <td class="p-3 font-mono text-slate-600">${c.clientPhone}</td>
+                    <td class="p-3">
+                      ${c.safeContact ? '<span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[10px]">Verified Safe ✓</span>' : '<span class="bg-red-100 text-red-800 font-bold px-2 py-0.5 rounded text-[10px]">Restricted / Unsafe ⚠️</span>'}
+                    </td>
+                    <td class="p-3 text-slate-600">${c.safeTime}</td>
+                    <td class="p-3">
+                      <button onclick="navigate('caseDetails', '${c.id}', 'communication')" class="text-emerald-800 font-bold hover:underline">
+                        যোগাযোগ খুলুন
+                      </button>
+                    </td>
+                  </tr>
+                `,
+                  )
+                  .join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 10: CALENDAR DOCKET
+      // ==========================================
+      function viewCalendar() {
+        return `
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-6">
+          <div class="flex items-center justify-between pb-5 border-b border-slate-200">
+            <div>
+              <h2 class="text-xl font-bold text-slate-900">আইনজীবী ক্যালেন্ডার ডকেট (সেপ্টেম্বর - অক্টোবর ২০২৬)</h2>
+              <p class="text-xs text-slate-500 mt-0.5">শুনানি ও ডেডলাইনের সমন্বিত ক্যালেন্ডার সূচি।</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div class="p-4 bg-purple-50/70 border border-purple-200 rounded-2xl space-y-2">
+              <span class="font-bold text-purple-900 text-sm block">আসন্ন শুনানিসমূহ</span>
+              <div class="p-2.5 bg-white rounded-xl border border-purple-100 flex justify-between">
+                <div><strong>৩০ সেপ্টেম্বর ২০২৬:</strong> LA-001 (পারিবারিক আদালত)</div>
+                <span class="font-bold text-purple-900">১০:৩০ AM</span>
+              </div>
+              <div class="p-2.5 bg-white rounded-xl border border-purple-100 flex justify-between">
+                <div><strong>০২ অক্টোবর ২০২৬:</strong> LA-002 (পারিবারিক আদালত)</div>
+                <span class="font-bold text-purple-900">১১:০০ AM</span>
+              </div>
+            </div>
+
+            <div class="p-4 bg-amber-50/70 border border-amber-200 rounded-2xl space-y-2">
+              <span class="font-bold text-amber-950 text-sm block">রিপোর্ট দাখিলের ডেডলাইন</span>
+              <div class="p-2.5 bg-white rounded-xl border border-amber-200 flex justify-between">
+                <div><strong class="text-red-700">০৫ অক্টোবর ২০২৬:</strong> LA-001 অগ্রগতি রিপোর্ট</div>
+                <span class="bg-red-100 text-red-800 font-bold px-2 py-0.5 rounded text-[10px]">OVERDUE</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 11: NOTIFICATIONS
+      // ==========================================
+      function viewNotifications() {
+        return `
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-6">
+          <div class="flex items-center justify-between pb-5 border-b border-slate-200">
+            <div>
+              <h2 class="text-xl font-bold text-slate-900">কাজ ও সতর্কতা (Notifications)</h2>
+              <p class="text-xs text-slate-500 mt-0.5">জরুরি পদক্ষেপ, শুনানির নোটিশ ও DLAO বার্তা।</p>
+            </div>
+          </div>
+
+          <div class="space-y-3 text-xs">
+            ${state.notifications
+              .map(
+                (n) => `
+              <div class="p-4 rounded-xl border ${n.type === "OVERDUE" ? "bg-red-50 border-red-300" : "bg-slate-50 border-slate-200"} flex justify-between items-center">
+                <div>
+                  <span class="font-bold text-slate-900 block">${n.type} ALERT · Case ${n.caseId}</span>
+                  <p class="text-slate-600 mt-0.5">${n.text}</p>
+                  <span class="text-slate-400 text-[10px] mt-1 block">${n.date}</span>
+                </div>
+                ${
+                  n.type === "OVERDUE"
+                    ? `
+                  <button onclick="navigate('caseDetails', '${n.caseId}', 'updates')" class="bg-red-600 text-white font-bold px-3 py-1.5 rounded-lg shrink-0">
+                    সমাধান করুন
+                  </button>
+                `
+                    : ""
+                }
+              </div>
+            `,
+              )
+              .join("")}
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 12: ACTIVITY AUDIT LOG
+      // ==========================================
+      function viewActivityLog() {
+        return `
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-6">
+          <div class="flex items-center justify-between pb-5 border-b border-slate-200">
+            <div>
+              <h2 class="text-xl font-bold text-slate-900">নিরীক্ষা ও কার্যক্রম লগ (Audit Trail)</h2>
+              <p class="text-xs text-slate-500 mt-0.5">আইনজীবী ও সিস্টেমের সকল পদক্ষেপের অপরিবর্তনীয় ডিজিটাল খতিয়ান।</p>
+            </div>
+          </div>
+
+          <div class="relative pl-6 space-y-4 border-l-2 border-slate-200 ml-3 text-xs">
+            ${state.activityLog
+              .map(
+                (l) => `
+              <div class="relative">
+                <span class="absolute -left-[31px] top-1 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white shadow-sm"></span>
+                <span class="font-mono text-slate-400 text-[11px] block">${l.date}</span>
+                <p class="text-slate-800 font-medium mt-0.5 leading-relaxed">${l.text}</p>
+              </div>
+            `,
+              )
+              .join("")}
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // VIEW 13: LAWYER PROFILE & RBAC
+      // ==========================================
+      function viewProfile() {
+        return `
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-6 text-xs">
+          <div class="flex items-center justify-between pb-5 border-b border-slate-200">
+            <div>
+              <h2 class="text-xl font-bold text-slate-900">প্যানেল আইনজীবী প্রোফাইল ও নিরাপত্তা</h2>
+              <p class="text-slate-500 mt-0.5">Role-Based Access Control (RBAC) ও পরিচয়পত্র তথ্য।</p>
+            </div>
+            <span class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full">Panel Status: ACTIVE</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-slate-50 p-5 rounded-2xl border text-center space-y-3">
+              <div class="w-16 h-16 bg-[#0f3322] text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto">
+                AR
+              </div>
+              <div>
+                <h3 class="font-bold text-slate-900 text-sm">এডভোকেট মোঃ আতিকুর রহমান</h3>
+                <span class="text-slate-500 text-[11px]">আইডি: PL-2026-00451</span>
+              </div>
+              <div class="text-left bg-white p-3 rounded-xl border space-y-1 text-[11px]">
+                <div><strong>জেলা:</strong> জয়পুরহাট</div>
+                <div><strong>বার সমিতি:</strong> জয়পুরহাট জেলা বার</div>
+                <div><strong>নিরাপত্তা:</strong> 2FA OTP সক্রিয় ✓</div>
+              </div>
+            </div>
+
+            <div class="md:col-span-2 space-y-3">
+              <h4 class="font-bold text-slate-800 text-sm">RBAC এক্সেস অনুমতি ম্যাট্রিক্স</h4>
+              <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl space-y-1">
+                <span class="font-bold text-emerald-950 block">অনুমোদিত এক্সেস (Authorized):</span>
+                <p class="text-emerald-900">বরাদ্দকৃত মামলার নথি, শুনানির কার্যতালিকা, ক্লায়েন্ট যোগাযোগ ও DLAO রিপোর্ট দাখিল।</p>
+              </div>
+              <div class="p-3 bg-red-50 border border-red-200 rounded-xl space-y-1">
+                <span class="font-bold text-red-950 block">সীমাবদ্ধতা (Restricted):</span>
+                <p class="text-red-900">অন্য আইনজীবীর মামলার নথি, DLAO অভ্যন্তরীণ প্রশাসনিক নোট এবং অননুমোদিত চ্যানেলে সরাসরি যোগাযোগ সম্পূর্ণ নিষিদ্ধ।</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      }
+
+      // ==========================================
+      // MODALS & DEMO FLOW ENGINE
+      // ==========================================
+      function showAddDocModal(caseId) {
+        const c = getCase(caseId);
+        showModal(`
+        <div class="space-y-4 text-xs">
+          <div class="flex justify-between items-center border-b pb-3">
+            <h3 class="text-base font-bold text-slate-900">নথি সংযুক্ত করুন (${c.id})</h3>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">নথির শিরোনাম</label>
+            <input type="text" id="docNameInp" placeholder="e.g. Court_Reply_Notice.pdf" class="w-full border rounded-xl p-2.5">
+          </div>
+          <div class="flex justify-end gap-2">
+            <button onclick="closeModal()" class="px-4 py-2 border rounded-xl">বাতিল</button>
+            <button onclick="executeAddDoc('${c.id}')" class="px-5 py-2 bg-[#0f3322] text-white font-bold rounded-xl">সংযুক্ত করুন</button>
+          </div>
+        </div>
+      `);
+      }
+
+      function executeAddDoc(caseId) {
+        const name = document.getElementById("docNameInp").value.trim();
+        if (!name) return toast("নথির শিরোনাম লিখুন।");
+        const c = getCase(caseId);
+        c.documents.push({
+          name,
+          type: "Court Pleading",
+          by: "Adv. Atikur Rahman",
+          date: new Date().toISOString().slice(0, 10),
+        });
+        logAction(`Case ${c.id}-তে নথি '${name}' সংযুক্ত করা হয়েছে।`);
+        closeModal();
+        persist();
+        renderPage();
+        toast("নথি সংযুক্ত হয়েছে।");
+      }
+
+      function showHearingOutcomeModal(caseId) {
+        const c = getCase(caseId);
+        showModal(`
+        <div class="space-y-4 text-xs">
+          <div class="flex justify-between items-center border-b pb-3">
+            <h3 class="text-base font-bold text-slate-900">শুনানির ফলাফল ও আদেশ দাখিল (${c.id})</h3>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">শুনানির ফলাফল</label>
+            <select id="houtSelect" class="w-full border rounded-xl p-2.5">
+              <option>হাজিরা প্রদান ও সময় প্রার্থনা মঞ্জুর</option>
+              <option>আরজির জবাব দাখিল সম্পন্ন</option>
+              <option>অন্তর্বর্তীকালীন খোরপোশ আদেশ জারি</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">পরবর্তী শুনানির তারিখ</label>
+            <input type="date" id="nextDateInp" value="2026-10-15" class="w-full border rounded-xl p-2.5">
+          </div>
+          <div class="flex justify-end gap-2">
+            <button onclick="closeModal()" class="px-4 py-2 border rounded-xl">বাতিল</button>
+            <button onclick="executeHearingUpdate('${c.id}')" class="px-5 py-2 bg-purple-700 text-white font-bold rounded-xl">ফলাফল দাখিল</button>
+          </div>
+        </div>
+      `);
+      }
+
+      function executeHearingUpdate(caseId) {
+        const nd = document.getElementById("nextDateInp").value;
+        const c = getCase(caseId);
+        if (nd) c.nextHearing = nd;
+        const t1 = c.tasks.find((t) => t.id === "T1");
+        if (t1) {
+          t1.status = "Completed";
+          t1.overdue = false;
+        }
+        logAction(
+          `Case ${c.id}: শুনানি সম্পন্ন। পরবর্তী তারিখ: ${nd}। DLAO সিঙ্ক সম্পন্ন।`,
+        );
+        closeModal();
+        persist();
+        renderPage();
+        toast("শুনানির ফলাফল DLAO দপ্তরে দাখিল হয়েছে।");
+      }
+
+      function markTaskComplete(caseId, taskId) {
+        const c = getCase(caseId);
+        const t = c.tasks.find((x) => x.id === taskId);
+        if (t) {
+          t.status = "Completed";
+          t.overdue = false;
+          logAction(`টাস্ক সম্পন্ন: ${t.title} (${c.id})।`);
+          persist();
+          renderPage();
+          toast("টাস্কটি সম্পন্ন চিহ্নিত করা হলো।");
+        }
+      }
+
+      function showUpdateModal(caseId) {
+        const c = getCase(caseId);
+        showModal(`
+        <div class="space-y-4 text-xs">
+          <div class="flex justify-between items-center border-b pb-3">
+            <h3 class="text-base font-bold text-slate-900">DLAO অগ্রগতি রিপোর্ট দাখিল (${c.id})</h3>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">গৃহীত পদক্ষেপের বিবরণ</label>
+            <textarea id="updTextInp" rows="3" class="w-full border rounded-xl p-2.5" placeholder="আদালতে বা মক্কেলের বিষয়ে কী অগ্রগতি হয়েছে লিখুন..."></textarea>
+          </div>
+          <div class="flex justify-end gap-2">
+            <button onclick="closeModal()" class="px-4 py-2 border rounded-xl">বাতিল</button>
+            <button onclick="executeSubmitUpdate('${c.id}')" class="px-5 py-2 bg-[#0f3322] text-white font-bold rounded-xl">দাখিল করুন</button>
+          </div>
+        </div>
+      `);
+      }
+
+      function executeSubmitUpdate(caseId) {
+        const txt = document.getElementById("updTextInp").value.trim();
+        if (!txt) return toast("অগ্রগতির বিবরণ লিখুন।");
+        const c = getCase(caseId);
+        c.updates.unshift({
+          date: new Date().toISOString().slice(0, 10),
+          stage: "Progress Update",
+          text: txt,
+          by: "Adv. Atikur Rahman",
+        });
+        const t2 = c.tasks.find((t) => t.id === "T2");
+        if (t2) {
+          t2.status = "Completed";
+          t2.overdue = false;
+        }
+        logAction(`Case ${c.id}: অগ্রগতি রিপোর্ট দাখিল সম্পন্ন।`);
+        closeModal();
+        persist();
+        renderPage();
+        toast("অগ্রগতি রিপোর্ট সফলভাবে DLAO দপ্তরে দাখিল হয়েছে।");
+      }
+
+      function showSendCommModal(caseId) {
+        const c = getCase(caseId);
+        if (!c.safeContact)
+          return toast("সরাসরি বার্তা পাঠানো অবরুদ্ধ: অনিরাপদ মাধ্যম।");
+        showModal(`
+        <div class="space-y-4 text-xs">
+          <div class="flex justify-between items-center border-b pb-3">
+            <h3 class="text-base font-bold text-slate-900">নিরাপদ মক্কেল বার্তা (${c.id})</h3>
+          </div>
+          <p class="text-slate-600">অনুমোদিত চ্যানেল: <strong>${c.safeChannel}</strong> (${c.safeTime})</p>
+          <textarea id="commMsgInp" rows="3" class="w-full border rounded-xl p-2.5">আপনার মামলার পরবর্তী শুনানির তারিখ ৩০ সেপ্টেম্বর ২০২৬, পারিবারিক আদালত, জয়পুরহাট।</textarea>
+          <div class="flex justify-end gap-2">
+            <button onclick="closeModal()" class="px-4 py-2 border rounded-xl">বাতিল</button>
+            <button onclick="executeSendComm('${c.id}')" class="px-5 py-2 bg-emerald-700 text-white font-bold rounded-xl">পাঠান</button>
+          </div>
+        </div>
+      `);
+      }
+
+      function executeSendComm(caseId) {
+        const msg = document.getElementById("commMsgInp").value.trim();
+        if (!msg) return toast("বার্তার বিষয়বস্তু লিখুন।");
+        const c = getCase(caseId);
+        c.communications.unshift({
+          date: new Date().toISOString().slice(0, 10),
+          channel: c.safeChannel,
+          purpose: "Hearing Update",
+          notes: msg,
+          status: "Delivered",
+        });
+        logAction(`Case ${c.id}: মক্কেলকে নিরাপদ বার্তা প্রেরণ করা হলো।`);
+        closeModal();
+        persist();
+        renderPage();
+        toast("বার্তা সফলভাবে প্রেরিত হয়েছে।");
+      }
+
+      // THE B5 CHALLENGE MINIMUM EVIDENCE DEMO
+      function runB5DemoFlow() {
+        const c = getCase("LA-001");
+        c.assignmentStatus = "Accepted";
+        c.status = "Active";
+        const t1 = c.tasks.find((t) => t.id === "T1");
+        if (t1) {
+          t1.status = "Completed";
+          t1.overdue = false;
+        }
+        const t2 = c.tasks.find((t) => t.id === "T2");
+        if (t2) {
+          t2.status = "Pending";
+          t2.due = "2026-10-05";
+          t2.overdue = false;
+        }
+        logAction(
+          "B5 Evidence Demo Triggered: LA-001 accepted → 30 Sep hearing update submitted → 5 Oct Progress Deadline created.",
+        );
+        persist();
+
+        showModal(`
+        <div class="space-y-4 text-xs">
+          <div class="flex justify-between items-center border-b pb-3">
+            <h3 class="text-base font-bold text-slate-900 flex items-center">
+              <i class="fa-solid fa-bolt text-amber-500 mr-2 text-base"></i>
+              B5 Challenge Minimum Evidence Demo
+            </h3>
+            <span class="font-mono font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded">Case: LA-001</span>
+          </div>
+
+          <div class="space-y-2 text-slate-700">
+            <div class="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-900">
+              ✓ <strong>ধাপ ১:</strong> আইনজীবী LA-001 মামলার দায়িত্ব গ্রহণ নিশ্চিত করেছেন।
+            </div>
+            <div class="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-900">
+              ✓ <strong>ধাপ ২:</strong> ৩০ সেপ্টেম্বর শুনানির ফলাফল দাখিল হয়েছে।
+            </div>
+            <div class="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-900">
+              ✓ <strong>ধাপ ৩:</strong> সিস্টেম স্বয়ংক্রিয়ভাবে পরবর্তী অগ্রগতি রিপোর্ট জমার জন্য <em>০৫ অক্টোবর ২০২৬</em> ডেডলাইন তৈরি করেছে।
+            </div>
+            <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-950 leading-relaxed">
+              <strong>ধাপ ৪ (ওভারডিউ টেস্ট):</strong> নিচের বাটনে ক্লিক করে ডেডলাইন মিস হওয়ার পরিস্থিতি সিমুলেট করুন। সিস্টেম স্বয়ংক্রিয়ভাবে কেসটিকে <strong>OVERDUE</strong> চিহ্নিত করবে এবং ফোনে তাগাদা দেওয়া ছাড়াই DLAO দপ্তরে রিয়েল-টাইম অ্যালার্ট পাঠাবে!
+            </div>
+          </div>
+
+          <div class="flex justify-end gap-2 pt-2">
+            <button onclick="closeModal()" class="px-4 py-2 border rounded-xl font-bold text-slate-700">বন্ধ করুন</button>
+            <button onclick="simulateOverdueAlert()" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-md flex items-center space-x-1.5">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              <span>মেয়াদোত্তীর্ণ সিমুলেট করুন ও DLAO অ্যালার্ট দেখুন</span>
+            </button>
+          </div>
+        </div>
+      `);
+      }
+
+      function simulateOverdueAlert() {
+        const c = getCase("LA-001");
+        const t2 = c.tasks.find((t) => t.id === "T2");
+        if (t2) {
+          t2.status = "Pending";
+          t2.overdue = true;
+        }
+        state.notifications.unshift({
+          id: Date.now(),
+          type: "OVERDUE",
+          caseId: "LA-001",
+          text: "স্বয়ংক্রিয় ওভারডিউ ফ্ল্যাগ: LA-001 এর অগ্রগতি রিপোর্ট ০৫ অক্টোবর অতিক্রম করেছে। DLAO সতর্কবার্তা প্রেরিত।",
+          date: "2026-10-06 00:01",
+        });
+        logAction(
+          "সিস্টেম ওভারডিউ ইঞ্জিন: Case LA-001 ডেডলাইন উত্তীর্ণ। কোনো ফোন কল ছাড়াই DLAO-তে স্বয়ংক্রিয় ওভারডিউ অ্যালার্ট পৌঁছেছে।",
+        );
+        persist();
+        closeModal();
+        navigate("deadlines");
+        toast("DEADLINE EXPIRED: Case LA-001 ওভারডিউ চিহ্নিত হলো!");
+        setTimeout(() => {
+          showDlaoAlertModal();
+        }, 600);
+      }
+
+      function showDlaoAlertModal() {
+        showModal(`
+        <div class="space-y-4 text-xs">
+          <div class="flex justify-between items-center border-b pb-3">
+            <div class="flex items-center space-x-2">
+              <span class="w-3 h-3 rounded-full bg-red-600 animate-ping"></span>
+              <h3 class="text-base font-bold text-red-950 uppercase">DLAO Dashboard Overdue View</h3>
+            </div>
+            <span class="bg-red-100 text-red-800 font-bold px-2 py-0.5 rounded font-mono text-[10px]">Zero Chase Telemetry</span>
+          </div>
+
+          <div class="p-4 bg-red-50 border-2 border-red-300 rounded-2xl space-y-3">
+            <div class="flex justify-between items-center border-b border-red-200 pb-2">
+              <div>
+                <span class="text-red-700 font-bold text-[10px] block uppercase">⚠️ OVERDUE LEGAL AID MATTER</span>
+                <h4 class="font-mono font-bold text-slate-900 text-base">Case ID: LA-001</h4>
+              </div>
+              <span class="bg-red-600 text-white font-bold px-2 py-0.5 rounded text-[10px]">NOT SUBMITTED</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 text-slate-700">
+              <div><span class="text-slate-500 block">প্যানেল আইনজীবী:</span><strong>এডভোকেট মোঃ আতিকুর রহমান</strong></div>
+              <div><span class="text-slate-500 block">মক্কেল:</span><strong>ময়ূরী আক্তার (ভরণপোষণ)</strong></div>
+              <div><span class="text-slate-500 block">প্রয়োজনীয় রিপোর্ট:</span><strong class="text-red-800">শুনানি-পরবর্তী অগ্রগতি রিপোর্ট</strong></div>
+              <div><span class="text-slate-500 block">শেষ সময় ছিল:</span><strong>০৫ অক্টোবর ২০২৬ (২৩:৫৯)</strong></div>
+            </div>
+
+            <div class="p-3 bg-white rounded-xl border border-red-200 text-slate-700 leading-relaxed">
+              <strong>Core Challenge Verification:</strong> DLAO কর্মকর্তা তার ড্যাশবোর্ডে সরাসরি এই অ্যালার্ট দেখতে পাচ্ছেন। আইনজীবীকে ফোন করে তাগাদা দেওয়ার কোনো প্রয়োজন পড়ছে না।
+            </div>
+
+            <div class="flex justify-between pt-1">
+              <button onclick="toast('সিস্টেম রিমাইন্ডার পিং পাঠানো হয়েছে।')" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-3 py-1.5 rounded-lg">সিস্টেম রিমাইন্ডার পিং পাঠান</button>
+              <button onclick="navigate('caseDetails', 'LA-001', 'updates'); closeModal();" class="bg-blue-700 hover:bg-blue-800 text-white font-bold px-3 py-1.5 rounded-lg">আইনজীবী হিসেবে ফাইল খুলুন</button>
+            </div>
+          </div>
+
+          <div class="flex justify-end">
+            <button onclick="closeModal()" class="px-4 py-2 border rounded-xl">বন্ধ করুন</button>
+          </div>
+        </div>
+      `);
+      }
+
+      // function confirmLogout() {
+      //   if (confirm("আপনি কি লগ আউট করতে চান?")) {
+      //     window.location.href = "/login";
+      //   }
+      // }
+
+      // Accessibility Handlers
+      function changeFontSize(delta) {
+        state.fontSizeDelta += delta;
+        if (state.fontSizeDelta > 4) state.fontSizeDelta = 4;
+        if (state.fontSizeDelta < -2) state.fontSizeDelta = -2;
+        document.getElementById("appBody").style.fontSize =
+          16 + state.fontSizeDelta + "px";
+      }
+
+      function resetFontSize() {
+        state.fontSizeDelta = 0;
+        document.getElementById("appBody").style.fontSize = "16px";
+      }
+
+      function toggleHighContrast() {
+        state.highContrast = !state.highContrast;
+        const b = document.getElementById("appBody");
+        if (state.highContrast) b.classList.add("high-contrast");
+        else b.classList.remove("high-contrast");
+      }
+
+      // Page renderer router
+      function renderPage() {
+        const container = document.getElementById("pageContainer");
+        if (!container) return;
+
+        switch (state.currentPage) {
+          case "dashboard":
+            container.innerHTML = viewDashboard();
+            break;
+          case "assignments":
+            container.innerHTML = viewAssignments();
+            break;
+          case "cases":
+            container.innerHTML = viewCases();
+            applyCaseFilters();
+            break;
+          case "caseDetails":
+            container.innerHTML = viewCaseDetails();
+            break;
+          case "hearings":
+            container.innerHTML = viewHearings();
+            break;
+          case "deadlines":
+            container.innerHTML = viewDeadlines();
+            break;
+          case "documents":
+            container.innerHTML = viewDocuments();
+            break;
+          case "updates":
+            container.innerHTML = viewUpdates();
+            break;
+          case "communications":
+            container.innerHTML = viewCommunications();
+            break;
+          case "calendar":
+            container.innerHTML = viewCalendar();
+            break;
+          case "notifications":
+            container.innerHTML = viewNotifications();
+            break;
+          case "activity":
+            container.innerHTML = viewActivityLog();
+            break;
+          case "profile":
+            container.innerHTML = viewProfile();
+            break;
+          default:
+            container.innerHTML = viewDashboard();
+        }
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+
+      window.addEventListener("DOMContentLoaded", () => {
+        init();
+        navigate("dashboard");
+      });
+    </script>
+  </body>
+</html>

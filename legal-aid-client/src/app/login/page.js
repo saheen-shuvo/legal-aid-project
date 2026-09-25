@@ -19,6 +19,8 @@ const demoAccounts = {
   "dlao@gmail.com": "/dashboard/dlao",
   "case@gmail.com": "/dashboard/dlo-administration-case-support",
   "udc@gmail.com": "/udc-portal.html",
+  "citizen@gmail.com": "/citizen-portal-styled.html",
+  "lawyer@gmail.com": "/lawyer-portal.html",
 };
 
 export default function LoginPage() {
