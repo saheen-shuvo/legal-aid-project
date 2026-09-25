@@ -18,10 +18,12 @@ import {
   FiUsers,
   FiX,
 } from "react-icons/fi";
+import { RiBriefcase3Line } from "react-icons/ri";
 
 const dlaoItems = [
   { label: "কমান্ড সেন্টার", icon: FiGrid, href: "#command-centre" },
   { label: "আবেদনসমূহ", icon: FiClipboard, href: "#applications" },
+  { label: "কেস রেকর্ডস", icon: RiBriefcase3Line, href: "#case" },
   { label: "হিউম্যান রিভিউ কিউ", icon: FiFlag, href: "#human-queue" },
   { label: "ইউনিফাইড কেস রেকর্ডস", icon: FiArchive, href: "#case-records" },
   { label: "টাস্ক এবং ফলো-আপ", icon: FiCheck, href: "#tasks-follow-up" },
@@ -37,7 +39,6 @@ const dlaoItems = [
   { label: "অফলাইন ও সিঙ্ক", icon: FiRepeat, href: "#offline-sync" },
   { label: "নিরাপত্তা ও গোপনীয়তা", icon: FiShield, href: "#safety-privacy" },
   { label: "অডিট ট্রেইল", icon: FiActivity, href: "#audit-trail" },
-  { label: "২৩ রিকোয়ারমেন্ট কভারেজ", icon: FiCheck, href: "#coverage" },
 ];
 
 export default function DashboardLayout({ role, roleConfig, children }) {
@@ -85,9 +86,6 @@ export default function DashboardLayout({ role, roleConfig, children }) {
           >
             লিগ্যাল এইড
           </Link>
-          <p className="mt-1 text-[13px] font-semibold text-emerald-100/75">
-            পাঁচ দরজা · এক রেকর্ড
-          </p>
         </div>
         <div className="mx-5 mt-4 rounded-xl bg-white/[0.09] px-4 py-3.5 leading-tight text-white">
           <p className="text-[15px] font-bold">
@@ -174,10 +172,6 @@ export default function DashboardLayout({ role, roleConfig, children }) {
             >
               <FiMenu size={22} aria-hidden="true" />
             </button>
-
-            <p className="text-sm font-bold text-[#52627b]">
-              {isDlao ? "DLAO / ২৩/২৩ কভারেজ" : roleConfig.title}
-            </p>
           </div>
 
           <div className="flex items-center gap-3 sm:gap-6">

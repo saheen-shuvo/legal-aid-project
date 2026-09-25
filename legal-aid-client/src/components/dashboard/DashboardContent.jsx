@@ -7,6 +7,7 @@ import DlaoSections from "./DlaoSections";
 const sectionIds = new Set([
   "command-centre",
   "applications",
+  "case",
   "human-queue",
   "case-records",
   "tasks-follow-up",
@@ -18,7 +19,6 @@ const sectionIds = new Set([
   "offline-sync",
   "safety-privacy",
   "audit-trail",
-  "coverage",
 ]);
 
 const statCards = [

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import CaseRecordDetails from "./CaseRecordDetails";
 import {
   FiArrowRight,
   FiCheckCircle,
@@ -9,6 +10,8 @@ import {
   FiSearch,
   FiShield,
 } from "react-icons/fi";
+import CaseRecords from "./CaseRecords";
+import MediationWorkflow from "./MediationWorkflow";
 
 const demoSections = {
   applications: {
@@ -95,31 +98,31 @@ const demoSections = {
     subtitle:
       "আপডেট, রেফারেল এবং ফলো-আপ হিস্ট্রির জন্য একটি সমন্বিত কেস রেকর্ড।",
     metrics: [
-      ["সক্রিয় কেস", "১২৬"],
-      ["পদক্ষেপের অপেক্ষায়", "১৪"],
+      ["সক্রিয় কেস", "১২৬"],
+      ["পদক্ষেপের অপেক্ষায়", "১৪"],
       ["চলতি রেফারেল", "৭"],
     ],
     records: [
       [
         "CASE-26-00417",
-        "আব্দুল মালেক",
+        "আবদুল মালেক",
         "শুনানি এবং আইনজীবীর তথ্য আপডেট",
-        "সক্রিয়",
+        "সক্রিয়",
         "কেস সাপোর্ট",
       ],
       [
         "CASE-26-00420",
-        "ডেমো ক্লায়েন্ট",
+        "ডেমো ক্লায়েন্ট",
         "রেফারেল প্রাপ্তি স্বীকার",
         "পেন্ডিং",
         "DLAO",
       ],
       [
         "CASE-26-00422",
-        "ডেমো ক্লায়েন্ট",
-        "সালিশির সময়সূচী নির্ধারণ",
-        "সক্রিয়",
-        "মিডিয়েটর",
+        "ডেমো ক্লায়েন্ট",
+        "সালিশির সময়সূচি নির্ধারণ",
+        "সক্রিয়",
+        "মিডিয়েটর",
       ],
     ],
   },
@@ -307,7 +310,27 @@ export default function DlaoSections({
   const [filter, setFilter] = useState("All stages");
   const [syncTime, setSyncTime] = useState("Not run in this session");
   const [aiRecord, setAiRecord] = useState("APP-000035");
+  const [selectedCase, setSelectedCase] = useState(null);
   const section = demoSections[active];
+  const [selectedMediation, setSelectedMediation] = useState(null);
+
+  if (active === "mediation" && selectedMediation) {
+    return (
+      <MediationWorkflow
+        key={selectedMediation.id}
+        onBack={() => setSelectedMediation(null)}
+      />
+    );
+  }
+
+  if (active === "case-records" && selectedCase) {
+    return (
+      <CaseRecordDetails
+        record={selectedCase}
+        onBack={() => setSelectedCase(null)}
+      />
+    );
+  }
 
   if (section) {
     const rows =
@@ -410,19 +433,33 @@ export default function DlaoSections({
                     <td className="px-3 py-4 text-right">
                       <button
                         type="button"
-                        onClick={() =>
-                          onSelect({
-                            id,
-                            name,
-                            reason,
-                            priority: status,
-                            owner,
-                            section: section.title,
-                          })
-                        }
+                        onClick={() => {
+                          if (active === "mediation") {
+                            setSelectedMediation({ id, name });
+                          } else if (active === "case-records") {
+                            setSelectedCase({
+                              id,
+                              name,
+                              reason,
+                              status,
+                              owner,
+                            });
+                          } else {
+                            onSelect({
+                              id,
+                              name,
+                              reason,
+                              priority: status,
+                              owner,
+                              section: section.title,
+                            });
+                          }
+                        }}
                         className="rounded-lg px-3 py-2 font-bold hover:bg-emerald-50"
                       >
-                        খুলুন
+                        {active === "mediation" || active === "case-records"
+                          ? "খুলুন"
+                          : "Open"}
                       </button>
                     </td>
                   </tr>
@@ -647,52 +684,9 @@ export default function DlaoSections({
       </section>
     );
 
-  if (active === "coverage")
-    return (
-      <section id={active}>
-        <SectionHeading
-          title="২৩টি প্রয়োজনীয়তার কভারেজ"
-          subtitle="প্রতিযোগিতার প্রোটোটাইপে অন্তর্ভুক্ত প্রয়োজনীয়তাগুলোর সারসংক্ষেপ।"
-        />
-
-        <div className={panelClass}>
-          <div className="flex items-end gap-3">
-            <strong className="text-5xl text-[#145542]">23/23</strong>
-            <span className="pb-1 text-sm text-slate-600">
-              ডেমোতে ম্যাপ করা হয়েছে
-            </span>
-          </div>
-
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              ["আবেদন গ্রহণ ও অ্যাক্সেস", "5"],
-              ["মামলা পরিচালনা কার্যপ্রবাহ", "6"],
-              ["সেবা প্রদান", "5"],
-              ["নিরাপত্তা ও তদারকি", "4"],
-              ["রিপোর্টিং ও অডিট", "3"],
-            ].map(([label, count]) => (
-              <div
-                key={label}
-                className="rounded-xl border border-slate-200 p-4"
-              >
-                <FiCheckCircle className="text-[#145542]" aria-hidden="true" />
-
-                <p className="mt-2 font-bold">{label}</p>
-
-                <p className="text-sm text-slate-500">
-                  {count}টি প্রয়োজনীয়তা ম্যাপ করা হয়েছে
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <p className="mt-6 text-xs text-slate-500">
-            এটি একটি প্রদর্শনমূলক UI ম্যাপিং; এই স্ক্রিনটি প্রোডাকশন ব্যবহারের
-            প্রস্তুতি যাচাই করে না।
-          </p>
-        </div>
-      </section>
-    );
+  if (active === "case") {
+    return <CaseRecords />;
+  }
 
   return (
     <section id={active} className={panelClass}>
