@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Swal from "sweetalert2";
 import {
   FiEye,
   FiEyeOff,
@@ -24,6 +25,32 @@ const demoAccounts = {
   "chairman@gmail.com": "/chairman-portal.html",
 };
 
+const demoUsers = [
+  {
+    label: "নাগরিক",
+    email: "citizen@gmail.com",
+  },
+  {
+    label: "ডিএলও অফিসার",
+    email: "dlao@gmail.com",
+  },
+  {
+    label: "চেয়ারম্যান পোর্টাল",
+    email: "chairman@gmail.com",
+  },
+  {
+    label: "ইউডিসি অন্ট্রাপ্রেনার",
+    email: "udc@gmail.com",
+  },
+  {
+    label: "প্যানাল আইনজীবী",
+    email: "lawyer@gmail.com",
+  },
+  {
+    label: "ডিএলও অ্যাডমিনিস্ট্রেশন/ কেস সাপোর্ট",
+    email: "case@gmail.com",
+  },
+];
 export default function LoginPage() {
   const router = useRouter();
 
@@ -32,6 +59,12 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
   const [dashboardPath, setDashboardPath] = useState("");
+
+  function fillDemoAccount(email) {
+    setIdentifier(email);
+    setPassword("12345678");
+    setMessage("");
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -46,10 +79,25 @@ export default function LoginPage() {
 
     if (destination && password.trim() === "12345678") {
       setDashboardPath(destination);
-      setMessage("লগইন সফল হয়েছে! ড্যাশবোর্ডে নিয়ে যাওয়া হচ্ছে...");
+
+      Swal.fire({
+        icon: "success",
+        title: "লগইন সফল হয়েছে!",
+        text: "ড্যাশবোর্ডে নিয়ে যাওয়া হচ্ছে...",
+        timer: 1200,
+        showConfirmButton: false,
+        allowOutsideClick: false,
+      });
     } else {
       setDashboardPath("");
-      setMessage("ইমেইল অথবা পাসওয়ার্ড সঠিক নয়।");
+
+      Swal.fire({
+        icon: "error",
+        title: "লগইন ব্যর্থ",
+        text: "ইমেইল অথবা পাসওয়ার্ড সঠিক নয়।",
+        confirmButtonText: "ঠিক আছে",
+        confirmButtonColor: "#047857",
+      });
     }
   }
 
@@ -185,20 +233,29 @@ export default function LoginPage() {
                 >
                   পাসওয়ার্ড ভুলে গেছেন?
                 </Link>
-              </div>
+                <div className="border-t border-slate-200 pt-3">
+                  <p className="mb-4 text-center text-sm font-semibold text-slate-600">
+                    Demo Login
+                  </p>
 
-              {message && (
-                <p
-                  role={isSuccess ? "status" : "alert"}
-                  className={`rounded-lg p-3 text-sm ${
-                    isSuccess
-                      ? "bg-emerald-50 text-emerald-800"
-                      : "bg-red-50 text-red-700"
-                  }`}
-                >
-                  {message}
-                </p>
-              )}
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                    {demoUsers.map((user) => (
+                      <button
+                        key={user.email}
+                        type="button"
+                        onClick={() => fillDemoAccount(user.email)}
+                        className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2.5 text-sm font-medium text-emerald-800 transition hover:border-emerald-400 hover:bg-emerald-100"
+                      >
+                        {user.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  <p className="mt-3 text-center text-xs text-slate-400">
+                    Demo password: 12345678
+                  </p>
+                </div>
+              </div>
 
               <button
                 type="submit"

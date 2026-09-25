@@ -11,10 +11,11 @@ import {
   FiUserPlus,
   FiX,
 } from "react-icons/fi";
+import GoogleTranslate from "../GoogleTranslate";
 
 const links = [
-  { label: "আবেদন করুন", href: "/apply" },
-  { label: "আবেদন ট্র্যাক করুন", href: "/track" },
+  { label: "আবেদন করুন", href: "/login" },
+  { label: "আবেদন ট্র্যাক করুন", href: "/login" },
 ];
 
 const registrationRoles = [
@@ -103,9 +104,7 @@ export default function Navbar() {
               </Link>
             ))}
 
-            <span className="whitespace-nowrap text-sm font-medium text-green-900">
-              English
-            </span>
+            <GoogleTranslate />
 
             <Link
               href="/login"
@@ -188,9 +187,7 @@ export default function Navbar() {
                 </Link>
               ))}
 
-              <span className="px-3 py-3 font-medium text-green-900">
-                English
-              </span>
+              <GoogleTranslate />
             </div>
 
             <div className="mt-auto flex flex-col gap-3 border-t border-gray-200 pt-5">

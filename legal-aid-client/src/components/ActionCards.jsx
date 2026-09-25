@@ -17,9 +17,9 @@ const actions = [
   },
   {
     number: "০২",
-    title: "এসএমএস সহায়তা",
-    description: "মোবাইলে বার্তার মাধ্যমে সহায়তা চান।",
-    href: "/apply/sms",
+    title: "USSD সহায়তা",
+    description: "ফোনের USSD কোড ব্যবহার করে সহায়তার জন্য আবেদন করুন।",
+    href: "/ussd-system.html",
     icon: FiMessageSquare,
   },
   {

@@ -1,0 +1,2111 @@
+<!doctype html>
+<html lang="bn" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>জাতীয় আইনগত সহায়তা — ইউএসএসডি সিস্টেম (*১৬৬৯৯#)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts: Hind Siliguri & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                950: "#071810",
+                900: "#0f3322", // Primary deep forest green matching screenshot
+                850: "#133e2a",
+                800: "#16442f",
+                750: "#1a4733",
+                700: "#1e533b",
+                600: "#286f4f",
+                500: "#328b63",
+                100: "#d1e7dd",
+                50: "#f0fdf4",
+              },
+            },
+            fontFamily: {
+              sans: ['"Hind Siliguri"', "system-ui", "sans-serif"],
+              mono: ['"JetBrains Mono"', "ui-monospace", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        font-family: "Hind Siliguri", system-ui, sans-serif;
+        background-color: #f8fafc;
+        color: #0f172a;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(15, 51, 34, 0.25);
+        border-radius: 4px;
+      }
+
+      /* Realistic Phone Bezel Frame */
+      .phone-mockup {
+        width: 100%;
+        max-width: 395px;
+        height: 700px;
+        border-radius: 46px;
+        box-shadow:
+          0 25px 60px -15px rgba(0, 0, 0, 0.35),
+          0 0 0 10px #1e293b,
+          0 0 0 12px #334155;
+        background: #0f172a;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Keypad Button Styling */
+      .key-btn {
+        transition: all 0.12s ease;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        color: #1e293b;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      }
+      .key-btn:active {
+        transform: scale(0.94);
+        background: #e2e8f0;
+      }
+
+      /* USSD Popup Dialog Box (Classic Mobile Feature) */
+      .ussd-popup {
+        animation: ussdPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      @keyframes ussdPop {
+        0% {
+          transform: scale(0.9);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .pulse-green {
+        animation: pulseGreen 2s infinite;
+      }
+      @keyframes pulseGreen {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+    </style>
+    <script>
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "bn",
+            includedLanguages: "bn,en",
+            autoDisplay: false,
+          },
+          "google_translate_element",
+        );
+      }
+
+      function changeLanguage(language) {
+        const select = document.querySelector(".goog-te-combo");
+
+        if (!select) {
+          console.log("Google Translate is still loading...");
+          return;
+        }
+
+        select.value = language;
+        select.dispatchEvent(new Event("change"));
+
+        updateLanguageButton(language);
+      }
+
+      function updateLanguageButton(language) {
+        const bnBtn = document.getElementById("bnBtn");
+        const enBtn = document.getElementById("enBtn");
+
+        if (language === "en") {
+          enBtn.className =
+            "rounded-full bg-emerald-900 px-3 py-1.5 text-xs font-semibold text-white transition";
+
+          bnBtn.className =
+            "rounded-full px-3 py-1.5 text-xs font-semibold text-gray-600 transition hover:bg-white";
+        } else {
+          bnBtn.className =
+            "rounded-full bg-emerald-900 px-3 py-1.5 text-xs font-semibold text-white transition";
+
+          enBtn.className =
+            "rounded-full px-3 py-1.5 text-xs font-semibold text-gray-600 transition hover:bg-white";
+        }
+      }
+    </script>
+
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  </head>
+  <body
+    class="h-full flex flex-col bg-slate-100 text-slate-800 antialiased selection:bg-brand-900 selection:text-white text-[14.5px]"
+  >
+    <!-- Toast Notification Container -->
+    <div
+      id="toastContainer"
+      class="fixed top-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"
+    ></div>
+
+    <!-- Global Navigation Header -->
+    <header class="border-b border-gray-200 bg-white">
+      <nav
+        aria-label="প্রধান নেভিগেশন"
+        class="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6"
+      >
+        <!-- Logo and department name -->
+        <a href="/" class="flex min-w-0 items-center gap-2 sm:gap-3">
+          <img
+            src="https://db.nlaso.gov.bd/Images/nlaso.png"
+            alt="বাংলাদেশ আইনগত সহায়তা অধিদপ্তর"
+            width="64"
+            height="64"
+            class="h-12 w-12 shrink-0 object-contain sm:h-16 sm:w-16"
+          />
+
+          <span class="min-w-0">
+            <span
+              class="block text-sm font-bold leading-tight text-orange-600 sm:text-lg xl:whitespace-nowrap"
+            >
+              বাংলাদেশ আইনগত সহায়তা অধিদপ্তর
+            </span>
+
+            <span
+              class="mt-1 block text-xs font-semibold leading-tight text-green-800 sm:text-sm"
+            >
+              গণপ্রজাতন্ত্রী বাংলাদেশ সরকার
+            </span>
+          </span>
+        </a>
+
+        <!-- Desktop navigation -->
+        <div class="hidden items-center gap-4 xl:flex">
+          <a
+            href="/login"
+            class="whitespace-nowrap text-sm font-medium text-gray-800 hover:text-green-800"
+          >
+            আবেদন করুন
+          </a>
+
+          <a
+            href="/login"
+            class="whitespace-nowrap text-sm font-medium text-gray-800 hover:text-green-800"
+          >
+            আবেদন ট্র্যাক করুন
+          </a>
+
+          <div
+            class="flex items-center gap-1 rounded-full border border-gray-200 bg-gray-50 p-1"
+          >
+            <button
+              id="bnBtn"
+              type="button"
+              onclick="changeLanguage('bn')"
+              class="rounded-full bg-emerald-900 px-3 py-1.5 text-xs font-semibold text-white transition"
+            >
+              বাংলা
+            </button>
+
+            <button
+              id="enBtn"
+              type="button"
+              onclick="changeLanguage('en')"
+              class="rounded-full px-3 py-1.5 text-xs font-semibold text-gray-600 transition hover:bg-white"
+            >
+              English
+            </button>
+          </div>
+
+          <!-- Hidden Google Translate widget -->
+          <div id="google_translate_element" class="hidden"></div>
+
+          <!-- Login -->
+          <a
+            href="/login"
+            class="btn btn-outline btn-sm whitespace-nowrap rounded-full border-emerald-600 text-emerald-900 hover:bg-emerald-50"
+          >
+            <!-- Login icon -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" y1="12" x2="3" y2="12"></line>
+            </svg>
+
+            লগ ইন
+          </a>
+        </div>
+
+        <!-- Mobile menu button -->
+        <button
+          type="button"
+          class="btn btn-ghost btn-square shrink-0 xl:hidden"
+          aria-label="মেনু খুলুন"
+          onclick="openMobileMenu()"
+        >
+          <!-- Menu icon -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="25"
+            height="25"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </nav>
+    </header>
+
+    <!-- Mobile drawer -->
+    <div id="mobile-navigation" class="fixed inset-0 z-50 hidden xl:hidden">
+      <!-- Overlay -->
+      <button
+        type="button"
+        class="absolute inset-0 bg-black/50"
+        aria-label="মেনু বন্ধ করুন"
+        onclick="closeMobileMenu()"
+      ></button>
+
+      <!-- Drawer -->
+      <aside
+        class="relative flex h-full w-[min(85vw,320px)] flex-col overflow-y-auto bg-white p-5 shadow-xl"
+      >
+        <!-- Drawer header -->
+        <div
+          class="flex items-center justify-between border-b border-gray-200 pb-4"
+        >
+          <span class="font-bold text-green-900"> মেনু </span>
+
+          <button
+            type="button"
+            class="btn btn-ghost btn-square btn-sm"
+            aria-label="মেনু বন্ধ করুন"
+            onclick="closeMobileMenu()"
+          >
+            <!-- X icon -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="23"
+              height="23"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile navigation links -->
+        <div class="flex flex-col gap-1 py-5">
+          <a
+            href="/login"
+            class="rounded-lg px-3 py-3 font-medium text-gray-800 hover:bg-green-50"
+          >
+            আবেদন করুন
+          </a>
+
+          <a
+            href="/login"
+            class="rounded-lg px-3 py-3 font-medium text-gray-800 hover:bg-green-50"
+          >
+            আবেদন ট্র্যাক করুন
+          </a>
+
+          <!-- Google Translate -->
+          <div id="google_translate_element_mobile"></div>
+        </div>
+
+        <!-- Bottom actions -->
+        <div class="mt-auto flex flex-col gap-3 border-t border-gray-200 pt-5">
+          <!-- Login -->
+          <a
+            href="/login"
+            class="btn btn-outline rounded-full border-emerald-600 text-emerald-900"
+          >
+            <!-- Login icon -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" y1="12" x2="3" y2="12"></line>
+            </svg>
+
+            লগ ইন
+          </a>
+
+          <!-- Mobile registration dropdown -->
+          <details class="rounded-xl border border-gray-200">
+            <summary
+              class="flex cursor-pointer list-none items-center justify-center gap-2 rounded-xl bg-emerald-900 px-4 py-3 font-medium text-white"
+            >
+              <!-- User icon -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <line x1="19" y1="8" x2="19" y2="14"></line>
+                <line x1="22" y1="11" x2="16" y2="11"></line>
+              </svg>
+
+              রেজিস্ট্রেশন
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </summary>
+
+            <div class="flex flex-col p-2">
+              <a
+                href="/register?role=applicant"
+                class="rounded-lg px-3 py-2 text-gray-800 hover:bg-green-50"
+              >
+                নাগরিক
+              </a>
+
+              <a
+                href="/register?role=dlo-officer"
+                class="rounded-lg px-3 py-2 text-gray-800 hover:bg-green-50"
+              >
+                ডিএলও অফিসার
+              </a>
+
+              <a
+                href="/register?role=chairman-portal"
+                class="rounded-lg px-3 py-2 text-gray-800 hover:bg-green-50"
+              >
+                চেয়ারম্যান পোর্টাল
+              </a>
+
+              <a
+                href="/register?role=udc-entrepreneur"
+                class="rounded-lg px-3 py-2 text-gray-800 hover:bg-green-50"
+              >
+                ইউডিসি অন্ট্রাপ্রেনার
+              </a>
+
+              <a
+                href="/register?role=panel-lawyer"
+                class="rounded-lg px-3 py-2 text-gray-800 hover:bg-green-50"
+              >
+                প্যানাল আইনজীবী
+              </a>
+
+              <a
+                href="/register?role=dlo-administration-case-support"
+                class="rounded-lg px-3 py-2 text-gray-800 hover:bg-green-50"
+              >
+                ডিএলও অ্যাডমিনিস্ট্রেশন/ কেস সাপোর্ট
+              </a>
+
+              <a
+                href="/register?role=nlaso"
+                class="rounded-lg px-3 py-2 text-gray-800 hover:bg-green-50"
+              >
+                এনএলএএসও (NLASO)
+              </a>
+            </div>
+          </details>
+        </div>
+      </aside>
+    </div>
+
+    <script>
+      function openMobileMenu() {
+        document.getElementById("mobile-navigation").classList.remove("hidden");
+      }
+
+      function closeMobileMenu() {
+        document.getElementById("mobile-navigation").classList.add("hidden");
+      }
+    </script>
+
+    <!-- MAIN WRAPPER (Split Screen: Left Info / Right Phone) -->
+    <main class="flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar">
+      <div
+        class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+      >
+        <!-- LEFT COLUMN: Instruction, Scenarios & Backend Audit (Col 7) -->
+        <div class="lg:col-span-7 space-y-6">
+          <!-- Top Intro & Badge (Matching screenshot aesthetic) -->
+          <div class="space-y-3">
+            <div
+              class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-100/90 text-emerald-900 font-bold text-xs border border-emerald-300"
+            >
+              <span class="w-2 h-2 rounded-full bg-emerald-700"></span>
+              <span>ইন্টারঅ্যাকটিভ ডেমো · ইউএসএসডি সিস্টেম</span>
+            </div>
+
+            <h2
+              class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight"
+            >
+              সহায়তার শুরু <br class="hidden sm:block" />একটি ডায়ালে।
+            </h2>
+
+            <p class="text-slate-600 text-sm leading-relaxed max-w-xl">
+              <strong>*১৬৬৯৯#</strong> ডায়াল করুন। কিপ্যাডে সেবা বেছে নিন। কোনো
+              ইন্টারনেট, স্মার্টফোন বা মোবাইল অ্যাপ ছাড়াই প্রত্যন্ত অঞ্চলের
+              বিচারপ্রার্থীদের জন্য সরকারি আইনি সহায়তার আবেদন, মামলার অবস্থা,
+              শুনানির তারিখ ও মধ্যস্থতা ট্র্যাকিংয়ের স্বয়ংক্রিয় ইউএসএসডি গেটওয়ে।
+            </p>
+          </div>
+
+          <!-- Two Feature Cards (1:1 with image_fe6ca5.png layout) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div
+              class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-2"
+            >
+              <div
+                class="text-xs font-bold text-emerald-800 uppercase tracking-wide"
+              >
+                ০১ · কিপ্যাড ও ইউএসএসডি
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                নম্বর ও PIN দিন। মেনুর সংখ্যা চেপে
+                <strong>পাঠান (Send)</strong> চাপুন। * দিয়ে মুছুন। যেকোনো সাধারণ
+                ফিচার ফোনেও তাৎক্ষণিক কার্যকর।
+              </p>
+            </div>
+
+            <div
+              class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-2"
+            >
+              <div
+                class="text-xs font-bold text-emerald-800 uppercase tracking-wide"
+              >
+                ০২ · স্বয়ংক্রিয় স্ক্রিপ্ট ও নিরাপত্তা
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                নিচে প্রদত্ত সিনারিওগুলোতে ক্লিক করলে স্ক্রিপ্টের তথ্য দ্রুত
+                স্বয়ংক্রিয়ভাবে প্রবেশ করবে। সংবেদনশীল পারিবারিক ক্ষেত্রে SMS
+                ব্লক প্রটোকল সক্রিয় হয়।
+              </p>
+            </div>
+          </div>
+
+          <!-- Accordion: Demo Numbers, Cases & PIN (matching screenshot dropdown) -->
+          <div
+            class="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-2xs"
+          >
+            <button
+              onclick="toggleAccordion('demoCredsPanel')"
+              class="w-full p-4 text-left flex items-center justify-between hover:bg-slate-50 transition text-xs font-bold text-slate-800"
+            >
+              <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-play text-brand-900 text-[10px]"></i>
+                <span>ডেমোর কোড, নম্বর, টেস্ট কেস ও PIN দেখুন</span>
+              </div>
+              <span class="text-slate-400 text-xs" id="demoCredsIcon"
+                ><i class="fa-solid fa-chevron-down"></i
+              ></span>
+            </button>
+
+            <div
+              id="demoCredsPanel"
+              class="p-4 pt-0 border-t border-slate-100 text-xs space-y-3 hidden"
+            >
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3">
+                <div
+                  class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1"
+                >
+                  <span class="font-bold text-slate-900 block"
+                    >১. পূর্বের আবেদন যাচাই (রিপন / ময়ূরী)</span
+                  >
+                  <div class="text-slate-600 font-mono text-[11px]">
+                    Application ID: <strong>20260342</strong>
+                  </div>
+                  <div class="text-slate-600 font-mono text-[11px]">
+                    গোপন PIN: <strong>5824</strong>
+                  </div>
+                  <div class="text-[10px] text-amber-800">
+                    স্ট্যাটাস: Human Review Pending (Case ID এখনো তৈরি হয়নি)
+                  </div>
+                </div>
+
+                <div
+                  class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1"
+                >
+                  <span class="font-bold text-slate-900 block"
+                    >২. চলমান মামলা (আব্দুল মালেক)</span
+                  >
+                  <div class="text-slate-600 font-mono text-[11px]">
+                    Case ID: <strong>CASE-2026-000342</strong>
+                  </div>
+                  <div class="text-slate-600 font-mono text-[11px]">
+                    গোপন PIN: <strong>5824</strong>
+                  </div>
+                  <div class="text-[10px] text-emerald-800">
+                    শুনানি: ৫ অক্টোবর ২০২৬ | মধ্যস্থতা: ৭ অক্টোবর
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Scenario Runner (Fast Test Buttons for Competition Evaluation) -->
+          <div
+            class="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-2xs space-y-3"
+          >
+            <div
+              class="flex items-center justify-between border-b border-slate-100 pb-2.5"
+            >
+              <h3
+                class="text-xs font-bold text-slate-900 flex items-center space-x-2"
+              >
+                <i class="fa-solid fa-bolt text-amber-500"></i>
+                <span>দ্রুত ডেমো স্ক্রিপ্ট রানার (Quick Scenario Runner)</span>
+              </h3>
+              <span class="text-[10px] text-slate-400 font-mono"
+                >16699.docx compliant</span
+              >
+            </div>
+
+            <p class="text-xs text-slate-500">
+              ডকুমেন্টে উল্লিখিত যেকোনো জটিল আইনি পরিস্থিতি এক ক্লিকে ফোনে
+              সিমুলেট করুন:
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+              <button
+                onclick="runScenario('NEW_APP_SAFE_CONTACT')"
+                class="p-2.5 text-left border rounded-xl hover:border-brand-900 hover:bg-slate-50 transition font-medium text-slate-800 flex items-start space-x-2"
+              >
+                <span class="font-bold text-brand-900 text-[11px]">১.</span>
+                <div>
+                  <strong class="block text-slate-900"
+                    >নতুন আবেদন (রিপন / ময়ূরী)</strong
+                  >
+                  <span class="text-[10px] text-slate-500"
+                    >স্বামী ফোন নিয়ন্ত্রণ করে $ ightarrow$ SMS ব্লক
+                    প্রটোকল</span
+                  >
+                </div>
+              </button>
+
+              <button
+                onclick="runScenario('CHECK_STATUS')"
+                class="p-2.5 text-left border rounded-xl hover:border-brand-900 hover:bg-slate-50 transition font-medium text-slate-800 flex items-start space-x-2"
+              >
+                <span class="font-bold text-brand-900 text-[11px]">২.</span>
+                <div>
+                  <strong class="block text-slate-900"
+                    >আবেদনের অবস্থা যাচাই</strong
+                  >
+                  <span class="text-[10px] text-slate-500"
+                    >আইডি ২০২৬০৩৪২ ও PIN ৫৮২৪ যাচাই</span
+                  >
+                </div>
+              </button>
+
+              <button
+                onclick="runScenario('HEARING_SCHEDULE')"
+                class="p-2.5 text-left border rounded-xl hover:border-brand-900 hover:bg-slate-50 transition font-medium text-slate-800 flex items-start space-x-2"
+              >
+                <span class="font-bold text-brand-900 text-[11px]">৩.</span>
+                <div>
+                  <strong class="block text-slate-900"
+                    >শুনানির তারিখ ও উপস্থিতি সমস্যা</strong
+                  >
+                  <span class="text-[10px] text-slate-500"
+                    >৫ অক্টোবর তারিখ $ ightarrow$ যাতায়াত সমস্যার টাস্ক</span
+                  >
+                </div>
+              </button>
+
+              <button
+                onclick="runScenario('MEDIATION_REMOTE')"
+                class="p-2.5 text-left border rounded-xl hover:border-brand-900 hover:bg-slate-50 transition font-medium text-slate-800 flex items-start space-x-2"
+              >
+                <span class="font-bold text-brand-900 text-[11px]">৪.</span>
+                <div>
+                  <strong class="block text-slate-900"
+                    >মধ্যস্থতা ও ফোনে অংশগ্রহণ</strong
+                  >
+                  <span class="text-[10px] text-slate-500"
+                    >৭ অক্টোবর বৈঠক $ ightarrow$ Remote Participation Req</span
+                  >
+                </div>
+              </button>
+
+              <button
+                onclick="runScenario('LAWYER_CHANGE')"
+                class="p-2.5 text-left border rounded-xl hover:border-brand-900 hover:bg-slate-50 transition font-medium text-slate-800 flex items-start space-x-2"
+              >
+                <span class="font-bold text-brand-900 text-[11px]">৫.</span>
+                <div>
+                  <strong class="block text-slate-900"
+                    >আইনজীবী পরিবর্তন আবেদন</strong
+                  >
+                  <span class="text-[10px] text-slate-500"
+                    >খবর দেন না $ ightarrow$ Human Review Queue টাস্ক</span
+                  >
+                </div>
+              </button>
+
+              <button
+                onclick="runScenario('EMERGENCY_RISK')"
+                class="p-2.5 text-left border rounded-xl hover:border-rose-400 bg-rose-50/40 hover:bg-rose-50 transition font-medium text-rose-950 flex items-start space-x-2"
+              >
+                <span class="font-bold text-rose-700 text-[11px]">৬.</span>
+                <div>
+                  <strong class="block text-rose-900"
+                    >জরুরি নিরাপত্তা ঝুঁকি (ধারা ৯)</strong
+                  >
+                  <span class="text-[10px] text-rose-700"
+                    >জীবন ঝুঁকি $ ightarrow$ ৯৯৯ ইমার্জেন্সি হ্যান্ডঅফ</span
+                  >
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Real-Time Backend Telemetry & Audit Log -->
+          <div
+            class="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-2xs space-y-3"
+          >
+            <div
+              class="flex items-center justify-between border-b border-slate-100 pb-2"
+            >
+              <div class="flex items-center space-x-2">
+                <span
+                  class="w-2.5 h-2.5 rounded-full bg-emerald-600 pulse-green"
+                ></span>
+                <h3 class="text-xs font-bold text-slate-900">
+                  সিস্টেম ব্যাকএন্ড টেলিমেট্রি ও অডিট ট্রেইল (Live Engine)
+                </h3>
+              </div>
+              <span class="text-[10px] text-slate-400 font-mono"
+                >DLAO Central Engine Sync</span
+              >
+            </div>
+
+            <div
+              id="backendLog"
+              class="p-3 bg-slate-900 text-emerald-400 font-mono text-[11px] rounded-xl h-36 overflow-y-auto custom-scrollbar space-y-1"
+            >
+              <div class="text-slate-400">
+                > ইউএসএসডি গেটওয়ে চালু হয়েছে: *১৬৬৯৯# রেডি।
+              </div>
+              <div class="text-slate-400">
+                > টেলিকম সেশন আইডল: ইনপুট এর অপেক্ষায়...
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Disclaimer (Matching screenshot) -->
+          <div class="flex items-center space-x-2 text-xs text-slate-500 pt-1">
+            <i class="fa-solid fa-shield-halved text-emerald-800 text-sm"></i>
+            <span
+              >সব তথ্য নমুনা। বাস্তবে কোনো কল, আবেদন, SMS বা জরুরি সহায়তার
+              অনুরোধ পাঠানো হয় না।</span
+            >
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Realistic Phone Simulator Dedicated to USSD (Col 5) -->
+        <div class="lg:col-span-5 flex justify-center sticky top-6">
+          <div class="phone-mockup border-4 border-slate-700">
+            <!-- PHONE NOTCH & SPEAKER -->
+            <div
+              class="h-6 bg-slate-950 flex items-center justify-between px-6 shrink-0 text-white/70 text-[10px] select-none font-mono"
+            >
+              <span>16:54</span>
+              <div
+                class="w-16 h-3.5 bg-slate-900 rounded-full mx-auto flex items-center justify-center"
+              >
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-800"></span>
+              </div>
+              <div class="flex items-center space-x-1.5">
+                <i class="fa-solid fa-signal text-[9px]"></i>
+                <i class="fa-solid fa-wifi text-[9px]"></i>
+                <i class="fa-solid fa-battery-full text-[10px]"></i>
+              </div>
+            </div>
+
+            <!-- TOP GREEN CALL / SESSION BAR (Matching image_fe6ca5.png) -->
+            <div
+              id="phoneTopBar"
+              class="bg-brand-900 text-white p-3.5 px-4 shrink-0 flex items-center justify-between shadow-md border-b border-brand-800"
+            >
+              <div class="flex items-center space-x-3">
+                <div
+                  class="w-9 h-9 rounded-full bg-emerald-800/80 border border-emerald-600/50 flex items-center justify-center text-white text-sm shadow-inner"
+                >
+                  <i class="fa-solid fa-hashtag text-emerald-200"></i>
+                </div>
+                <div>
+                  <h4
+                    id="phoneTopTitle"
+                    class="text-xs font-bold text-white tracking-wide"
+                  >
+                    লিগ্যাল এইড · *১৬৬৯৯#
+                  </h4>
+                  <div class="flex items-center space-x-1.5">
+                    <span
+                      id="phoneStatusDot"
+                      class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-green"
+                    ></span>
+                    <p
+                      id="phoneTopSubtitle"
+                      class="text-[10px] text-emerald-200"
+                    >
+                      ইউএসএসডি ডায়াল করতে প্রস্তুত
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center space-x-2 text-white/80">
+                <button
+                  onclick="toggleSpeaker()"
+                  id="btnSpeaker"
+                  class="p-1.5 hover:text-white rounded-lg transition"
+                  title="স্পিকার"
+                >
+                  <i class="fa-solid fa-volume-high text-xs"></i>
+                </button>
+                <button
+                  onclick="resetSimulator()"
+                  class="p-1.5 hover:text-white rounded-lg transition"
+                  title="রিসেট"
+                >
+                  <i class="fa-solid fa-arrows-rotate text-xs"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- SUB-BAR: Session Notice (1:1 with image_fe6ca5.png) -->
+            <div
+              class="bg-emerald-50 text-emerald-900 border-b border-emerald-200/80 px-4 py-1 text-[10px] font-semibold flex items-center justify-between shrink-0"
+            >
+              <span id="subBarText"
+                >টেলিকম সেশন: *১৬৬৯৯# · নো-ইন্টারনেট মোড</span
+              >
+              <span class="text-emerald-700 font-mono">Teletalk 4G</span>
+            </div>
+
+            <!-- PHONE SCREEN CONTAINER (Houses USSD Popup Dialog & Keypad) -->
+            <div
+              class="flex-1 bg-slate-50 flex flex-col justify-between overflow-hidden relative"
+            >
+              <!-- USSD MODAL POPUP DIALOG (The Authentic Mobile USSD Box) -->
+              <div
+                id="ussdPopupOverlay"
+                class="absolute inset-0 bg-slate-950/40 backdrop-blur-2xs z-20 flex items-center justify-center p-4 hidden"
+              >
+                <div
+                  class="ussd-popup bg-white rounded-2xl border-2 border-slate-300 shadow-2xl w-full p-4 space-y-3 font-sans"
+                >
+                  <!-- Carrier Header -->
+                  <div class="flex items-center justify-between border-b pb-2">
+                    <span
+                      class="text-[10px] font-bold text-slate-500 uppercase font-mono"
+                      >USSD Service · *16699#</span
+                    >
+                    <span
+                      class="w-2 h-2 rounded-full bg-emerald-600 animate-ping"
+                    ></span>
+                  </div>
+
+                  <!-- USSD Text Prompt Screen -->
+                  <div
+                    id="ussdPromptText"
+                    class="text-xs text-slate-800 leading-relaxed font-sans whitespace-pre-line max-h-56 overflow-y-auto custom-scrollbar p-1"
+                  >
+                    স্বাগতম। জাতীয় আইনগত সহায়তা ব্যবস্থা। ভাষা নির্বাচন করুন:
+                    ১. বাংলা ২. English ৩. অন্যান্য ভাষা
+                  </div>
+
+                  <!-- Interactive Text Input Box (Direct input in USSD modal) -->
+                  <div id="ussdInputWrapper" class="pt-1">
+                    <input
+                      type="text"
+                      id="ussdModalInput"
+                      placeholder="উত্তরের সংখ্যা বা তথ্য লিখুন..."
+                      class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-mono font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-brand-900 focus:border-brand-900 transition"
+                      onkeydown="handleUssdEnter(event)"
+                    />
+                  </div>
+
+                  <!-- Action Buttons: Cancel & Send -->
+                  <div class="flex space-x-2 pt-1 border-t border-slate-100">
+                    <button
+                      onclick="closeUssdSession()"
+                      class="flex-1 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition"
+                    >
+                      বাতিল (Cancel)
+                    </button>
+                    <button
+                      onclick="submitUssdInput()"
+                      class="flex-1 py-2 bg-brand-900 hover:bg-brand-800 text-white text-xs font-bold rounded-xl shadow-xs transition active:scale-95"
+                    >
+                      পাঠান (Send)
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- KEYPAD SECTION (1:1 with image_fe6ca5.png) -->
+              <div
+                id="keypadSection"
+                class="p-3.5 bg-slate-100/90 border-t border-slate-200 space-y-2.5 shrink-0 mt-auto"
+              >
+                <!-- Input Display Box -->
+                <div
+                  class="bg-white rounded-xl border border-slate-200 p-2 px-3 flex items-center justify-between shadow-2xs"
+                >
+                  <input
+                    type="text"
+                    id="dialInput"
+                    placeholder="কিপ্যাডে নম্বর দিন..."
+                    value="*16699#"
+                    class="w-full text-center font-mono font-bold text-sm text-slate-900 bg-transparent focus:outline-hidden tracking-wider"
+                    oninput="onDialInputChange()"
+                  />
+                  <button
+                    onclick="clearDialInput()"
+                    class="text-slate-400 hover:text-slate-600 p-1 text-xs"
+                  >
+                    <i class="fa-solid fa-circle-xmark"></i>
+                  </button>
+                </div>
+
+                <!-- Hint Text -->
+                <div class="text-center text-[10px] text-slate-500 font-mono">
+                  <span>ডেমোর জন্য: *16699#</span>
+                </div>
+
+                <!-- 12-Button Keypad Grid (1:1 with image_fe6ca5.png) -->
+                <div class="grid grid-cols-3 gap-2">
+                  <button
+                    onclick="pressKey('1')"
+                    class="key-btn h-11 rounded-xl font-mono text-base font-bold flex flex-col items-center justify-center"
+                  >
+                    <span>1</span>
+                    <span class="text-[8px] font-sans text-slate-400 -mt-1"
+                      >&nbsp;</span
+                    >
+                  </button>
+                  <button
+                    onclick="pressKey('2')"
+                    class="key-btn h-11 rounded-xl font-mono text-base font-bold flex flex-col items-center justify-center"
+                  >
+                    <span>2</span>
+                    <span class="text-[8px] font-sans text-slate-400 -mt-1"
+                      >ABC</span
+                    >
+                  </button>
+                  <button
+                    onclick="pressKey('3')"
+                    class="key-btn h-11 rounded-xl font-mono text-base font-bold flex flex-col items-center justify-center"
+                  >
+                    <span>3</span>
+                    <span class="text-[8px] font-sans text-slate-400 -mt-1"
+                      >DEF</span
+                    >
+                  </button>
+
+                  <button
+                    onclick="pressKey('4')"
+                    class="key-btn h-11 rounded-xl font-mono text-base font-bold flex flex-col items-center justify-center"
+                  >
+                    <span>4</span>
+                    <span class="text-[8px] font-sans text-slate-400 -mt-1"
+                      >GHI</span
+                    >
+                  </button>
+                  <button
+                    onclick="pressKey('5')"
+                    class="key-btn h-11 rounded-xl font-mono text-base font-bold flex flex-col items-center justify-center"
+                  >
+                    <span>5</span>
+                    <span class="text-[8px] font-sans text-slate-400 -mt-1"
+                      >JKL</span
+                    >
+                  </button>
+                  <button
+                    onclick="pressKey('6')"
+                    class="key-btn h-11 rounded-xl font-mono text-base font-bold flex flex-col items-center justify-center"
+                  >
+                    <span>6</span>
+                    <span class="text-[8px] font-sans text-slate-400 -mt-1"
+                      >MNO</span
+                    >
+                  </button>
+
+                  <button
+                    onclick="pressKey('7')"
+                    class="key-btn h-11 rounded-xl font-mono text-base font-bold flex flex-col items-center justify-center"
+                  >
+                    <span>7</span>
+                    <span class="text-[8px] font-sans text-slate-400 -mt-1"
+                      >PQRS</span
+                    >
+                  </button>
+                  <button
+                    onclick="pressKey('8')"
+                    class="key-btn h-11 rounded-xl font-mono text-base font-bold flex flex-col items-center justify-center"
+                  >
+                    <span>8</span>
+                    <span class="text-[8px] font-sans text-slate-400 -mt-1"
+                      >TUV</span
+                    >
+                  </button>
+                  <button
+                    onclick="pressKey('9')"
+                    class="key-btn h-11 rounded-xl font-mono text-base font-bold flex flex-col items-center justify-center"
+                  >
+                    <span>9</span>
+                    <span class="text-[8px] font-sans text-slate-400 -mt-1"
+                      >WXYZ</span
+                    >
+                  </button>
+
+                  <button
+                    onclick="pressKey('*')"
+                    class="key-btn h-11 rounded-xl font-mono text-base font-bold flex items-center justify-center text-slate-600"
+                  >
+                    *
+                  </button>
+                  <button
+                    onclick="pressKey('0')"
+                    class="key-btn h-11 rounded-xl font-mono text-base font-bold flex flex-col items-center justify-center"
+                  >
+                    <span>0</span>
+                    <span class="text-[8px] font-sans text-slate-400 -mt-1"
+                      >+</span
+                    >
+                  </button>
+                  <button
+                    onclick="pressKey('#')"
+                    class="key-btn h-11 rounded-xl font-mono text-base font-bold flex items-center justify-center text-slate-600"
+                  >
+                    #
+                  </button>
+                </div>
+
+                <!-- Bottom Call & Control Bar (Matching image_fe6ca5.png) -->
+                <div class="flex items-center justify-center space-x-6 pt-1">
+                  <!-- Backspace -->
+                  <button
+                    onclick="backspaceKey()"
+                    class="w-11 h-11 rounded-full bg-slate-200 text-slate-600 hover:bg-slate-300 flex items-center justify-center transition shadow-2xs"
+                    title="মুছুন"
+                  >
+                    <i class="fa-solid fa-delete-left text-sm"></i>
+                  </button>
+
+                  <!-- Green Dial / Send Button -->
+                  <button
+                    onclick="startUssdSession()"
+                    id="btnDialAction"
+                    class="w-14 h-14 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center shadow-lg transition active:scale-95"
+                    title="ইউএসএসডি ডায়াল"
+                  >
+                    <i class="fa-solid fa-phone text-xl"></i>
+                  </button>
+
+                  <!-- Red Cancel / End Session Button -->
+                  <button
+                    onclick="endSession()"
+                    class="w-11 h-11 rounded-full bg-rose-100 text-rose-600 hover:bg-rose-200 flex items-center justify-center transition shadow-2xs"
+                    title="সেশন সমাপ্ত"
+                  >
+                    <i class="fa-solid fa-phone-slash text-sm"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- APPLICATION JAVASCRIPT STATE ENGINE -->
+    <script>
+      // Audio Synthesis Engine (DTMF Keypad Tones)
+      let audioCtx = null;
+      let speakerMuted = false;
+
+      function initAudio() {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+      }
+
+      function playTone(freq1 = 440, freq2 = 880, duration = 0.08) {
+        if (speakerMuted) return;
+        try {
+          initAudio();
+          const osc1 = audioCtx.createOscillator();
+          const osc2 = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+
+          osc1.frequency.value = freq1;
+          osc2.frequency.value = freq2;
+
+          gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(
+            0.001,
+            audioCtx.currentTime + duration,
+          );
+
+          osc1.connect(gain);
+          osc2.connect(gain);
+          gain.connect(audioCtx.destination);
+
+          osc1.start();
+          osc2.start();
+          osc1.stop(audioCtx.currentTime + duration);
+          osc2.stop(audioCtx.currentTime + duration);
+        } catch (e) {}
+      }
+
+      function toggleSpeaker() {
+        speakerMuted = !speakerMuted;
+        const btn = document.getElementById("btnSpeaker");
+        if (speakerMuted) {
+          btn.innerHTML =
+            '<i class="fa-solid fa-volume-xmark text-xs text-rose-300"></i>';
+          showToast("স্পিকার মিউট করা হয়েছে।", "warning");
+        } else {
+          btn.innerHTML = '<i class="fa-solid fa-volume-high text-xs"></i>';
+          showToast("স্পিকার চালু করা হয়েছে।", "info");
+        }
+      }
+
+      // Dial Buffer & State
+      let dialBuffer = "*16699#";
+      let ussdState = {
+        step: "IDLE",
+        selectedLang: "bn",
+        tempApp: {
+          who: "",
+          name: "",
+          pin: "",
+          relation: "",
+          beneficiary: "",
+          problem: "",
+          district: "",
+          nid: "",
+          safeContact: true,
+          altNumber: "",
+        },
+        currentCaseId: "",
+        currentAppId: "",
+      };
+
+      // Pre-seeded authorative database (From 16699.docx)
+      const DATABASE = {
+        cases: {
+          "CASE-2026-000342": {
+            id: "CASE-2026-000342",
+            pin: "5824",
+            applicant: "আব্দুল মালেক",
+            subject: "পারিবারিক খোরপোশ মোকদ্দমা",
+            court: "পারিবারিক আদালত, বরগুনা",
+            hearingDate: "৫ অক্টোবর ২০২৬, সকাল ১০:০০",
+            hearingLocation: "বরগুনা আদালত ভবন (কক্ষ তথ্য অপেক্ষমাণ)",
+            documentsPending:
+              "১টি প্রয়োজনীয় নথি যাচাই বাকি রয়েছে (আইনজীবীর সহায়তা প্রয়োজন)",
+            lawyerName: "এডভোকেট রফিকুল ইসলাম",
+            lastLawyerUpdate: "১০ সেপ্টেম্বর ২০২৬ (আপডেটের সময়সীমা উত্তীর্ণ)",
+            mediationDate: "৭ অক্টোবর ২০২৬, বুধবার, বিকেল ৩:০০",
+            mediationVenue: "বরগুনা জেলা লিগ্যাল এইড অফিস",
+            referralStatus:
+              "অন্য জেলা অফিসে প্রেরিত; প্রাপক অফিসের স্বীকৃতি (Acknowledgement) এখনো সিস্টেমে পাওয়া যায়নি।",
+          },
+        },
+        applications: {
+          20260342: {
+            id: "20260342",
+            pin: "5824",
+            applicantName: "রিপন (ভাই)",
+            beneficiaryName: "মোছাঃ ময়ূরী আক্তার (বোন)",
+            district: "জয়পুরহাট",
+            problem: "স্বামীর নির্যাতন ও ফোন নিয়ন্ত্রণ",
+            status: "Human Review Pending",
+            safeContact: false,
+            smsBlocked: true,
+            caseIdGenerated: false,
+          },
+          2026035: {
+            id: "2026035",
+            pin: "1112",
+            applicantName: "জরুরি আবেদনকারী",
+            problem: "জীবন ঝুঁকি / তাৎক্ষণিক নিরাপত্তা সংকট",
+            status: "Immediate 999 Handoff",
+            safeContact: false,
+            smsBlocked: true,
+            caseIdGenerated: false,
+          },
+        },
+      };
+
+      function logBackend(msg, tag = "INFO") {
+        const container = document.getElementById("backendLog");
+        const time = new Date().toLocaleTimeString("bn-BD", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        });
+        const el = document.createElement("div");
+        el.className =
+          tag === "WARN"
+            ? "text-amber-400"
+            : tag === "ERR"
+              ? "text-rose-400"
+              : "text-emerald-400";
+        el.innerText = `[${time}] [${tag}] ${msg}`;
+        container.appendChild(el);
+        container.scrollTop = container.scrollHeight;
+      }
+
+      // Keypad Functions
+      function pressKey(num) {
+        playTone(350 + num.charCodeAt(0) * 12, 700 + num.charCodeAt(0) * 8);
+        const ussdOverlay = document.getElementById("ussdPopupOverlay");
+        if (!ussdOverlay.classList.contains("hidden")) {
+          const inp = document.getElementById("ussdModalInput");
+          inp.value += num;
+          inp.focus();
+          return;
+        }
+        dialBuffer += num;
+        updateDialDisplay();
+      }
+
+      function backspaceKey() {
+        playTone(300, 400, 0.05);
+        const ussdOverlay = document.getElementById("ussdPopupOverlay");
+        if (!ussdOverlay.classList.contains("hidden")) {
+          const inp = document.getElementById("ussdModalInput");
+          inp.value = inp.value.slice(0, -1);
+          inp.focus();
+          return;
+        }
+        dialBuffer = dialBuffer.slice(0, -1);
+        updateDialDisplay();
+      }
+
+      function clearDialInput() {
+        dialBuffer = "";
+        updateDialDisplay();
+      }
+
+      function updateDialDisplay() {
+        document.getElementById("dialInput").value = dialBuffer;
+      }
+
+      function onDialInputChange() {
+        dialBuffer = document.getElementById("dialInput").value;
+      }
+
+      // USSD Session Handlers
+      function startUssdSession() {
+        const input = dialBuffer.trim();
+        if (input !== "*16699#" && !input.startsWith("*16699")) {
+          showToast(
+            "ইউএসএসডির জন্য অনুগ্রহ করে *16699# ডায়াল করুন।",
+            "warning",
+          );
+          return;
+        }
+
+        playTone(523, 659, 0.12);
+        ussdState.step = "LANG_SELECT";
+
+        document.getElementById("phoneTopSubtitle").innerText =
+          "ইউএসএসডি সেশন সক্রিয় (*১৬৬৯৯#)";
+        document.getElementById("phoneStatusDot").className =
+          "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping";
+        document.getElementById("ussdPopupOverlay").classList.remove("hidden");
+
+        renderUssdScreen(`স্বাগতম। জাতীয় আইনগত সহায়তা ব্যবস্থা।
+ভাষা নির্বাচন করুন:
+১. বাংলা
+২. English
+৩. অন্যান্য ভাষা (ক্ষুদ্র নৃগোষ্ঠী)`);
+
+        logBackend("ইউএসএসডি সেশন সংযুক্ত: *16699# [LANG_SELECT]", "INFO");
+      }
+
+      function closeUssdSession() {
+        document.getElementById("ussdPopupOverlay").classList.add("hidden");
+        ussdState.step = "IDLE";
+        document.getElementById("phoneTopSubtitle").innerText =
+          "ইউএসএসডি ডায়াল করতে প্রস্তুত";
+        document.getElementById("phoneStatusDot").className =
+          "w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-green";
+        logBackend("ইউএসএসডি সেশন বাতিল / সমাপ্ত।", "INFO");
+      }
+
+      function endSession() {
+        playTone(280, 200, 0.15);
+        closeUssdSession();
+      }
+
+      function resetSimulator() {
+        endSession();
+        dialBuffer = "*16699#";
+        updateDialDisplay();
+        showToast("সিমুলেটর রিসেট করা হয়েছে।", "info");
+      }
+
+      function renderUssdScreen(text, prefill = "") {
+        document.getElementById("ussdPromptText").innerText = text;
+        const inp = document.getElementById("ussdModalInput");
+        inp.value = prefill;
+        inp.focus();
+      }
+
+      function handleUssdEnter(e) {
+        if (e.key === "Enter") {
+          submitUssdInput();
+        }
+      }
+
+      function submitUssdInput() {
+        const inp = document.getElementById("ussdModalInput");
+        const val = inp.value.trim();
+        if (!val && ussdState.step !== "IDLE") {
+          showToast(
+            "অনুগ্রহ করে একটি বিকল্প নির্বাচন করুন বা তথ্য লিখুন।",
+            "warning",
+          );
+          return;
+        }
+        playTone(600, 750, 0.08);
+        processUssdStep(val);
+        inp.value = "";
+      }
+
+      // Step-by-step state processor following 16699.docx
+      function processUssdStep(val) {
+        logBackend(
+          `ইউএসএসডি ইনপুট প্রাপ্ত: "${val}" [ধাপ: ${ussdState.step}]`,
+          "INFO",
+        );
+
+        switch (ussdState.step) {
+          // 1. Language Selection
+          case "LANG_SELECT":
+            if (val === "1" || val.toLowerCase() === "বাংলা") {
+              ussdState.selectedLang = "bn";
+              showMainMenu();
+            } else if (val === "2") {
+              ussdState.selectedLang = "en";
+              showMainMenu();
+            } else if (val === "3") {
+              ussdState.step = "LANG_ETHNIC";
+              renderUssdScreen(`আপনার ভাষা নির্বাচন করুন:
+১. চাকমা
+২. মারমা
+৩. সাঁওতালি
+৪. গারো
+৫. ত্রিপুরা
+০. পূর্ববর্তী মেনু`);
+            } else {
+              renderUssdScreen(`ভুল ইনপুট। পুনরায় ভাষা নির্বাচন করুন:
+১. বাংলা
+২. English
+৩. অন্যান্য ভাষা`);
+            }
+            break;
+
+          case "LANG_ETHNIC":
+            ussdState.selectedLang = "ethnic_" + val;
+            showMainMenu();
+            break;
+
+          // 2. Main Menu Selection (1 to 8, 0)
+          case "MAIN_MENU":
+            handleMainMenuSelection(val);
+            break;
+
+          // ==========================================
+          // FLOW 1: NEW APPLICATION (রিপন ও ময়ূরী আক্তার)
+          // ==========================================
+          case "NEW_APP_WHO":
+            ussdState.tempApp.who =
+              val === "1" ? "নিজের জন্য" : "অন্য কারও হয়ে";
+            ussdState.step = "NEW_APP_NAME";
+            renderUssdScreen(`আইনি সহায়তার বিষয়ে আপনার নাম লিখুন:
+(যেমন: রিপন)`);
+            break;
+
+          case "NEW_APP_NAME":
+            ussdState.tempApp.name = val;
+            ussdState.step = "NEW_APP_PIN";
+            renderUssdScreen(`ধন্যবাদ, ${val}।
+নিরাপত্তার জন্য আপনার ৪ সংখ্যার গোপন PIN দিন:
+(অনুগ্রহ করে PIN কাউকে বলবেন না, যেমন: 5824)`);
+            break;
+
+          case "NEW_APP_PIN":
+            ussdState.tempApp.pin = val;
+            logBackend(
+              `নিরাপদ কিপ্যাডে ৪ সংখ্যার PIN সেট সম্পন্ন: ****`,
+              "INFO",
+            );
+            if (ussdState.tempApp.who === "অন্য কারও হয়ে") {
+              ussdState.step = "NEW_APP_REL";
+              renderUssdScreen(`আপনি যার হয়ে কথা বলছেন, তার সঙ্গে সম্পর্ক কী?
+(যেমন: বোন / মা / স্ত্রী)`);
+            } else {
+              ussdState.step = "NEW_APP_PROBLEM";
+              renderUssdScreen(`আপনার সমস্যাটি সংক্ষেপে লিখুন:
+(যেমন: পারিবারিক বিরোধ / জমি দখল / যৌতুক)`);
+            }
+            break;
+
+          case "NEW_APP_REL":
+            ussdState.tempApp.relation = val;
+            ussdState.step = "NEW_APP_BEN_NAME";
+            renderUssdScreen(`আপনার ${val}-এর নাম কী?
+(যেমন: ময়ূরী আক্তার)`);
+            break;
+
+          case "NEW_APP_BEN_NAME":
+            ussdState.tempApp.beneficiary = val;
+            ussdState.step = "NEW_APP_PROBLEM";
+            renderUssdScreen(`সমস্যাটি সংক্ষেপে লিখুন:
+(যেমন: স্বামীর নির্যাতন ও ফোন নিয়ন্ত্রণ)`);
+            break;
+
+          case "NEW_APP_PROBLEM":
+            ussdState.tempApp.problem = val;
+            ussdState.step = "NEW_APP_DISTRICT";
+            renderUssdScreen(`প্রার্থী বর্তমানে কোন জেলায় থাকেন?
+(যেমন: জয়পুরহাট)`);
+            break;
+
+          case "NEW_APP_DISTRICT":
+            ussdState.tempApp.district = val;
+            ussdState.step = "NEW_APP_NID";
+            renderUssdScreen(`জাতীয় পরিচয়পত্র (NID) বর্তমানে পাওয়া যাচ্ছে কি?
+১. হ্যাঁ
+২. না (না থাকলেও আবেদন বাতিল হবে না)`);
+            break;
+
+          case "NEW_APP_NID":
+            ussdState.tempApp.nid =
+              val === "1" ? "আছে" : "অনুপলব্ধ (স্বাভাবিক বিবেচনা)";
+            ussdState.step = "NEW_APP_SAFE_CONTACT";
+            renderUssdScreen(`⚠️ নিরাপত্তা যাচাই:
+প্রার্থীর সঙ্গে সরাসরি যোগাযোগ করা কি নিরাপদ?
+১. হ্যাঁ (নিরাপদ)
+২. না (স্বামী/বিপক্ষ ফোন চেক করে)`);
+            break;
+
+          case "NEW_APP_SAFE_CONTACT":
+            if (val === "2" || val.toLowerCase().includes("না")) {
+              ussdState.tempApp.safeContact = false;
+              logBackend(
+                "G3 SAFE CONTACT PROTOCOL ACTIVATED: SMS & Notification BLOCKED.",
+                "WARN",
+              );
+              ussdState.step = "NEW_APP_ALT_NUM";
+              renderUssdScreen(`নিরাপত্তার কারণে কোনো স্বয়ংক্রিয় SMS বা নোটিফিকেশন পাঠানো হবে না।
+কোনো বিকল্প নিরাপদ নম্বর দিতে চান?
+(নম্বর লিখুন অথবা '০' চেপে এড়িয়ে যান)`);
+            } else {
+              ussdState.tempApp.safeContact = true;
+              showNewAppConfirmation();
+            }
+            break;
+
+          case "NEW_APP_ALT_NUM":
+            ussdState.tempApp.altNumber = val === "0" ? "নেই" : val;
+            showNewAppConfirmation();
+            break;
+
+          case "NEW_APP_CONFIRM":
+            if (val === "1" || val.includes("হ্যাঁ")) {
+              submitNewApplication();
+            } else {
+              showToast("আবেদন বাতিল করা হয়েছে।", "info");
+              showMainMenu();
+            }
+            break;
+
+          // ==========================================
+          // FLOW 2: APPLICATION STATUS CHECK (20260342)
+          // ==========================================
+          case "STATUS_APP_ID":
+            ussdState.currentAppId = val;
+            ussdState.step = "STATUS_PIN";
+            renderUssdScreen(`আবেদন নং ${val}।
+নিরাপত্তা যাচাইয়ের জন্য ৪ সংখ্যার গোপন PIN দিন:`);
+            break;
+
+          case "STATUS_PIN":
+            verifyAppStatusPin(val);
+            break;
+
+          // ==========================================
+          // FLOW 3: HEARING DATE & CONFLICT (CASE-2026-000342)
+          // ==========================================
+          case "HEARING_CASE_ID":
+            ussdState.currentCaseId = val;
+            ussdState.step = "HEARING_PIN";
+            renderUssdScreen(`কেস নম্বর: ${val}।
+নিরাপত্তা যাচাইয়ের জন্য আপনার গোপন PIN প্রবেশ করান:`);
+            break;
+
+          case "HEARING_PIN":
+            verifyHearingPin(val);
+            break;
+
+          case "HEARING_SAFE_CHECK":
+            if (val === "1") {
+              showHearingDetails();
+            } else {
+              renderUssdScreen(`নিরাপত্তার স্বার্থে তথ্য দেখানো স্থগিত করা হলো। পরবর্তীতে নিরাপদ সময়ে ডায়াল করুন।
+০. মূল মেনু`);
+              ussdState.step = "RETURN_MAIN";
+            }
+            break;
+
+          case "HEARING_ACTIONS":
+            if (val === "1") {
+              logBackend(
+                "TASK_CREATED: LAWYER_UPDATE_REQUEST generated for case " +
+                  ussdState.currentCaseId,
+                "INFO",
+              );
+              renderUssdScreen(`✓ আইনজীবীর কাছ থেকে আপডেট পাওয়ার অনুরোধ সফলভাবে রেকর্ড হয়েছে।
+০. মূল মেনু`);
+              ussdState.step = "RETURN_MAIN";
+            } else if (val === "2") {
+              logBackend(
+                "TASK_CREATED: HEARING_ATTENDANCE_DIFFICULTY (Travel/Income loss) queued for Human Review.",
+                "WARN",
+              );
+              renderUssdScreen(`✓ শুনানিতে উপস্থিতির অসুবিধার বিষয়টি সংশ্লিষ্ট কর্মকর্তার পর্যালোচনার জন্য পাঠানো হয়েছে।
+(শুনানির তারিখ এখনো পরিবর্তন হয়নি)
+০. মূল মেনু`);
+              ussdState.step = "RETURN_MAIN";
+            } else {
+              showMainMenu();
+            }
+            break;
+
+          // ==========================================
+          // FLOW 4: MEDIATION & REMOTE PARTICIPATION
+          // ==========================================
+          case "MEDIATION_CASE_ID":
+            ussdState.currentCaseId = val;
+            ussdState.step = "MEDIATION_PIN";
+            renderUssdScreen(`মধ্যস্থতা সেবা। কেস নম্বর: ${val}।
+নিরাপত্তা যাচাইয়ের জন্য গোপন PIN প্রবেশ করান:`);
+            break;
+
+          case "MEDIATION_PIN":
+            verifyMediationPin(val);
+            break;
+
+          case "MEDIATION_OPTIONS":
+            if (val === "1" || val === "2" || val === "3") {
+              const method =
+                val === "1"
+                  ? "ফোনের মাধ্যমে"
+                  : val === "2"
+                    ? "ভিডিও কলের মাধ্যমে"
+                    : "স্থানীয় ইউডিসি কেন্দ্র থেকে";
+              logBackend(
+                `TASK_CREATED: REMOTE_PARTICIPATION_REQUEST (${method}) queued for Mediator Review.`,
+                "INFO",
+              );
+              renderUssdScreen(`✓ ${method} মধ্যস্থতায় অংশগ্রহণের অনুরোধ সফলভাবে জমা হয়েছে।
+কর্মকর্তা আপনার মামলার পরিস্থিতি পর্যালোচনা করে সিদ্ধান্ত জানাবেন।
+০. মূল মেনু`);
+              ussdState.step = "RETURN_MAIN";
+            } else {
+              showMainMenu();
+            }
+            break;
+
+          // ==========================================
+          // FLOW 6: LAWYER CHANGE REQUEST
+          // ==========================================
+          case "LAWYER_CASE_ID":
+            ussdState.currentCaseId = val;
+            ussdState.step = "LAWYER_PIN";
+            renderUssdScreen(`আইনজীবী সেবা। কেস নম্বর: ${val}।
+নিরাপত্তা PIN দিন:`);
+            break;
+
+          case "LAWYER_PIN":
+            verifyLawyerPin(val);
+            break;
+
+          case "LAWYER_OPTIONS":
+            if (val === "1") {
+              logBackend(
+                "TASK_CREATED: LAWYER_CONTACT_REQUEST sent to Adv. Rafiqul Islam.",
+                "INFO",
+              );
+              renderUssdScreen(`✓ বর্তমান আইনজীবীর সঙ্গে যোগাযোগের অনুরোধ পাঠানো হয়েছে।
+০. মূল মেনু`);
+              ussdState.step = "RETURN_MAIN";
+            } else if (val === "2") {
+              ussdState.step = "LAWYER_REASON";
+              renderUssdScreen(`কেন আপনি আইনজীবী পরিবর্তন করতে চান?
+(যেমন: নিয়মিত খবর দেন না / শুনানির তারিখ জানান না)`);
+            } else {
+              showMainMenu();
+            }
+            break;
+
+          case "LAWYER_REASON":
+            logBackend(
+              `TASK_CREATED: LAWYER_CHANGE_REQUEST [Reason: "${val}"] queued for Human Review Committee. AI does NOT change lawyer directly.`,
+              "WARN",
+            );
+            renderUssdScreen(`✓ আইনজীবী পরিবর্তনের আবেদনটি অনুমোদিত কর্মকর্তার পর্যালোচনার জন্য পাঠানো হয়েছে।
+বর্তমান আইনজীবী এখনো পরিবর্তন করা হয়নি। কমিটি সিদ্ধান্ত গ্রহণ করবে।
+০. মূল মেনু`);
+            ussdState.step = "RETURN_MAIN";
+            break;
+
+          // ==========================================
+          // FLOW 7: REFERRAL TRACKING
+          // ==========================================
+          case "REFERRAL_CASE_ID":
+            ussdState.currentCaseId = val;
+            ussdState.step = "REFERRAL_PIN";
+            renderUssdScreen(`রেফারেল ট্র্যাকিং। কেস নম্বর: ${val}।
+নিরাপত্তা PIN দিন:`);
+            break;
+
+          case "REFERRAL_PIN":
+            verifyReferralPin(val);
+            break;
+
+          case "REFERRAL_OPTIONS":
+            if (val === "1") {
+              logBackend(
+                `TASK_CREATED: REFERRAL_FOLLOWUP_REQUEST sent for case ${ussdState.currentCaseId}.`,
+                "INFO",
+              );
+              renderUssdScreen(`✓ প্রাপক অফিসের সাথে যোগাযোগের জন্য ফলো-আপ অনুরোধ সফলভাবে তৈরি হয়েছে।
+০. মূল মেনু`);
+              ussdState.step = "RETURN_MAIN";
+            } else {
+              showMainMenu();
+            }
+            break;
+
+          // ==========================================
+          // FLOW 8: ACCESSIBILITY & EMERGENCY SCREENING
+          // ==========================================
+          case "EMERGENCY_RISK":
+            if (val === "1" || val.includes("জীবন")) {
+              logBackend(
+                "CRITICAL ESCALATION: Immediate 999 Handoff Required. Risk Level = CRITICAL.",
+                "ERR",
+              );
+              renderUssdScreen(`🚨 জরুরি নিরাপত্তা ঝুঁকি নথিভুক্ত হয়েছে!
+আপনার অবস্থান বা তথ্য নিরাপদ হলে বলুন।
+আপনার তথ্য সরাসরি ৯৯৯ ও নিকটস্থ পুলিশের কাছে হস্তান্তরের জন্য ব্যবস্থা নেওয়া হচ্ছে।
+(অনিরাপদ হলে কোনো তথ্য দিতে বাধ্য নন)
+০. সেশন সমাপ্ত`);
+              ussdState.step = "RETURN_MAIN";
+            } else if (val === "2") {
+              logBackend(
+                "URGENT INTAKE: Serious Physical Injury risk recorded. Officer Review = IMMEDIATE.",
+                "WARN",
+              );
+              renderUssdScreen(`⚠️ শারীরিক আঘাতের আশঙ্কা নথিভুক্ত হয়েছে।
+জরুরি কর্মকর্তার পর্যালোচনার জন্য সংরক্ষিত হলো।
+০. মূল মেনু`);
+              ussdState.step = "RETURN_MAIN";
+            } else {
+              ussdState.step = "NEW_APP_WHO";
+              renderUssdScreen(`আইনি সহায়তার আবেদন:
+১. নিজের জন্য
+২. অন্য কারও হয়ে`);
+            }
+            break;
+
+          case "RETURN_MAIN":
+            showMainMenu();
+            break;
+
+          default:
+            showMainMenu();
+            break;
+        }
+      }
+
+      // MAIN MENU DISPLAY
+      function showMainMenu() {
+        ussdState.step = "MAIN_MENU";
+        renderUssdScreen(`জাতীয় আইনগত সহায়তা (*১৬৬৯৯#)
+১. নতুন আবেদন
+২. পূর্বের আবেদনের অবস্থা
+৩. শুনানির তারিখ ও পদক্ষেপ
+৪. মধ্যস্থতার সময়সূচি ও অংশগ্রহণ
+৫. মধ্যস্থতা বা Mediation কী
+৬. আইনজীবীর আপডেট ও পরিবর্তন
+৭. রেফারেলের অবস্থা
+৮. জরুরি ও বিশেষ সহায়তা
+০. মেনু পুনরায় দেখুন`);
+      }
+
+      function handleMainMenuSelection(val) {
+        switch (val) {
+          case "1":
+            ussdState.step = "NEW_APP_WHO";
+            renderUssdScreen(`নতুন আবেদন:
+আপনি কি নিজের জন্য আইনি সহায়তা চাইছেন, নাকি অন্য কারও হয়ে?
+১. নিজের জন্য
+২. অন্য কারও হয়ে`);
+            break;
+
+          case "2":
+            ussdState.step = "STATUS_APP_ID";
+            renderUssdScreen(`পূর্বের আবেদনের নম্বর লিখুন:
+(ডেমোর জন্য: 20260342)`);
+            break;
+
+          case "3":
+            ussdState.step = "HEARING_CASE_ID";
+            renderUssdScreen(`শুনানির তথ্য পেতে Case ID লিখুন:
+(ডেমোর জন্য: CASE-2026-000342)`);
+            break;
+
+          case "4":
+            ussdState.step = "MEDIATION_CASE_ID";
+            renderUssdScreen(`মধ্যস্থতার তথ্য পেতে Case ID লিখুন:
+(ডেমোর জন্য: CASE-2026-000342)`);
+            break;
+
+          case "5":
+            renderUssdScreen(`মধ্যস্থতা (Mediation/ADR):
+আদালতের বাইরে দুই পক্ষের মধ্যে আপস মীমাংসার আইনি পদ্ধতি।
+• সম্পূর্ণ বিনামূল্যে ও গোপনীয়
+• নিরপেক্ষ মধ্যস্থতাকারী সহায়তা করেন
+০. মূল মেনু`);
+            ussdState.step = "RETURN_MAIN";
+            break;
+
+          case "6":
+            ussdState.step = "LAWYER_CASE_ID";
+            renderUssdScreen(`আইনজীবী সেবা। Case ID লিখুন:
+(ডেমোর জন্য: CASE-2026-000342)`);
+            break;
+
+          case "7":
+            ussdState.step = "REFERRAL_CASE_ID";
+            renderUssdScreen(`রেফারেল ট্র্যাকিং। Case ID লিখুন:
+(ডেমোর জন্য: CASE-2026-000342)`);
+            break;
+
+          case "8":
+            ussdState.step = "EMERGENCY_RISK";
+            renderUssdScreen(`জরুরি নিরাপত্তা ও বিশেষ সহায়তা:
+১. জীবন ঝুঁকি (তাৎক্ষণিক ৯৯৯)
+২. গুরুতর শারীরিক আঘাতের আশঙ্কা
+৩. অন্যান্য আইনি সমস্যা (পারিবারিক/জমি/ফৌজদারি)
+০. মূল মেনু`);
+            break;
+
+          case "0":
+            showMainMenu();
+            break;
+
+          default:
+            renderUssdScreen(`ভুল মেনু নির্বাচন। অনুগ্রহ করে ১ থেকে ৮ বা ০ চাপুন।
+০. মূল মেনু`);
+            break;
+        }
+      }
+
+      function showNewAppConfirmation() {
+        ussdState.step = "NEW_APP_CONFIRM";
+        const app = ussdState.tempApp;
+        renderUssdScreen(`তথ্য নিশ্চিতকরণ:
+• আবেদনকারী: ${app.name} (${app.relation || "স্বয়ং"})
+• প্রার্থী: ${app.beneficiary || app.name}
+• জেলা: ${app.district}
+• সমস্যা: ${app.problem}
+• যোগাযোগ: ${app.safeContact ? "স্বাভাবিক" : "অনিরাপদ (SMS ব্লক)"}
+
+তথ্য ঠিক থাকলে আবেদন জমা দিতে '১' চাপুন:
+১. হ্যাঁ, জমা দিন
+২. সংশোধন`);
+      }
+
+      function submitNewApplication() {
+        const newId = "20260342";
+        logBackend(
+          `APPLICATION_SUBMITTED: ID=${newId}, PIN=${ussdState.tempApp.pin}, SafeContact=${ussdState.tempApp.safeContact}`,
+          "INFO",
+        );
+        logBackend(
+          "SYSTEM_ACTION: Case ID not generated yet. Application routed to Human Review Queue.",
+          "INFO",
+        );
+
+        renderUssdScreen(`✓ আপনার আবেদন সফলভাবে জমা হয়েছে!
+আবেদন নম্বর: ${newId}
+গোপন PIN: ${ussdState.tempApp.pin}
+
+স্ট্যাটাস: Human Review Pending
+(অনুমোদনের পর Case ID তৈরি হবে। PIN কাউকে জানাবেন না)
+০. মূল মেনু`);
+        ussdState.step = "RETURN_MAIN";
+      }
+
+      function verifyAppStatusPin(pin) {
+        const app = DATABASE.applications[ussdState.currentAppId];
+        if (app && app.pin === pin) {
+          logBackend(
+            `AUTH_SUCCESS: PIN verified for App ${ussdState.currentAppId}. Role-based access confirmed.`,
+            "INFO",
+          );
+          renderUssdScreen(`আবেদন স্ট্যাটাস: ${app.id}
+• প্রার্থী: ${app.beneficiaryName} (${app.district})
+• বর্তমান অবস্থা: ${app.status}
+(আবেদনটি বর্তমানে অনুমোদিত কর্মকর্তার যাচাইয়ের অপেক্ষায়। এখনো কোনো Case ID তৈরি হয়নি)
+০. মূল মেনু`);
+          ussdState.step = "RETURN_MAIN";
+        } else {
+          logBackend(
+            `AUTH_FAILED: Invalid PIN for App ${ussdState.currentAppId}`,
+            "ERR",
+          );
+          renderUssdScreen(`গোপন PIN সঠিক হয়নি। অনুগ্রহ করে পুনরায় চেষ্টা করুন।
+০. মূল মেনু`);
+          ussdState.step = "RETURN_MAIN";
+        }
+      }
+
+      function verifyHearingPin(pin) {
+        const c = DATABASE.cases[ussdState.currentCaseId];
+        if (c && c.pin === pin) {
+          logBackend(
+            `AUTH_SUCCESS: PIN verified for Case ${ussdState.currentCaseId}`,
+            "INFO",
+          );
+          ussdState.step = "HEARING_SAFE_CHECK";
+          renderUssdScreen(`নিরাপত্তা যাচাই সম্পন্ন।
+আপনি কি এখন নিরাপদে আপনার মামলার ব্যক্তিগত তথ্য দেখতে পারবেন?
+১. হ্যাঁ
+২. না`);
+        } else {
+          renderUssdScreen(`ভুল PIN। তথ্য প্রদর্শন সম্ভব নয়।
+০. মূল মেনু`);
+          ussdState.step = "RETURN_MAIN";
+        }
+      }
+
+      function showHearingDetails() {
+        const c = DATABASE.cases[ussdState.currentCaseId];
+        ussdState.step = "HEARING_ACTIONS";
+        renderUssdScreen(`শুনানির তথ্য (কেস: ${c.id}):
+• তারিখ: ${c.hearingDate}
+• স্থান: ${c.hearingLocation}
+• নথি: ${c.documentsPending}
+• আইনজীবী আপডেট: ${c.lastLawyerUpdate}
+
+১. আইনজীবীর সঙ্গে যোগাযোগের অনুরোধ
+২. শুনানিতে উপস্থিতির অসুবিধা জানান
+০. মূল মেনু`);
+      }
+
+      function verifyMediationPin(pin) {
+        const c = DATABASE.cases[ussdState.currentCaseId];
+        if (c && c.pin === pin) {
+          logBackend(
+            `AUTH_SUCCESS: PIN verified for Case ${ussdState.currentCaseId}`,
+            "INFO",
+          );
+          ussdState.step = "MEDIATION_OPTIONS";
+          renderUssdScreen(`মধ্যস্থতার সময়সূচি (${c.id}):
+• পরবর্তী বৈঠক: ${c.mediationDate}
+• স্থান: ${c.mediationVenue}
+
+সরাসরি উপস্থিতিতে অসুবিধা থাকলে দূরবর্তী অনুরোধ:
+১. ফোনের মাধ্যমে অংশ নিতে অনুরোধ
+২. ভিডিও কলের মাধ্যমে অনুরোধ
+৩. স্থানীয় ইউডিসি কেন্দ্র থেকে
+০. মূল মেনু`);
+        } else {
+          renderUssdScreen(`ভুল PIN।
+০. মূল মেনু`);
+          ussdState.step = "RETURN_MAIN";
+        }
+      }
+
+      function verifyLawyerPin(pin) {
+        const c = DATABASE.cases[ussdState.currentCaseId];
+        if (c && c.pin === pin) {
+          ussdState.step = "LAWYER_OPTIONS";
+          renderUssdScreen(`আইনজীবী তথ্য (${c.id}):
+• নিযুক্ত আইনজীবী: ${c.lawyerName}
+• সর্বশেষ আপডেট: ${c.lastLawyerUpdate}
+
+১. আইনজীবীর সাথে যোগাযোগের অনুরোধ
+২. আইনজীবী পরিবর্তনের আবেদন
+০. মূল মেনু`);
+        } else {
+          renderUssdScreen(`ভুল PIN।
+০. মূল মেনু`);
+          ussdState.step = "RETURN_MAIN";
+        }
+      }
+
+      function verifyReferralPin(pin) {
+        const c = DATABASE.cases[ussdState.currentCaseId];
+        if (c && c.pin === pin) {
+          ussdState.step = "REFERRAL_OPTIONS";
+          renderUssdScreen(`রেফারেল অবস্থা (${c.id}):
+${c.referralStatus}
+
+১. ফলো-আপ অনুরোধ পাঠান
+০. মূল মেনু`);
+        } else {
+          renderUssdScreen(`ভুল PIN।
+০. মূল মেনু`);
+          ussdState.step = "RETURN_MAIN";
+        }
+      }
+
+      // Fast Scenario Runners (DOCX Pre-fills)
+      function runScenario(scen) {
+        startUssdSession();
+
+        switch (scen) {
+          case "NEW_APP_SAFE_CONTACT":
+            showToast(
+              "সিনারিও ১: রিপন ও ময়ূরী আক্তার নতুন আবেদন লোড হচ্ছে...",
+              "info",
+            );
+            setTimeout(() => {
+              processUssdStep("1");
+            }, 200);
+            setTimeout(() => {
+              processUssdStep("1");
+            }, 400);
+            setTimeout(() => {
+              processUssdStep("2");
+            }, 600); // অন্য কারও হয়ে
+            setTimeout(() => {
+              document.getElementById("ussdModalInput").value = "রিপন";
+              showToast(
+                "নাম 'রিপন' প্রস্তুত। 'Send' চাপুন বা চালিয়ে যান।",
+                "info",
+              );
+            }, 800);
+            break;
+
+          case "CHECK_STATUS":
+            showToast("সিনারিও ২: আবেদন অবস্থা যাচাই লোড হচ্ছে...", "info");
+            setTimeout(() => {
+              processUssdStep("1");
+            }, 200);
+            setTimeout(() => {
+              processUssdStep("2");
+            }, 400); // পূর্বের আবেদন
+            setTimeout(() => {
+              document.getElementById("ussdModalInput").value = "20260342";
+              showToast("অ্যাপ আইডি '20260342' প্রস্তুত।", "info");
+            }, 600);
+            break;
+
+          case "HEARING_SCHEDULE":
+            showToast(
+              "সিনারিও ৩: শুনানির তারিখ ও উপস্থিতি সমস্যা লোড হচ্ছে...",
+              "info",
+            );
+            setTimeout(() => {
+              processUssdStep("1");
+            }, 200);
+            setTimeout(() => {
+              processUssdStep("3");
+            }, 400); // শুনানি
+            setTimeout(() => {
+              document.getElementById("ussdModalInput").value =
+                "CASE-2026-000342";
+              showToast("কেস আইডি 'CASE-2026-000342' প্রস্তুত।", "info");
+            }, 600);
+            break;
+
+          case "MEDIATION_REMOTE":
+            showToast(
+              "সিনারিও ৪: মধ্যস্থতা ও দূরবর্তী অংশগ্রহণ লোড হচ্ছে...",
+              "info",
+            );
+            setTimeout(() => {
+              processUssdStep("1");
+            }, 200);
+            setTimeout(() => {
+              processUssdStep("4");
+            }, 400); // মধ্যস্থতা
+            setTimeout(() => {
+              document.getElementById("ussdModalInput").value =
+                "CASE-2026-000342";
+            }, 600);
+            break;
+
+          case "LAWYER_CHANGE":
+            showToast("সিনারিও ৫: আইনজীবী পরিবর্তন আবেদন লোড হচ্ছে...", "info");
+            setTimeout(() => {
+              processUssdStep("1");
+            }, 200);
+            setTimeout(() => {
+              processUssdStep("6");
+            }, 400); // আইনজীবী
+            setTimeout(() => {
+              document.getElementById("ussdModalInput").value =
+                "CASE-2026-000342";
+            }, 600);
+            break;
+
+          case "EMERGENCY_RISK":
+            showToast("সিনারিও ৬: জরুরি জীবন ঝুঁকি যাচাই লোড হচ্ছে...", "info");
+            setTimeout(() => {
+              processUssdStep("1");
+            }, 200);
+            setTimeout(() => {
+              processUssdStep("8");
+            }, 400); // জরুরি
+            setTimeout(() => {
+              document.getElementById("ussdModalInput").value = "1";
+              showToast("জীবন ঝুঁকি '1' প্রস্তুত।", "warning");
+            }, 600);
+            break;
+        }
+      }
+
+      // Toast Notification Utility
+      function showToast(msg, type = "info") {
+        const container = document.getElementById("toastContainer");
+        const toast = document.createElement("div");
+        toast.className = `p-3 px-4 rounded-xl shadow-lg border text-xs font-semibold flex items-center space-x-2 transform transition duration-300 translate-y-2 pointer-events-auto ${
+          type === "success"
+            ? "bg-emerald-900 text-white border-emerald-700"
+            : type === "warning"
+              ? "bg-amber-600 text-white border-amber-500"
+              : type === "error"
+                ? "bg-rose-700 text-white border-rose-600"
+                : "bg-slate-900 text-white border-slate-700"
+        }`;
+        toast.innerHTML = `
+        <i class="fa-solid ${type === "success" ? "fa-circle-check text-emerald-300" : "fa-bell text-amber-300"}"></i>
+        <span>${msg}</span>
+      `;
+        container.appendChild(toast);
+        setTimeout(() => {
+          toast.classList.add("opacity-0", "translate-x-full");
+          setTimeout(() => toast.remove(), 300);
+        }, 3500);
+      }
+
+      function toggleAccordion(id) {
+        const el = document.getElementById(id);
+        const icon = document.getElementById(id.replace("Panel", "Icon"));
+        if (el.classList.contains("hidden")) {
+          el.classList.remove("hidden");
+          if (icon) icon.innerHTML = '<i class="fa-solid fa-chevron-up"></i>';
+        } else {
+          el.classList.add("hidden");
+          if (icon) icon.innerHTML = '<i class="fa-solid fa-chevron-down"></i>';
+        }
+      }
+
+      // App Initialization
+      window.addEventListener("DOMContentLoaded", () => {
+        updateDialDisplay();
+        logBackend(
+          "ইউএসএসডি গেটওয়ে সক্রিয়। *১৬৬৯৯# ডায়াল করে সেবা গ্রহণ করুন।",
+          "INFO",
+        );
+      });
+    </script>
+  </body>
+</html>
