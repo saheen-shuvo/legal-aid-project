@@ -43,7 +43,7 @@ const demoUsers = [
     email: "udc@gmail.com",
   },
   {
-    label: "প্যানাল আইনজীবী",
+    label: "প্যানেল আইনজীবী",
     email: "lawyer@gmail.com",
   },
   {
@@ -238,13 +238,13 @@ export default function LoginPage() {
                     Demo Login
                   </p>
 
-                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                  <div className="grid grid-cols-2 gap-2">
                     {demoUsers.map((user) => (
                       <button
                         key={user.email}
                         type="button"
                         onClick={() => fillDemoAccount(user.email)}
-                        className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2.5 text-sm font-medium text-emerald-800 transition hover:border-emerald-400 hover:bg-emerald-100"
+                        className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2.5 text-xs md:text-sm font-medium text-emerald-800 transition hover:border-emerald-400 hover:bg-emerald-100"
                       >
                         {user.label}
                       </button>

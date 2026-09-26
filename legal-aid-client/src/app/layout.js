@@ -12,8 +12,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Legal Aid ",
-  description: "Welcome to Legal Aid, your trusted source for legal assistance and support.",
+  title: "সমাধান",
+  description: "বাংলাদেশের জন্য একটি ওপেন সোর্স লিগ্যাল এইড প্ল্যাটফর্ম।",
 };
 
 export default function RootLayout({ children }) {

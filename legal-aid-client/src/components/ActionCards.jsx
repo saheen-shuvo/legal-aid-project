@@ -11,35 +11,35 @@ const actions = [
   {
     number: "০১",
     title: "ফোনে সহায়তা (16699)",
-    description: "ফোনে কথা বলার জন্য সহায়তার অনুরোধ করুন।",
+    description: "ফোনে কথা বলার জন্য সহায়তার অনুরোধ করুন",
     href: "/apply/voice",
     icon: FiPhoneCall,
   },
   {
     number: "০২",
     title: "USSD সহায়তা",
-    description: "ফোনের USSD কোড ব্যবহার করে সহায়তার জন্য আবেদন করুন।",
+    description: "ফোনের USSD কোড ব্যবহার করে সহায়তার জন্য আবেদন করুন",
     href: "/ussd-system.html",
     icon: FiMessageSquare,
   },
   {
     number: "০৩",
     title: "অনলাইনে আবেদন",
-    description: "ওয়েবের মাধ্যমে আইনগত সহায়তার আবেদন করুন।",
+    description: "ওয়েবের মাধ্যমে আইনগত সহায়তার আবেদন করুন",
     href: "/login",
     icon: FiGlobe,
   },
   {
     number: "০৪",
     title: "ইউডিসির মাধ্যমে আবেদন",
-    description: "ইউডিসি সহায়তাকারীর মাধ্যমে আবেদন শুরু করুন।",
+    description: "ইউডিসি সহায়তাকারীর মাধ্যমে আবেদন শুরু করুন",
     href: "/login",
     icon: FiUsers,
   },
   {
     number: "০৫",
     title: "ডিএলএও রেফারেল",
-    description: "বিদ্যমান বিষয়ে রেফারেলের তথ্য প্রদান করুন।",
+    description: "বিদ্যমান বিষয়ে রেফারেলের তথ্য প্রদান করুন",
     href: "/login",
     icon: FiBriefcase,
   },
@@ -65,8 +65,8 @@ export default function ActionCards() {
           </h2>
 
           <p className="mt-4 text-xs leading-7 text-slate-600">
-            প্রতিটি মাধ্যম সেবা গ্রহণের আলাদা ইন্টারফেস। পরিকল্পনা অনুযায়ী সব
-            মাধ্যমের তথ্য একই মূল কেস নথিতে যুক্ত হবে।
+            প্রতিটি মাধ্যম সেবা গ্রহণের আলাদা ইন্টারফেস <br></br> পরিকল্পনা অনুযায়ী সব
+            মাধ্যমের তথ্য একই মূল কেস নথিতে যুক্ত হবে
           </p>
         </div>
 

@@ -4,6 +4,7 @@ import { FaFacebookF, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 import { FiMail } from "react-icons/fi";
 import euImg from "../../assets/footerImg/eu.png";
 import undpImg from "../../assets/footerImg/undp.png";
+import bdGovImg from "../../assets/footerImg/bdgovt.png";
 
 const footerLinks = [
   { label: "আইনগত সহায়তা পান", href: "/apply" },
@@ -20,7 +21,7 @@ export default function Footer() {
     <footer className="bg-[#f8fafb] text-gray-700">
       <div className="mx-auto max-w-7xl px-4 pt-12 pb-10 sm:px-6">
         {/* Partner and department logos */}
-        <div className="grid grid-cols-3 items-center justify-items-center gap-4 pb-10 sm:pb-12">
+        <div className="grid grid-cols-4 items-center justify-items-center gap-4 pb-10 sm:pb-12">
           <Image
             src={euImg}
             alt="ইউরোপীয় ইউনিয়ন"
@@ -30,18 +31,26 @@ export default function Footer() {
           />
 
           <Image
+            src={bdGovImg}
+            alt="বাংলাদেশ সরকার"
+            width={100}
+            height={100}
+            className="h-auto max-h-20 w-auto max-w-full object-contain sm:max-h-28"
+          />
+
+          <Image
             src="https://db.nlaso.gov.bd/Images/nlaso.png"
             alt="বাংলাদেশ আইনগত সহায়তা অধিদপ্তর"
-            width={155}
-            height={120}
-            className="h-auto max-h-24 w-auto max-w-full object-contain sm:max-h-32"
+            width={100}
+            height={100}
+            className="h-auto max-h-20 w-auto max-w-full object-contain sm:max-h-28"
           />
 
           <Image
             src={undpImg}
             alt="ইউএনডিপি"
             width={70}
-            height={110}
+            height={100}
             className="h-auto max-h-20 w-auto max-w-full object-contain sm:max-h-28"
           />
         </div>
@@ -65,7 +74,7 @@ export default function Footer() {
         {/* Copyright and social icons */}
         <div className="flex flex-col gap-5 pt-7 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm sm:text-base">
-            © ডিজিটাল লিগ্যাল এইড সিস্টেম (DLAS) ২০২৬ · সর্বস্বত্ব সংরক্ষিত।
+            © ডিজিটাল লিগ্যাল এইড সিস্টেম (DLAS) ২০২৬ · সর্বস্বত্ব সংরক্ষিত
           </p>
 
           <div

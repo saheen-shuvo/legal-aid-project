@@ -56,6 +56,28 @@
       }
     </style>
   </head>
+  <script>
+    function speakFieldText(fieldId) {
+      const field = document.getElementById(fieldId);
+
+      if (!field || !field.value.trim()) {
+        return;
+      }
+
+      // Stop any previous speech
+      window.speechSynthesis.cancel();
+
+      const text = field.value.trim();
+      const speech = new SpeechSynthesisUtterance(text);
+
+      // Bengali language
+      speech.lang = "bn-BD";
+      speech.rate = 0.9;
+      speech.pitch = 1;
+
+      window.speechSynthesis.speak(speech);
+    }
+  </script>
   <body class="bg-mist text-ink">
     <div id="app"></div>
     <script>
@@ -95,7 +117,12 @@
             locked: false,
             docs: [],
             versions: [
-              ["v1", "ইউডিসি কর্তৃক তথ্য সংযোজন", "প্রাথমিক সহায়তাপ্রাপ্ত আবেদন", stamp()],
+              [
+                "v1",
+                "ইউডিসি কর্তৃক তথ্য সংযোজন",
+                "প্রাথমিক সহায়তাপ্রাপ্ত আবেদন",
+                stamp(),
+              ],
             ],
             created: stamp(),
           },
@@ -112,6 +139,7 @@
         ["status", "Search", "আবেদনের অবস্থা"],
         ["sync", "RefreshCw", "অফলাইন ও সমন্বয়"],
         ["tasks", "ListTodo", "কাজ ও সতর্কতা"],
+        ["odr", "MonitorPlay", "ADR / ODR সহায়তা"],
         ["access", "LockKeyhole", "প্রবেশাধিকার ও গোপনীয়তা"],
         ["audit", "ScrollText", "নিরীক্ষা ইতিহাস"],
         ["help", "CircleHelp", "সহায়তা ও যোগাযোগ"],
@@ -169,31 +197,129 @@
         S.audit.unshift({ time: stamp(), action, detail });
         save();
       }
+      function captureFingerprint() {
+        const modal = document.createElement("div");
+
+        modal.id = "fingerprintModal";
+
+        modal.className =
+          "fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/50 p-4";
+
+        modal.innerHTML = `
+    <div class="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+
+      <div class="flex items-center justify-between">
+        <h3 class="text-lg font-bold">আঙুলের ছাপ যাচাই</h3>
+
+        <button
+          onclick="closeFingerprintModal()"
+          class="grid h-8 w-8 place-items-center rounded-lg text-slate-500 hover:bg-slate-100"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="mt-6 flex flex-col items-center text-center">
+
+        <div
+          class="grid h-28 w-28 place-items-center rounded-full border-4 border-teal-100 bg-teal-50 text-teal"
+        >
+          ${I("Fingerprint", "h-16 w-16")}
+        </div>
+
+        <h4 class="mt-5 text-base font-bold">
+          আঙুলের ছাপ স্ক্যান করুন
+        </h4>
+
+        <p class="mt-2 text-sm leading-6 text-slate-500">
+          আবেদনকারীর আঙুল ফিঙ্গারপ্রিন্ট ডিভাইসে রাখুন।
+          এটি একটি ডেমো যাচাই প্রক্রিয়া।
+        </p>
+
+        <div
+          class="mt-5 w-full rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-700"
+        >
+          ডেমো মোড — কোনো প্রকৃত বায়োমেট্রিক তথ্য সংগ্রহ করা হচ্ছে না।
+        </div>
+
+      </div>
+
+      <div class="mt-6 flex justify-end gap-2">
+
+        <button
+          onclick="closeFingerprintModal()"
+          class="rounded-lg border border-line px-4 py-2.5 text-sm font-bold"
+        >
+          বাতিল
+        </button>
+
+        <button
+          onclick="completeFingerprint()"
+          class="rounded-lg bg-teal px-4 py-2.5 text-sm font-bold text-white"
+        >
+          সম্পন্ন করুন
+        </button>
+
+      </div>
+
+    </div>
+  `;
+
+        document.body.appendChild(modal);
+      }
+      function closeFingerprintModal() {
+        const modal = document.getElementById("fingerprintModal");
+
+        if (modal) {
+          modal.remove();
+        }
+      }
+      function completeFingerprint() {
+        a.fingerprint = true;
+
+        closeFingerprintModal();
+
+        render();
+      }
       function bn(value) {
         const labels = {
-          "Applicant statement: Land dispute": "আবেদনকারীর বক্তব্য: জমি নিয়ে বিরোধ",
-          "Applicant statement: Land boundary dispute": "আবেদনকারীর বক্তব্য: জমির সীমানা নিয়ে বিরোধ",
-          "Conflict": "বিরোধ",
-          "YES": "হ্যাঁ", "NO": "না", "Submitted": "জমা হয়েছে",
-          "Accepted": "গৃহীত", "Case Created": "মামলার নথি তৈরি",
+          "Applicant statement: Land dispute":
+            "আবেদনকারীর বক্তব্য: জমি নিয়ে বিরোধ",
+          "Applicant statement: Land boundary dispute":
+            "আবেদনকারীর বক্তব্য: জমির সীমানা নিয়ে বিরোধ",
+          Conflict: "বিরোধ",
+          YES: "হ্যাঁ",
+          NO: "না",
+          Submitted: "জমা হয়েছে",
+          Accepted: "গৃহীত",
+          "Case Created": "মামলার নথি তৈরি",
           "Offline Saved": "অফলাইনে সংরক্ষিত",
           "Sync Pending": "সমন্বয়ের অপেক্ষায়",
-          "Pending": "অপেক্ষমাণ", "Draft": "খসড়া",
+          Pending: "অপেক্ষমাণ",
+          Draft: "খসড়া",
           "Consent Pending": "সম্মতির অপেক্ষায়",
           "More Information Required": "আরও তথ্য প্রয়োজন",
           "Document Check Pending": "নথি যাচাইয়ের অপেক্ষায়",
           "Consent Declined": "সম্মতি দেওয়া হয়নি",
-          "Readable": "পাঠযোগ্য", "Partially readable": "আংশিক পাঠযোগ্য",
-          "Poor quality": "নিম্নমানের ছবি", "Missing page": "পৃষ্ঠা অনুপস্থিত",
-          "Duplicate": "একই নথি", "Uncertain": "অনিশ্চিত",
-          "Recorded": "নথিবদ্ধ", "Synced": "সমন্বিত",
+          Readable: "পাঠযোগ্য",
+          "Partially readable": "আংশিক পাঠযোগ্য",
+          "Poor quality": "নিম্নমানের ছবি",
+          "Missing page": "পৃষ্ঠা অনুপস্থিত",
+          Duplicate: "একই নথি",
+          Uncertain: "অনিশ্চিত",
+          Recorded: "নথিবদ্ধ",
+          Synced: "সমন্বিত",
           "Keep Offline Version": "অফলাইন তথ্য রাখুন",
           "Keep Central Version": "কেন্দ্রীয় তথ্য রাখুন",
           "Escalated to authorised human": "অনুমোদিত কর্মকর্তার কাছে পাঠানো",
-          "Identity document": "পরিচয়পত্র", "Land document": "জমির নথি",
-          "Application form": "আবেদন ফরম", "Other reference": "অন্যান্য তথ্যসূত্র",
-          "Nuching Marma": "নুচিং মারমা", "Khagrachari": "খাগড়াছড়ি",
-          "Marma": "মারমা", "Limited": "সীমিত",
+          "Identity document": "পরিচয়পত্র",
+          "Land document": "জমির নথি",
+          "Application form": "আবেদন ফরম",
+          "Other reference": "অন্যান্য তথ্যসূত্র",
+          "Nuching Marma": "নুচিং মারমা",
+          Khagrachari: "খাগড়াছড়ি",
+          Marma: "মারমা",
+          Limited: "সীমিত",
           "No personal phone provided": "ব্যক্তিগত ফোন নম্বর দেওয়া হয়নি",
           "Ask before contacting": "যোগাযোগের আগে অনুমতি নিন",
           "UDC session started": "ইউডিসি সেশন শুরু হয়েছে",
@@ -206,9 +332,12 @@
           "Sync conflict detected": "সমন্বয়ে বিরোধ শনাক্ত",
           "Sync conflict resolved": "সমন্বয়ের বিরোধ নিষ্পত্তি",
           "Assisted draft saved": "আবেদনের খসড়া সংরক্ষিত",
-          "Application submitted to central DLAS": "আবেদন কেন্দ্রীয় সিস্টেমে জমা হয়েছে",
-          "Application securely saved offline": "আবেদন অফলাইনে নিরাপদে সংরক্ষিত",
-          "Applicant consented to demo status lookup": "আবেদনকারী ডেমোতে অবস্থা দেখতে সম্মতি দিয়েছেন",
+          "Application submitted to central DLAS":
+            "আবেদন কেন্দ্রীয় সিস্টেমে জমা হয়েছে",
+          "Application securely saved offline":
+            "আবেদন অফলাইনে নিরাপদে সংরক্ষিত",
+          "Applicant consented to demo status lookup":
+            "আবেদনকারী ডেমোতে অবস্থা দেখতে সম্মতি দিয়েছেন",
           "Document captured": "নথি সংযুক্ত হয়েছে",
           "Network changed": "সংযোগ পরিবর্তিত হয়েছে",
         };
@@ -252,6 +381,7 @@
           apps: appsPage,
           status,
           sync,
+          odr: odrPage,
           tasks,
           access,
           audit: auditPage,
@@ -268,6 +398,1298 @@
         }
         renderModal();
         lucide.createIcons();
+      }
+      function odrPage() {
+        return `
+    <div class="space-y-6">
+
+      <!-- Header -->
+      <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+          <div>
+            <div class="mb-2 inline-flex items-center gap-2 rounded-full bg-teal-50 px-3 py-1 text-xs font-bold text-teal-700">
+              ${I("ShieldCheck", "h-4 w-4")}
+              ইউডিসি সহায়তাপ্রাপ্ত প্রবেশাধিকার
+            </div>
+
+            <h1 class="text-2xl font-bold tracking-tight text-slate-900">
+              অনলাইন মধ্যস্থতা ও ADR সহায়তা
+            </h1>
+
+            <p class="mt-1 text-sm text-slate-500">
+              দূরবর্তী / হাইব্রিড বিরোধ নিষ্পত্তিতে সহায়তা
+            </p>
+          </div>
+
+          <div class="rounded-xl border border-teal-100 bg-teal-50 px-4 py-3">
+            <p class="text-xs font-semibold text-teal-700">
+              প্রবেশাধিকার মডেল
+            </p>
+
+            <p class="mt-1 text-sm font-bold text-teal-900">
+              সহায়তাপ্রাপ্ত সেবা কেন্দ্র
+            </p>
+          </div>
+
+        </div>
+
+        <div class="mt-5 rounded-xl border border-amber-200 bg-amber-50 p-4">
+
+          <div class="flex gap-3">
+
+            ${I("Info", "mt-0.5 h-5 w-5 shrink-0 text-amber-600")}
+
+            <div>
+
+              <p class="text-sm font-bold text-amber-900">
+                মানবিক নিয়ন্ত্রণ বজায় থাকবে
+              </p>
+
+              <p class="mt-1 text-xs leading-5 text-amber-800">
+                UDC Operator শুধুমাত্র নাগরিককে প্রযুক্তিগত ও প্রবেশাধিকার
+                সহায়তা প্রদান করবেন। মধ্যস্থতা / ADR পরিচালনা, সম্মতি,
+                মীমাংসা এবং ফলাফল সংক্রান্ত সিদ্ধান্ত অনুমোদিত
+                লিগ্যাল এইড কর্মকর্তা / মধ্যস্থতাকারীর দায়িত্ব।
+              </p>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Current Case -->
+      <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+
+        <div class="mb-4 flex items-center justify-between">
+
+          <div>
+            <h2 class="text-base font-bold text-slate-900">
+              সক্রিয় মামলা
+            </h2>
+
+            <p class="mt-1 text-xs text-slate-500">
+              একই Case ID ব্যবহার করে বিদ্যমান মামলার কার্যক্রম চালিয়ে যাওয়া যাবে।
+            </p>
+          </div>
+
+          <span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">
+            মামলা সংযুক্ত
+          </span>
+
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-3">
+
+          <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+
+            <p class="text-xs font-semibold text-slate-500">
+              মামলা নম্বর
+            </p>
+
+            <p class="mt-1 text-sm font-bold text-slate-900">
+              CASE-2026-000127
+            </p>
+
+          </div>
+
+
+          <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+
+            <p class="text-xs font-semibold text-slate-500">
+              নির্ধারিত মধ্যস্থতা
+            </p>
+
+            <p class="mt-1 text-sm font-bold text-slate-900">
+              ৭ অক্টোবর ২০২৬
+            </p>
+
+            <p class="mt-1 text-xs text-slate-500">
+              বিকেল ৩:০০
+            </p>
+
+          </div>
+
+
+          <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+
+            <p class="text-xs font-semibold text-slate-500">
+              বর্তমান অংশগ্রহণের ধরন
+            </p>
+
+            <p class="mt-1 text-sm font-bold text-slate-900">
+              সরাসরি উপস্থিতি
+            </p>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ODR Actions -->
+      <section>
+
+        <div class="mb-4">
+
+          <h2 class="text-lg font-bold text-slate-900">
+            অনলাইন ADR / ODR
+          </h2>
+
+          <p class="mt-1 text-sm text-slate-500">
+            নাগরিকের জন্য প্রয়োজনীয় সহায়তা সেবা নির্বাচন করুন।
+          </p>
+
+        </div>
+
+
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+
+
+          <!-- Join Mediation -->
+          <button
+            type="button"
+            onclick="openODRModal('join')"
+            class="group rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-md"
+          >
+
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-teal-50">
+              ${I("Video", "h-6 w-6 text-teal-600")}
+            </div>
+
+            <h3 class="font-bold text-slate-900">
+              নির্ধারিত মধ্যস্থতায় যোগ দিন
+            </h3>
+
+            <p class="mt-1 text-xs leading-5 text-slate-500">
+              অনুমোদিত দূরবর্তী মধ্যস্থতা সেশনে নাগরিককে সংযুক্ত করতে সহায়তা করুন।
+            </p>
+
+            <span class="mt-4 inline-flex items-center gap-1 text-xs font-bold text-teal-700">
+              সেশনে প্রবেশ করুন
+              ${I("ArrowRight", "h-3.5 w-3.5")}
+            </span>
+
+          </button>
+
+
+          <!-- Remote Participation -->
+          <button
+            type="button"
+            onclick="openODRModal('remote')"
+            class="group rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-md"
+          >
+
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-teal-50">
+              ${I("MonitorSmartphone", "h-6 w-6 text-teal-600")}
+            </div>
+
+            <h3 class="font-bold text-slate-900">
+              দূরবর্তী অংশগ্রহণের অনুরোধ
+            </h3>
+
+            <p class="mt-1 text-xs leading-5 text-slate-500">
+              অনলাইন বা হাইব্রিড পদ্ধতিতে অংশগ্রহণের জন্য অনুরোধ জমা দিন।
+            </p>
+
+            <span class="mt-4 inline-flex items-center gap-1 text-xs font-bold text-teal-700">
+              অনুরোধ জমা দিন
+              ${I("ArrowRight", "h-3.5 w-3.5")}
+            </span>
+
+          </button>
+
+
+          <!-- Schedule -->
+          <button
+            type="button"
+            onclick="openODRModal('schedule')"
+            class="group rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-md"
+          >
+
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-teal-50">
+              ${I("Calendar", "h-6 w-6 text-teal-600")}
+            </div>
+
+            <h3 class="font-bold text-slate-900">
+              মধ্যস্থতার সময়সূচি দেখুন
+            </h3>
+
+            <p class="mt-1 text-xs leading-5 text-slate-500">
+              নির্ধারিত মধ্যস্থতার সময় ও অংশগ্রহণের ধরন দেখুন।
+            </p>
+
+            <span class="mt-4 inline-flex items-center gap-1 text-xs font-bold text-teal-700">
+              সময়সূচি দেখুন
+              ${I("ArrowRight", "h-3.5 w-3.5")}
+            </span>
+
+          </button>
+
+
+          <!-- Documents -->
+          <button
+            type="button"
+            onclick="openODRModal('documents')"
+            class="group rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-md"
+          >
+
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-teal-50">
+              ${I("UploadCloud", "h-6 w-6 text-teal-600")}
+            </div>
+
+            <h3 class="font-bold text-slate-900">
+              মধ্যস্থতার নথি আপলোড
+            </h3>
+
+            <p class="mt-1 text-xs leading-5 text-slate-500">
+              নাগরিককে প্রয়োজনীয় নথি স্ক্যান ও আপলোড করতে সহায়তা করুন।
+            </p>
+
+            <span class="mt-4 inline-flex items-center gap-1 text-xs font-bold text-teal-700">
+              নথি আপলোড করুন
+              ${I("ArrowRight", "h-3.5 w-3.5")}
+            </span>
+
+          </button>
+
+
+          <!-- Settlement -->
+          <button
+            type="button"
+            onclick="openODRModal('settlement')"
+            class="group rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-md"
+          >
+
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-teal-50">
+              ${I("FileText", "h-6 w-6 text-teal-600")}
+            </div>
+
+            <h3 class="font-bold text-slate-900">
+              মীমাংসা খসড়া পর্যালোচনা
+            </h3>
+
+            <p class="mt-1 text-xs leading-5 text-slate-500">
+              নাগরিককে মীমাংসা খসড়া দেখতে ও বুঝতে সহায়তা করুন।
+            </p>
+
+            <span class="mt-4 inline-flex items-center gap-1 text-xs font-bold text-teal-700">
+              খসড়া পর্যালোচনা করুন
+              ${I("ArrowRight", "h-3.5 w-3.5")}
+            </span>
+
+          </button>
+
+
+          <!-- Signing -->
+          <button
+            type="button"
+            onclick="openODRModal('signing')"
+            class="group rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-md"
+          >
+
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-teal-50">
+              ${I("PenTool", "h-6 w-6 text-teal-600")}
+            </div>
+
+            <h3 class="font-bold text-slate-900">
+              স্বাক্ষর প্রদানে সহায়তা
+            </h3>
+
+            <p class="mt-1 text-xs leading-5 text-slate-500">
+              নাগরিককে স্বাক্ষর প্রদানের ইন্টারফেস ব্যবহার করতে সহায়তা করুন।
+            </p>
+
+            <span class="mt-4 inline-flex items-center gap-1 text-xs font-bold text-teal-700">
+              স্বাক্ষর খুলুন
+              ${I("ArrowRight", "h-3.5 w-3.5")}
+            </span>
+
+          </button>
+
+
+          <!-- In-person -->
+          <button
+            type="button"
+            onclick="openODRModal('inperson')"
+            class="group rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-md"
+          >
+
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-teal-50">
+              ${I("User", "h-6 w-6 text-teal-600")}
+            </div>
+
+            <h3 class="font-bold text-slate-900">
+              সরাসরি উপস্থিতির বিকল্প অনুরোধ
+            </h3>
+
+            <p class="mt-1 text-xs leading-5 text-slate-500">
+              দূরবর্তী অংশগ্রহণ উপযুক্ত না হলে সরাসরি উপস্থিতির বিকল্পের অনুরোধ করুন।
+            </p>
+
+            <span class="mt-4 inline-flex items-center gap-1 text-xs font-bold text-teal-700">
+              বিকল্পের অনুরোধ করুন
+              ${I("ArrowRight", "h-3.5 w-3.5")}
+            </span>
+
+          </button>
+
+        </div>
+      </section>
+
+
+      <!-- Private Session -->
+      <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+
+        <div class="flex items-start gap-4">
+
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50">
+            ${I("LockKeyhole", "h-6 w-6 text-emerald-600")}
+          </div>
+
+          <div class="flex-1">
+
+            <h2 class="font-bold text-slate-900">
+              ব্যক্তিগত ODR সেশন
+            </h2>
+
+            <p class="mt-1 text-xs text-slate-500">
+              গোপনীয় দূরবর্তী অংশগ্রহণের আগে গোপনীয়তা ও নিরাপত্তা যাচাই করুন।
+            </p>
+
+
+            <div class="mt-5 grid gap-3 sm:grid-cols-2">
+
+              <div class="flex items-center gap-2 rounded-lg bg-emerald-50 px-3 py-2">
+                ${I("Check", "h-4 w-4 text-emerald-600")}
+
+                <span class="text-xs font-semibold text-emerald-800">
+                  ব্যক্তিগত কক্ষ নিশ্চিত
+                </span>
+              </div>
+
+
+              <div class="flex items-center gap-2 rounded-lg bg-emerald-50 px-3 py-2">
+                ${I("Check", "h-4 w-4 text-emerald-600")}
+
+                <span class="text-xs font-semibold text-emerald-800">
+                  হেডফোন প্রস্তুত
+                </span>
+              </div>
+
+
+              <div class="flex items-center gap-2 rounded-lg bg-emerald-50 px-3 py-2">
+                ${I("Check", "h-4 w-4 text-emerald-600")}
+
+                <span class="text-xs font-semibold text-emerald-800">
+                  স্ক্রিনের গোপনীয়তা নিশ্চিত
+                </span>
+              </div>
+
+
+              <div class="flex items-center gap-2 rounded-lg bg-emerald-50 px-3 py-2">
+                ${I("Check", "h-4 w-4 text-emerald-600")}
+
+                <span class="text-xs font-semibold text-emerald-800">
+                  নাগরিকের পরিচয় যাচাই করা হয়েছে
+                </span>
+              </div>
+
+
+              <div class="flex items-center gap-2 rounded-lg bg-emerald-50 px-3 py-2">
+                ${I("Check", "h-4 w-4 text-emerald-600")}
+
+                <span class="text-xs font-semibold text-emerald-800">
+                  নিরাপদ অংশগ্রহণ নিশ্চিত
+                </span>
+              </div>
+
+
+              <div class="flex items-center gap-2 rounded-lg bg-slate-100 px-3 py-2">
+                ${I("CircleOff", "h-4 w-4 text-slate-500")}
+
+                <span class="text-xs font-semibold text-slate-700">
+                  ডিফল্টভাবে রেকর্ডিং বন্ধ
+                </span>
+              </div>
+
+            </div>
+
+
+            <div class="mt-4 rounded-xl border border-blue-100 bg-blue-50 p-4">
+
+              <p class="text-xs font-bold text-blue-900">
+                UDC Operator-এর ভূমিকার সীমা
+              </p>
+
+              <p class="mt-1 text-xs leading-5 text-blue-800">
+                মধ্যস্থতা শুরু হলে UDC Operator গোপনীয় সেশনে উপস্থিত
+                থাকবেন না, যদি না প্রবেশযোগ্যতা বা যোগাযোগ সহায়তার জন্য
+                তাঁর উপস্থিতি প্রয়োজন হয় এবং উপযুক্ত সম্মতি থাকে।
+              </p>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Offline Support -->
+      <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+
+        <div class="flex items-start gap-4">
+
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-orange-50">
+            ${I("WifiOff", "h-6 w-6 text-orange-600")}
+          </div>
+
+          <div class="flex-1">
+
+            <h2 class="font-bold text-slate-900">
+              অফলাইন / দুর্বল ইন্টারনেট সহায়তা
+            </h2>
+
+            <p class="mt-1 text-xs leading-5 text-slate-500">
+              নির্ভরযোগ্য ইন্টারনেট সংযোগ ছাড়া সরাসরি অনলাইন মধ্যস্থতা
+              চালিয়ে যাওয়া যাবে না। প্রস্তুত করা নথি ও অনুরোধ নিরাপদভাবে
+              সংরক্ষণ করে পরবর্তীতে সিঙ্ক করা যাবে।
+            </p>
+
+
+            <div class="mt-4 rounded-xl border border-orange-200 bg-orange-50 p-4">
+
+              <div class="grid gap-3 sm:grid-cols-3">
+
+                <div>
+                  <p class="text-[11px] font-semibold text-orange-700">
+                    নথি প্রস্তুতি
+                  </p>
+
+                  <p class="mt-1 text-xs font-bold text-orange-900">
+                    সংরক্ষিত
+                  </p>
+                </div>
+
+
+                <div>
+                  <p class="text-[11px] font-semibold text-orange-700">
+                    স্বাক্ষর অনুরোধ
+                  </p>
+
+                  <p class="mt-1 text-xs font-bold text-orange-900">
+                    নিরাপদে অপেক্ষমাণ
+                  </p>
+                </div>
+
+
+                <div>
+                  <p class="text-[11px] font-semibold text-orange-700">
+                    ভিডিও মধ্যস্থতা
+                  </p>
+
+                  <p class="mt-1 text-xs font-bold text-red-700">
+                    উপলভ্য নয়
+                  </p>
+                </div>
+
+              </div>
+
+
+              <div class="mt-4 flex flex-wrap gap-2">
+
+                <button
+                  type="button"
+                  onclick="openODRModal('retry')"
+                  class="rounded-lg bg-orange-600 px-3 py-2 text-xs font-bold text-white hover:bg-orange-700"
+                >
+                  পুনরায় চেষ্টা করুন
+                </button>
+
+
+                <button
+                  type="button"
+                  onclick="openODRModal('reschedule')"
+                  class="rounded-lg border border-orange-300 bg-white px-3 py-2 text-xs font-bold text-orange-800 hover:bg-orange-100"
+                >
+                  অনলাইন সেশনের সময় পরিবর্তন
+                </button>
+
+
+                <button
+                  type="button"
+                  onclick="openODRModal('inperson')"
+                  class="rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50"
+                >
+                  সরাসরি উপস্থিতির বিকল্প
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Authority Boundary -->
+      <section class="rounded-2xl border border-slate-200 bg-slate-900 p-6 text-white shadow-sm">
+
+        <div class="flex items-start gap-4">
+
+          ${I("Scale", "mt-0.5 h-6 w-6 shrink-0 text-teal-300")}
+
+          <div>
+
+            <h2 class="font-bold">
+              ADR-এর ক্ষমতা ও দায়িত্ব
+            </h2>
+
+
+            <div class="mt-4 grid gap-3 sm:grid-cols-2">
+
+
+              <div class="rounded-xl bg-white/10 p-4">
+
+                <p class="text-xs font-bold text-teal-300">
+                  UDC প্রবেশাধিকার নিশ্চিত করে
+                </p>
+
+                <p class="mt-1 text-xs leading-5 text-slate-300">
+                  প্রযুক্তি, ডিভাইস, নথি এবং প্রবেশযোগ্যতা সংক্রান্ত সহায়তা প্রদান।
+                </p>
+
+              </div>
+
+
+              <div class="rounded-xl bg-white/10 p-4">
+
+                <p class="text-xs font-bold text-teal-300">
+                  মধ্যস্থতাকারী ADR পরিচালনা করেন
+                </p>
+
+                <p class="mt-1 text-xs leading-5 text-slate-300">
+                  মধ্যস্থতা ও ফলাফল নথিভুক্ত করার দায়িত্ব অনুমোদিত পেশাজীবীর।
+                </p>
+
+              </div>
+
+
+              <div class="rounded-xl bg-white/10 p-4">
+
+                <p class="text-xs font-bold text-teal-300">
+                  নাগরিক নিজে সম্মতি প্রদান করেন
+                </p>
+
+                <p class="mt-1 text-xs leading-5 text-slate-300">
+                  নাগরিককে বিষয়টি পর্যালোচনা ও বুঝে নিজস্ব সম্মতি প্রদান করতে হবে।
+                </p>
+
+              </div>
+
+
+              <div class="rounded-xl bg-white/10 p-4">
+
+                <p class="text-xs font-bold text-teal-300">
+                  DLAO কর্তৃত্ব বজায় রাখেন
+                </p>
+
+                <p class="mt-1 text-xs leading-5 text-slate-300">
+                  আনুষ্ঠানিক মামলার সিদ্ধান্ত ও আইনি তদারকি অনুমোদিত কর্মকর্তার অধীনে থাকবে।
+                </p>
+
+              </div>
+
+
+            </div>
+
+
+            <div class="mt-5 border-t border-white/10 pt-4">
+
+              <p class="text-xs font-semibold text-slate-400">
+                মামলার ধারাবাহিকতা
+              </p>
+
+              <p class="mt-1 text-sm font-bold text-white">
+                পুরো কার্যক্রমে একই Case ID ব্যবহার করা হবে।
+              </p>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+
+    <!-- ODR Modal Container -->
+    <div
+      id="odrModal"
+      class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/50 p-4"
+    >
+
+      <div
+        id="odrModalContent"
+        class="w-full max-w-lg rounded-2xl bg-white shadow-2xl"
+      >
+      </div>
+
+    </div>
+  `;
+      }
+      function openODRModal(type) {
+        const modal = document.getElementById("odrModal");
+        const content = document.getElementById("odrModalContent");
+
+        const closeButton = `
+    <button
+      type="button"
+      onclick="closeODRModal()"
+      class="rounded-lg px-3 py-2 text-slate-500 hover:bg-slate-100"
+      aria-label="বন্ধ করুন"
+    >
+      ✕
+    </button>
+  `;
+
+        const configs = {
+          join: {
+            title: "নির্ধারিত মধ্যস্থতায় যোগ দিন",
+            icon: "Video",
+            body: `
+        <div class="space-y-4">
+
+          <div class="rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+            <p class="text-xs font-bold text-emerald-700">
+              সেশন প্রস্তুত
+            </p>
+
+            <p class="mt-1 text-sm font-bold text-emerald-900">
+              ৭ অক্টোবর ২০২৬ • বিকেল ৩:০০
+            </p>
+          </div>
+
+          <div class="grid gap-3 sm:grid-cols-2">
+            <div>
+              <p class="text-xs text-slate-500">
+                মামলা নম্বর
+              </p>
+
+              <p class="mt-1 text-sm font-bold text-slate-900">
+                CASE-2026-000127
+              </p>
+            </div>
+
+            <div>
+              <p class="text-xs text-slate-500">
+                অংশগ্রহণের ধরন
+              </p>
+
+              <p class="mt-1 text-sm font-bold text-slate-900">
+                অনলাইন
+              </p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-blue-200 bg-blue-50 p-4">
+            <p class="text-xs font-bold text-blue-900">
+              নিরাপদ ভিডিও সেশন
+            </p>
+
+            <p class="mt-1 text-xs leading-5 text-blue-800">
+              এটি একটি প্রোটোটাইপ সিমুলেশন। প্রকৃত মধ্যস্থতা
+              নির্ধারিত লিগ্যাল এইড কর্মকর্তা / মধ্যস্থতাকারী
+              পরিচালনা করবেন।
+            </p>
+          </div>
+
+          <button
+            onclick="closeODRModal()"
+            class="w-full rounded-lg bg-teal-700 px-4 py-3 text-sm font-bold text-white hover:bg-teal-800"
+          >
+            নিরাপদ সেশনে যোগ দিন
+          </button>
+
+        </div>
+      `,
+          },
+
+          remote: {
+            title: "দূরবর্তী অংশগ্রহণের অনুরোধ",
+            icon: "MonitorSmartphone",
+            body: `
+        <div class="space-y-5">
+
+          <div>
+            <p class="text-sm font-bold text-slate-900">
+              CASE-2026-000127
+            </p>
+
+            <p class="mt-1 text-xs text-slate-500">
+              বর্তমান মধ্যস্থতা: ৭ অক্টোবর ২০২৬ • বিকেল ৩:০০
+            </p>
+          </div>
+
+          <div>
+            <label class="mb-2 block text-xs font-bold text-slate-700">
+              অংশগ্রহণের ধরন
+            </label>
+
+            <div class="space-y-2">
+
+              <label class="flex cursor-pointer items-center gap-3 rounded-lg border border-slate-200 p-3">
+                <input
+                  type="radio"
+                  name="odrMode"
+                  value="remote"
+                />
+
+                <span class="text-sm font-semibold text-slate-800">
+                  দূরবর্তী / অনলাইন
+                </span>
+              </label>
+
+              <label class="flex cursor-pointer items-center gap-3 rounded-lg border border-slate-200 p-3">
+                <input
+                  type="radio"
+                  name="odrMode"
+                  value="hybrid"
+                />
+
+                <span class="text-sm font-semibold text-slate-800">
+                  হাইব্রিড
+                </span>
+              </label>
+
+              <label class="flex cursor-pointer items-center gap-3 rounded-lg border border-slate-200 p-3">
+                <input
+                  type="radio"
+                  name="odrMode"
+                  value="inperson"
+                />
+
+                <span class="text-sm font-semibold text-slate-800">
+                  সরাসরি উপস্থিতি
+                </span>
+              </label>
+
+            </div>
+          </div>
+
+          <div>
+            <label class="mb-2 block text-xs font-bold text-slate-700">
+              অনুরোধের কারণ
+            </label>
+
+            <textarea
+              class="w-full rounded-xl border border-slate-300 px-3 py-3 text-sm outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-600/10"
+              rows="3"
+              placeholder="যেমন: দূরত্ব বা যাতায়াতের অসুবিধা"
+            ></textarea>
+          </div>
+
+          <div class="rounded-xl border border-amber-200 bg-amber-50 p-3">
+            <p class="text-xs font-bold text-amber-900">
+              মানবিক পর্যালোচনা প্রয়োজন
+            </p>
+
+            <p class="mt-1 text-xs leading-5 text-amber-800">
+              ইউডিসি সহায়তাকারী এই অনুরোধ অনুমোদন বা বাতিল করতে
+              পারবেন না। অনুমোদিত লিগ্যাল এইড কর্মকর্তা / মধ্যস্থতাকারী
+              অনুরোধটি পর্যালোচনা করবেন।
+            </p>
+          </div>
+
+          <button
+            onclick="submitODRRequest()"
+            class="w-full rounded-lg bg-teal-700 px-4 py-3 text-sm font-bold text-white hover:bg-teal-800"
+          >
+            অনুরোধ জমা দিন
+          </button>
+
+        </div>
+      `,
+          },
+
+          schedule: {
+            title: "মধ্যস্থতার সময়সূচি",
+            icon: "Calendar",
+            body: `
+        <div class="space-y-3">
+
+          <div class="rounded-xl border border-teal-200 bg-teal-50 p-4">
+
+            <div class="flex items-start justify-between gap-3">
+              <div>
+
+                <p class="text-sm font-bold text-teal-900">
+                  ৭ অক্টোবর ২০২৬
+                </p>
+
+                <p class="mt-1 text-xs text-teal-700">
+                  বিকেল ৩:০০
+                </p>
+
+              </div>
+
+              <span class="rounded-full bg-emerald-100 px-2.5 py-1 text-[10px] font-bold text-emerald-700">
+                নির্ধারিত
+              </span>
+            </div>
+
+            <div class="mt-4 grid gap-2 text-xs">
+
+              <p>
+                <span class="font-semibold text-slate-500">
+                  মামলা:
+                </span>
+
+                CASE-2026-000127
+              </p>
+
+              <p>
+                <span class="font-semibold text-slate-500">
+                  অংশগ্রহণের ধরন:
+                </span>
+
+                সরাসরি উপস্থিতি
+              </p>
+
+              <p>
+                <span class="font-semibold text-slate-500">
+                  মধ্যস্থতাকারী:
+                </span>
+
+                নির্ধারিত লিগ্যাল এইড কর্মকর্তা
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+      `,
+          },
+
+          documents: {
+            title: "মধ্যস্থতার নথি আপলোড",
+            icon: "UploadCloud",
+            body: `
+        <div class="space-y-4">
+
+          <div class="rounded-xl border-2 border-dashed border-slate-300 p-8 text-center">
+
+            ${I("UploadCloud", "mx-auto h-8 w-8 text-slate-400")}
+
+            <p class="mt-3 text-sm font-bold text-slate-700">
+              নথি আপলোড করুন
+            </p>
+
+            <p class="mt-1 text-xs text-slate-500">
+              PDF, JPG অথবা PNG ফাইল
+            </p>
+
+            <button
+              class="mt-4 rounded-lg bg-teal-700 px-4 py-2 text-xs font-bold text-white hover:bg-teal-800"
+            >
+              নথি নির্বাচন করুন
+            </button>
+
+          </div>
+
+          <div class="rounded-xl border border-blue-200 bg-blue-50 p-3">
+
+            <p class="text-xs leading-5 text-blue-800">
+              ইউডিসি সহায়তাকারী নথি স্ক্যান ও আপলোড করতে সহায়তা
+              করতে পারবেন। তবে নথির বিষয়বস্তু বা আইনি প্রাসঙ্গিকতা
+              সম্পর্কে কোনো সিদ্ধান্ত সহায়তাকারী দেবেন না।
+            </p>
+
+          </div>
+
+        </div>
+      `,
+          },
+
+          settlement: {
+            title: "মীমাংসা খসড়া পর্যালোচনা",
+            icon: "FileText",
+            body: `
+        <div class="space-y-4">
+
+          <div class="rounded-xl border border-amber-200 bg-amber-50 p-4">
+
+            <p class="text-xs font-bold text-amber-800">
+              মানবিক আইনি পর্যালোচনা প্রয়োজন
+            </p>
+
+            <p class="mt-1 text-sm font-bold text-amber-900">
+              মীমাংসা চুক্তির খসড়া
+            </p>
+
+          </div>
+
+          <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+
+            <p class="text-xs font-semibold text-slate-500">
+              খসড়ার উৎস
+            </p>
+
+            <p class="mt-1 text-sm font-semibold text-slate-800">
+              মধ্যস্থতাকারীর নোট
+            </p>
+
+          </div>
+
+          <div class="rounded-xl border border-purple-200 bg-purple-50 p-4">
+
+            <p class="text-xs font-bold text-purple-900">
+              AI সহায়তাপ্রাপ্ত অংশ
+            </p>
+
+            <p class="mt-1 text-xs leading-5 text-purple-800">
+              AI দ্বারা তৈরি বা সহায়তাপ্রাপ্ত অংশ স্পষ্টভাবে চিহ্নিত
+              থাকবে এবং মানবিক আইনি পর্যালোচনা ছাড়া চূড়ান্ত করা যাবে না।
+            </p>
+
+          </div>
+
+          <div class="rounded-xl border border-red-200 bg-red-50 p-4">
+
+            <p class="text-xs font-bold text-red-800">
+              সম্ভাব্য অসঙ্গতি
+            </p>
+
+            <p class="mt-1 text-xs text-red-700">
+              ২ নম্বর ধারায় উল্লেখিত অর্থের পরিমাণ
+              মধ্যস্থতাকারীর নোটের সঙ্গে মিলছে না।
+            </p>
+
+          </div>
+
+          <button
+            onclick="closeODRModal()"
+            class="w-full rounded-lg bg-teal-700 px-4 py-3 text-sm font-bold text-white hover:bg-teal-800"
+          >
+            খসড়া পর্যালোচনা করুন
+          </button>
+
+        </div>
+      `,
+          },
+
+          signing: {
+            title: "স্বাক্ষর প্রদানে সহায়তা",
+            icon: "PenTool",
+            body: `
+        <div class="space-y-4">
+
+          <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+
+            <p class="text-xs font-semibold text-slate-500">
+              মীমাংসা চুক্তিতে স্বাক্ষর
+            </p>
+
+            <div class="mt-4 space-y-3">
+
+              <div class="flex items-center justify-between rounded-lg bg-white p-3">
+
+                <span class="text-sm font-semibold text-slate-700">
+                  পক্ষ - ক
+                </span>
+
+                <span class="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-bold text-emerald-700">
+                  স্বাক্ষর সম্পন্ন
+                </span>
+
+              </div>
+
+              <div class="flex items-center justify-between rounded-lg bg-white p-3">
+
+                <span class="text-sm font-semibold text-slate-700">
+                  পক্ষ - খ
+                </span>
+
+                <span class="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-bold text-amber-700">
+                  অপেক্ষমাণ
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="rounded-xl border border-blue-200 bg-blue-50 p-3">
+
+            <p class="text-xs leading-5 text-blue-800">
+              নাগরিক নিজে স্বাক্ষর বা অনুমোদন প্রদান করবেন।
+              ইউডিসি সহায়তাকারী নাগরিকের হয়ে স্বাক্ষর বা সম্মতি
+              প্রদান করতে পারবেন না।
+            </p>
+
+          </div>
+
+          <button
+            onclick="closeODRModal()"
+            class="w-full rounded-lg bg-teal-700 px-4 py-3 text-sm font-bold text-white hover:bg-teal-800"
+          >
+            স্বাক্ষর সেশন খুলুন
+          </button>
+
+        </div>
+      `,
+          },
+
+          inperson: {
+            title: "সরাসরি উপস্থিতির বিকল্প অনুরোধ",
+            icon: "User",
+            body: `
+        <div class="space-y-4">
+
+          <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+
+            <p class="text-xs font-semibold text-slate-500">
+              মামলা নম্বর
+            </p>
+
+            <p class="mt-1 text-sm font-bold text-slate-900">
+              CASE-2026-000127
+            </p>
+
+          </div>
+
+          <div>
+
+            <label class="mb-2 block text-xs font-bold text-slate-700">
+              অনুরোধের কারণ
+            </label>
+
+            <textarea
+              rows="3"
+              class="w-full rounded-xl border border-slate-300 px-3 py-3 text-sm outline-none focus:border-teal-600"
+              placeholder="কেন সরাসরি উপস্থিতিতে অংশগ্রহণ করতে চান তা লিখুন..."
+            ></textarea>
+
+          </div>
+
+          <div class="rounded-xl border border-amber-200 bg-amber-50 p-3">
+
+            <p class="text-xs font-bold text-amber-900">
+              মানবিক পর্যালোচনা প্রয়োজন
+            </p>
+
+            <p class="mt-1 text-xs leading-5 text-amber-800">
+              অনুরোধটি অনুমোদিত কর্মকর্তা পর্যালোচনা করবেন।
+            </p>
+
+          </div>
+
+          <button
+            onclick="submitODRRequest()"
+            class="w-full rounded-lg bg-teal-700 px-4 py-3 text-sm font-bold text-white hover:bg-teal-800"
+          >
+            অনুরোধ জমা দিন
+          </button>
+
+        </div>
+      `,
+          },
+
+          retry: {
+            title: "সংযোগ পুনরায় চেষ্টা করুন",
+            icon: "RefreshCw",
+            body: `
+        <div class="space-y-4">
+
+          <div class="rounded-xl border border-orange-200 bg-orange-50 p-4">
+
+            <p class="text-sm font-bold text-orange-900">
+              সংযোগ পাওয়া যাচ্ছে না
+            </p>
+
+            <p class="mt-1 text-xs leading-5 text-orange-800">
+              নির্ভরযোগ্য ইন্টারনেট সংযোগ না পাওয়া পর্যন্ত
+              সরাসরি অনলাইন মধ্যস্থতা চালিয়ে যাওয়া সম্ভব নয়।
+            </p>
+
+          </div>
+
+          <button
+            onclick="closeODRModal()"
+            class="w-full rounded-lg bg-teal-700 px-4 py-3 text-sm font-bold text-white hover:bg-teal-800"
+          >
+            সংযোগ পুনরায় চেষ্টা করুন
+          </button>
+
+        </div>
+      `,
+          },
+
+          reschedule: {
+            title: "অনলাইন সেশনের সময় পরিবর্তনের অনুরোধ",
+            icon: "CalendarClock",
+            body: `
+        <div class="space-y-4">
+
+          <div class="rounded-xl border border-amber-200 bg-amber-50 p-4">
+
+            <p class="text-xs font-bold text-amber-900">
+              সেশনের সময় পরিবর্তন
+            </p>
+
+            <p class="mt-1 text-xs leading-5 text-amber-800">
+              নতুন সময় নির্ধারণ ও নিশ্চিত করার আগে অনুমোদিত
+              লিগ্যাল এইড কর্মকর্তা / মধ্যস্থতাকারীর পর্যালোচনা
+              প্রয়োজন হবে।
+            </p>
+
+          </div>
+
+          <button
+            onclick="submitODRRequest()"
+            class="w-full rounded-lg bg-teal-700 px-4 py-3 text-sm font-bold text-white hover:bg-teal-800"
+          >
+            সময় পরিবর্তনের অনুরোধ করুন
+          </button>
+
+        </div>
+      `,
+          },
+        };
+
+        const config = configs[type] || configs.join;
+
+        content.innerHTML = `
+    <div class="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+
+      <div class="flex items-center gap-3">
+
+        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-50">
+          ${I(config.icon, "h-5 w-5 text-teal-700")}
+        </div>
+
+        <h3 class="font-bold text-slate-900">
+          ${config.title}
+        </h3>
+
+      </div>
+
+      ${closeButton}
+
+    </div>
+
+    <div class="max-h-[75vh] overflow-y-auto p-6">
+      ${config.body}
+    </div>
+  `;
+
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+
+      function closeODRModal() {
+        const modal = document.getElementById("odrModal");
+
+        if (!modal) return;
+
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+
+      function submitODRRequest() {
+        const content = document.getElementById("odrModalContent");
+
+        content.innerHTML = `
+    <div class="p-8 text-center">
+
+      <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50">
+        ${I("CheckCircle2", "h-8 w-8 text-emerald-600")}
+      </div>
+
+      <h3 class="mt-4 text-lg font-bold text-slate-900">
+        অনুরোধ জমা হয়েছে
+      </h3>
+
+      <p class="mt-2 text-sm leading-6 text-slate-500">
+        আপনার অনুরোধ সফলভাবে জমা হয়েছে।
+        এটি এখন অনুমোদিত লিগ্যাল এইড কর্মকর্তা /
+        মধ্যস্থতাকারীর মানবিক পর্যালোচনার অপেক্ষায় রয়েছে।
+      </p>
+
+      <div class="mt-5 rounded-xl border border-amber-200 bg-amber-50 p-4 text-left">
+
+        <p class="text-xs font-bold text-amber-900">
+          বর্তমান অবস্থা
+        </p>
+
+        <p class="mt-1 text-sm font-bold text-amber-800">
+          মানবিক পর্যালোচনার অপেক্ষায়
+        </p>
+
+      </div>
+
+      <button
+        onclick="closeODRModal()"
+        class="mt-5 w-full rounded-lg bg-slate-800 px-4 py-3 text-sm font-bold text-white hover:bg-slate-700"
+      >
+        সম্পন্ন
+      </button>
+
+    </div>
+  `;
+      }
+      function closeODRModal() {
+        const modal = document.getElementById("odrModal");
+
+        if (!modal) return;
+
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+
+      function submitODRRequest() {
+        const content = document.getElementById("odrModalContent");
+
+        content.innerHTML = `
+    <div class="p-8 text-center">
+
+      <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50">
+        ${I("CheckCircle2", "h-8 w-8 text-emerald-600")}
+      </div>
+
+      <h3 class="mt-4 text-lg font-bold text-slate-900">
+        Request Submitted
+      </h3>
+
+      <p class="mt-2 text-sm leading-6 text-slate-500">
+        আপনার request সফলভাবে জমা হয়েছে।
+        এটি এখন authorised Legal Aid Officer / Mediator-এর
+        human review-এর অপেক্ষায় রয়েছে।
+      </p>
+
+      <div class="mt-5 rounded-xl border border-amber-200 bg-amber-50 p-4 text-left">
+        <p class="text-xs font-bold text-amber-900">
+          Status
+        </p>
+
+        <p class="mt-1 text-sm font-bold text-amber-800">
+          PENDING HUMAN REVIEW
+        </p>
+      </div>
+
+      <button
+        onclick="closeODRModal()"
+        class="mt-5 w-full rounded-lg bg-slate-800 px-4 py-3 text-sm font-bold text-white hover:bg-slate-700"
+      >
+        Done
+      </button>
+
+    </div>
+  `;
       }
       function card(label, value, icon, tone) {
         if (typeof value === "number") value = value.toLocaleString("bn-BD");
@@ -306,7 +1728,117 @@
         const ready = Boolean(
           a?.camera && a?.recorded && a?.consent && a?.docs?.length,
         );
-        return `<div class="space-y-5"><div><h2 class="text-lg font-bold">সহায়তাপ্রাপ্ত আবেদন গ্রহণ</h2><p class="mt-1 text-sm text-slate-500">প্রতিটি ধাপে আবেদনকারী ও ইউডিসির ভূমিকা আলাদা থাকবে। জমা দেওয়ার পর তথ্য পরিবর্তন বন্ধ হবে।</p></div><div class="grid gap-5 xl:grid-cols-[1fr_320px]"><form onsubmit="saveIntake(event)" class="rounded-lg border border-line bg-white p-5 shadow-panel"><div class="flex items-center justify-between"><h3 class="font-bold">আবেদনকারীর তথ্য</h3>${a?.locked ? badge("তথ্য পরিবর্তন বন্ধ") : badge(a?.status || "Draft")}</div><div class="mt-5 grid gap-4 sm:grid-cols-2">${field("আবেদনকারীর নাম", "name", bn(a?.name) || "")}${field("ঠিকানা", "location", bn(a?.location) || "")}${field("পছন্দের ভাষা", "language", bn(a?.language) || "")}${field("বাংলা ভাষায় দক্ষতা", "bangla", bn(a?.bangla) || "")}${field("আবেদনকারীর ব্যক্তিগত ফোন", "contact", a?.contact || "")}${field("নিরাপদ যোগাযোগের নির্দেশনা", "safe", bn(a?.safe) || "যোগাযোগের আগে অনুমতি নিন")}</div><div class="mt-5 border-t border-line pt-5"><h3 class="font-bold">ভাষা ও তথ্যের উৎস</h3><p class="mt-1 text-sm text-slate-500">মূল বক্তব্য, অনুবাদ এবং সিস্টেমে লেখা তথ্য আলাদা রাখুন।</p><div class="mt-4 grid gap-4"><label class="text-sm font-bold">আবেদনকারীর মূল বক্তব্য <span class="text-xs font-medium text-teal">আবেদনকারীর বক্তব্য · মারমা</span><textarea id="original" rows="3" class="mt-1.5 w-full rounded-lg border border-line p-3 font-normal" ${a?.locked ? "disabled" : ""}>${esc(bn(a?.statement) || "")}</textarea></label><label class="text-sm font-bold">অনুবাদ / ব্যাখ্যা <span class="text-xs font-medium text-teal">সহায়তাকারীর অনুবাদ · বাংলা</span><textarea id="translation" rows="3" class="mt-1.5 w-full rounded-lg border border-line p-3 font-normal" ${a?.locked ? "disabled" : ""}>${esc(a?.translation || "")}</textarea></label><label class="text-sm font-bold">সিস্টেমে লেখা তথ্য <span class="text-xs font-medium text-teal">ইউডিসি কর্তৃক লেখা</span><textarea id="entry" rows="2" class="mt-1.5 w-full rounded-lg border border-line p-3 font-normal" ${a?.locked ? "disabled" : ""}>${esc(a?.translation || "")}</textarea></label></div></div><div class="mt-5 flex justify-end"><button ${a?.locked ? "disabled" : ""} class="rounded-lg bg-blue px-4 py-2.5 text-sm font-bold text-white disabled:opacity-40">আবেদনের খসড়া সংরক্ষণ</button></div></form><aside class="rounded-lg border border-teal-200 bg-teal-50 p-5"><h3 class="font-bold text-teal-950">তথ্যের উৎসের বিবরণ</h3><div class="mt-4 space-y-3 text-sm"><div><b>আবেদনকারী</b><p class="text-slate-600">তথ্য ও সম্মতির উৎস।</p></div><div><b>ইউডিসি উদ্যোক্তা</b><p class="text-slate-600">সহায়তা, অনুবাদ, টাইপ ও নথি সংযুক্ত করেন।</p></div><div><b>সিস্টেম</b><p class="text-slate-600">আবেদন আইডি তৈরি ও তথ্যের অখণ্ডতা যাচাই করে।</p></div><div><b>অনুমোদিত কর্মকর্তা</b><p class="text-slate-600">পর্যালোচনা ও আইনগত সহায়তার সিদ্ধান্ত নেন।</p></div></div><div class="mt-5 border-t border-teal-200 pt-4 text-xs leading-5 text-teal-950"><b>ইউডিসির যোগাযোগের নিয়ম:</b> কেন্দ্র বা উদ্যোক্তার নম্বর আবেদনকারীর ব্যক্তিগত নিরাপদ যোগাযোগের নম্বর হিসেবে সংরক্ষণ করবেন না।</div></aside></div><section id="consent-centre" class="space-y-4 pt-2"><div><h2 class="text-lg font-bold">সম্মতি গ্রহণ</h2><p class="mt-1 text-sm text-slate-500">আবেদনের খসড়া সংরক্ষণের পর আবেদনকারীর কাছ থেকে সরাসরি সম্মতি নিন।</p></div>${consent()}</section><section id="application-documents" class="space-y-4 pt-2"><div><h2 class="text-lg font-bold">নথিপত্র</h2><p class="mt-1 text-sm text-slate-500">জমা দেওয়ার আগে অন্তত একটি নথি বা তথ্যসূত্র সংযুক্ত করুন।</p></div>${docs()}</section><div class="flex justify-end rounded-lg border border-line bg-white p-5"><button onclick="submitApp()" ${ready ? "" : "disabled"} class="rounded-lg bg-blue px-5 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-35">আবেদন জমা দিন</button></div></div>`;
+        return `<div class="space-y-5"><div><h2 class="text-lg font-bold">সহায়তাপ্রাপ্ত আবেদন গ্রহণ</h2><p class="mt-1 text-sm text-slate-500">প্রতিটি ধাপে আবেদনকারী ও ইউডিসির ভূমিকা আলাদা থাকবে। জমা দেওয়ার পর তথ্য পরিবর্তন বন্ধ হবে।</p></div><div class="grid gap-5 xl:grid-cols-[1fr_320px]"><form
+  onsubmit="saveIntake(event)"
+  class="rounded-lg border border-line bg-white p-5 shadow-panel"
+>
+  <div class="flex items-center justify-between">
+    <h3 class="font-bold">আবেদনকারীর তথ্য</h3>
+
+    ${a?.locked ? badge("তথ্য পরিবর্তন বন্ধ") : badge(a?.status || "Draft")}
+  </div>
+
+  <div class="mt-5 grid gap-4 sm:grid-cols-2">
+    ${field("আবেদনকারীর নাম", "name", bn(a?.name) || "")}
+
+    ${field("ঠিকানা", "location", bn(a?.location) || "")}
+
+    ${field("ইউনিয়ন", "union", bn(a?.union) || "")}
+
+    ${field("ওয়ার্ড নম্বর", "ward", a?.ward || "")}
+
+    ${field("পছন্দের ভাষা", "language", bn(a?.language) || "")}
+
+    ${field("বাংলা ভাষায় দক্ষতা", "bangla", bn(a?.bangla) || "")}
+
+    ${field("আবেদনকারীর ব্যক্তিগত ফোন", "contact", a?.contact || "")}
+
+    ${field("বিকল্প ফোন", "alternateContact", a?.alternateContact || "")}
+
+    ${field(
+      "নিরাপদ যোগাযোগের নির্দেশনা",
+      "safe",
+      bn(a?.safe) || "যোগাযোগের আগে অনুমতি নিন",
+    )}
+  </div>
+
+  <div class="mt-5 border-t border-line pt-5">
+    <h3 class="font-bold">ভাষা ও তথ্যের উৎস</h3>
+
+    <p class="mt-1 text-sm text-slate-500">
+      মূল বক্তব্য, অনুবাদ এবং সিস্টেমে লেখা তথ্য আলাদা রাখুন।
+    </p>
+
+    <div class="mt-4 grid gap-4">
+
+      <label class="text-sm font-bold">
+        আবেদনকারীর মূল বক্তব্য
+        <span class="text-xs font-medium text-teal">
+          আবেদনকারীর বক্তব্য · মারমা
+        </span>
+
+        <textarea
+          id="original"
+          rows="3"
+          class="mt-1.5 w-full rounded-lg border border-line p-3 font-normal"
+          ${a?.locked ? "disabled" : ""}
+        >${esc(bn(a?.statement) || "")}</textarea>
+      </label>
+
+      <label class="text-sm font-bold">
+        অনুবাদ / ব্যাখ্যা
+        <span class="text-xs font-medium text-teal">
+          সহায়তাকারীর অনুবাদ · বাংলা
+        </span>
+
+        <textarea
+          id="translation"
+          rows="3"
+          class="mt-1.5 w-full rounded-lg border border-line p-3 font-normal"
+          ${a?.locked ? "disabled" : ""}
+        >${esc(a?.translation || "")}</textarea>
+      </label>
+
+<label class="text-sm font-bold">
+  <div class="flex items-center justify-between">
+    <div>
+      সিস্টেমে লেখা তথ্য
+      <span class="text-xs font-medium text-teal">
+        ইউডিসি কর্তৃক লেখা
+      </span>
+    </div>
+
+    <button
+      type="button"
+      onclick="speakFieldText('entry')"
+      class="flex items-center gap-1.5 rounded-lg border border-line bg-slate-50 px-2.5 py-1.5 text-xs font-bold text-slate-700 transition hover:bg-slate-100"
+      title="লেখাটি শুনুন"
+    >
+      <span>🔊</span>
+      <span>শুনুন</span>
+    </button>
+  </div>
+
+  <textarea
+    id="entry"
+    rows="2"
+    class="mt-1.5 w-full rounded-lg border border-line p-3 font-normal"
+    ${a?.locked ? "disabled" : ""}
+  >${esc(a?.translation || "")}</textarea>
+</label>
+
+    </div>
+  </div>
+
+  <div class="mt-5 flex justify-end">
+    <button
+      ${a?.locked ? "disabled" : ""}
+      class="rounded-lg bg-blue px-4 py-2.5 text-sm font-bold text-white disabled:opacity-40"
+    >
+      আবেদনের খসড়া সংরক্ষণ
+    </button>
+  </div>
+</form><aside class="rounded-lg border border-teal-200 bg-teal-50 p-5"><h3 class="font-bold text-teal-950">তথ্যের উৎসের বিবরণ</h3><div class="mt-4 space-y-3 text-sm"><div><b>আবেদনকারী</b><p class="text-slate-600">তথ্য ও সম্মতির উৎস।</p></div><div><b>ইউডিসি উদ্যোক্তা</b><p class="text-slate-600">সহায়তা, অনুবাদ, টাইপ ও নথি সংযুক্ত করেন।</p></div><div><b>সিস্টেম</b><p class="text-slate-600">আবেদন আইডি তৈরি ও তথ্যের অখণ্ডতা যাচাই করে।</p></div><div><b>অনুমোদিত কর্মকর্তা</b><p class="text-slate-600">পর্যালোচনা ও আইনগত সহায়তার সিদ্ধান্ত নেন।</p></div></div><div class="mt-5 border-t border-teal-200 pt-4 text-xs leading-5 text-teal-950"><b>ইউডিসির যোগাযোগের নিয়ম:</b> কেন্দ্র বা উদ্যোক্তার নম্বর আবেদনকারীর ব্যক্তিগত নিরাপদ যোগাযোগের নম্বর হিসেবে সংরক্ষণ করবেন না।</div></aside></div><section id="consent-centre" class="space-y-4 pt-2"><div><h2 class="text-lg font-bold">সম্মতি গ্রহণ</h2><p class="mt-1 text-sm text-slate-500">আবেদনের খসড়া সংরক্ষণের পর আবেদনকারীর কাছ থেকে সরাসরি সম্মতি নিন।</p></div>${consent()}</section><section id="application-documents" class="space-y-4 pt-2"><div><h2 class="text-lg font-bold">নথিপত্র</h2><p class="mt-1 text-sm text-slate-500">জমা দেওয়ার আগে অন্তত একটি নথি বা তথ্যসূত্র সংযুক্ত করুন।</p></div>${docs()}</section><div class="flex justify-end rounded-lg border border-line bg-white p-5"><button onclick="submitApp()" ${ready ? "" : "disabled"} class="rounded-lg bg-blue px-5 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-35">আবেদন জমা দিন</button></div></div>`;
       }
       function appsPage() {
         return `<section class="rounded-lg border border-line bg-white shadow-panel"><div class="flex flex-col justify-between gap-3 border-b border-line p-5 sm:flex-row"><div><h2 class="font-bold">আমার আবেদনসমূহ</h2><p class="mt-1 text-sm text-slate-500">এই কেন্দ্র ও উদ্যোক্তার অনুমোদিত আবেদনগুলোই এখানে দেখানো হয়।</p></div><input id="app-q" oninput="filterApps()" placeholder="আবেদন আইডি বা আবেদনকারীর নাম" class="rounded-lg border border-line px-3 py-2 text-sm" /></div><div id="apps-table">${appsTable(S.apps)}</div></section>`;
@@ -317,24 +1849,110 @@
       function filterApps() {
         let q = document.querySelector("#app-q").value.toLowerCase();
         document.querySelector("#apps-table").innerHTML = appsTable(
-          S.apps.filter((a) => (a.id + a.name + bn(a.name)).toLowerCase().includes(q)),
+          S.apps.filter((a) =>
+            (a.id + a.name + bn(a.name)).toLowerCase().includes(q),
+          ),
         );
       }
       function consent() {
         let a = app();
-        return `<div class="grid gap-5 lg:grid-cols-2"><section class="rounded-lg border border-line bg-white p-5 shadow-panel"><h2 class="font-bold">সম্মতি গ্রহণ</h2><p class="mt-2 text-sm text-slate-600">তাঁর তথ্য আইনগত সহায়তা সেবায় ব্যবহার করা যাবে কি না, আবেদনকারীকে সরাসরি জিজ্ঞাসা করুন।</p><video id="cam" autoplay muted playsinline class="mt-5 aspect-video w-full rounded-lg bg-slate-900 object-cover"></video><div class="mt-3 flex flex-wrap gap-2"><button onclick="startCamera()" class="rounded-lg border border-line px-3 py-2 text-sm font-bold">${I("Camera", "inline h-4 w-4")}ক্যামেরা চালু করুন</button><button onclick="recordConsent()" class="rounded-lg border border-line px-3 py-2 text-sm font-bold">${I("CircleDot", "inline h-4 w-4")}সম্মতির ডেমো রেকর্ড তৈরি করুন</button></div><div class="mt-5 flex gap-3"><button onclick="giveConsent(true)" class="rounded-lg bg-teal px-4 py-2.5 text-sm font-bold text-white">আবেদনকারী সম্মত</button><button onclick="giveConsent(false)" class="rounded-lg border border-line px-4 py-2.5 text-sm font-bold">আবেদনকারী অসম্মত</button></div></section><section class="rounded-lg border border-line bg-white p-5 shadow-panel"><h3 class="font-bold">আবেদন জমার আবশ্যিক শর্ত</h3><div class="mt-4 space-y-3 text-sm">${[
-          ["ক্যামেরা / ওয়েবক্যাম চালু", a?.camera],
-          ["সম্মতির ডেমো রেকর্ড তৈরি", a?.recorded],
-          ["আবেদনকারী সম্মতি দিয়েছেন", a?.consent],
-          ["প্রয়োজনীয় নথি ও প্রক্রিয়া সম্পন্ন", a?.docs.length > 0],
-        ]
-          .map(
-            (g) =>
-              `<div class="flex items-center gap-3 rounded-lg border border-line p-3"><span class="grid h-5 w-5 place-items-center rounded-full ${g[1] ? "bg-emerald-600 text-white" : "bg-slate-200 text-slate-500"}">${g[1] ? "✓" : "-"}</span>${g[0]}</div>`,
-          )
-          .join(
-            "",
-          )}</div><p class="mt-3 text-xs leading-5 text-slate-500">জমা দেওয়ার পর নথির তথ্য পরিবর্তন বন্ধ হবে। পরবর্তী সংশোধন অনুমোদিত পদ্ধতিতে করতে হবে।</p></section></div>`;
+        return `<div class="grid gap-5 lg:grid-cols-2">
+  <section class="rounded-lg border border-line bg-white p-5 shadow-panel">
+    <h2 class="font-bold">সম্মতি গ্রহণ</h2>
+
+    <p class="mt-2 text-sm text-slate-600">
+      তাঁর তথ্য আইনগত সহায়তা সেবায় ব্যবহার করা যাবে কি না, আবেদনকারীকে সরাসরি জিজ্ঞাসা করুন।
+    </p>
+
+    <video
+      id="cam"
+      autoplay
+      muted
+      playsinline
+      class="mt-5 aspect-video w-full rounded-lg bg-slate-900 object-cover"
+    ></video>
+
+    <div class="mt-3 flex flex-wrap gap-2">
+
+      <button
+        onclick="startCamera()"
+        class="rounded-lg border border-line px-3 py-2 text-sm font-bold"
+      >
+        ${I("Camera", "inline h-4 w-4")}
+        ক্যামেরা চালু করুন
+      </button>
+
+      <button
+        onclick="recordConsent()"
+        class="rounded-lg border border-line px-3 py-2 text-sm font-bold"
+      >
+        ${I("CircleDot", "inline h-4 w-4")}
+        সম্মতির ডেমো রেকর্ড তৈরি করুন
+      </button>
+
+      <button
+        onclick="captureFingerprint()"
+        class="rounded-lg border border-line px-3 py-2 text-sm font-bold"
+      >
+        ${I("Fingerprint", "inline h-4 w-4")}
+        আঙুলের ছাপ নিন
+      </button>
+
+    </div>
+
+    <div
+      id="fingerprintStatus"
+      class="mt-3 hidden rounded-lg border border-line bg-slate-50 p-3 text-sm"
+    ></div>
+
+    <div class="mt-5 flex gap-3">
+      <button
+        onclick="giveConsent(true)"
+        class="rounded-lg bg-teal px-4 py-2.5 text-sm font-bold text-white"
+      >
+        আবেদনকারী সম্মত
+      </button>
+
+      <button
+        onclick="giveConsent(false)"
+        class="rounded-lg border border-line px-4 py-2.5 text-sm font-bold"
+      >
+        আবেদনকারী অসম্মত
+      </button>
+    </div>
+  </section>
+
+  <section class="rounded-lg border border-line bg-white p-5 shadow-panel">
+    <h3 class="font-bold">আবেদন জমার আবশ্যিক শর্ত</h3>
+
+    <div class="mt-4 space-y-3 text-sm">
+      ${[
+        ["ক্যামেরা / ওয়েবক্যাম চালু", a?.camera],
+        ["সম্মতির ডেমো রেকর্ড তৈরি", a?.recorded],
+        ["আবেদনকারী সম্মতি দিয়েছেন", a?.consent],
+        ["প্রয়োজনীয় নথি ও প্রক্রিয়া সম্পন্ন", a?.docs.length > 0],
+      ]
+        .map(
+          (g) =>
+            `<div class="flex items-center gap-3 rounded-lg border border-line p-3">
+              <span class="grid h-5 w-5 place-items-center rounded-full ${
+                g[1]
+                  ? "bg-emerald-600 text-white"
+                  : "bg-slate-200 text-slate-500"
+              }">
+                ${g[1] ? "✓" : "-"}
+              </span>
+              ${g[0]}
+            </div>`,
+        )
+        .join("")}
+    </div>
+
+    <p class="mt-3 text-xs leading-5 text-slate-500">
+      জমা দেওয়ার পর নথির তথ্য পরিবর্তন বন্ধ হবে। পরবর্তী সংশোধন অনুমোদিত পদ্ধতিতে করতে হবে।
+    </p>
+  </section>
+</div>`;
       }
       function docs() {
         let a = app();

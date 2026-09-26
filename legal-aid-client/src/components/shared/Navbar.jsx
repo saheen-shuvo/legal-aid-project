@@ -15,13 +15,12 @@ import GoogleTranslate from "../GoogleTranslate";
 
 const links = [
   { label: "আবেদন করুন", href: "/login" },
-  { label: "আবেদন ট্র্যাক করুন", href: "/login" },
 ];
 
 const registrationRoles = [
   { label: "নাগরিক", slug: "applicant" },
   { label: "ডিএলও অফিসার", slug: "dlo-officer" },
-  { label: "চেয়ারম্যান পোর্টাল", slug: "chairman-portal" },
+  { label: "চেয়ারম্যান পোর্টাল/ জেলা ও দায়রা জজ", slug: "chairman-portal" },
   { label: "ইউডিসি অন্ট্রাপ্রেনার", slug: "udc-entrepreneur" },
   { label: "প্যানাল আইনজীবী", slug: "panel-lawyer" },
   {

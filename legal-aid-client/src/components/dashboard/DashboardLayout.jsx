@@ -23,8 +23,9 @@ import { RiBriefcase3Line } from "react-icons/ri";
 const dlaoItems = [
   { label: "কমান্ড সেন্টার", icon: FiGrid, href: "#command-centre" },
   { label: "আবেদনসমূহ", icon: FiClipboard, href: "#applications" },
+  { label: "সালিশি ও মধ্যস্থতা", icon: FiLayers, href: "#mediation" },
+  { label: "ডুপ্লিকেট রিভিউ", icon: FiLayers, href: "#duplicate" },
   { label: "কেস রেকর্ডস", icon: RiBriefcase3Line, href: "#case" },
-  { label: "হিউম্যান রিভিউ কিউ", icon: FiFlag, href: "#human-queue" },
   { label: "ইউনিফাইড কেস রেকর্ডস", icon: FiArchive, href: "#case-records" },
   { label: "টাস্ক এবং ফলো-আপ", icon: FiCheck, href: "#tasks-follow-up" },
   {
@@ -35,8 +36,6 @@ const dlaoItems = [
   { label: "নথিপত্র", icon: FiFileText, href: "#documents" },
   { label: "প্যানেল আইনজীবী", icon: FiUsers, href: "#panel-lawyers" },
   { label: "রেফারেল গ্রহণকারী DLAO", icon: FiRepeat, href: "#referrals" },
-  { label: "সালিশি ও মধ্যস্থতা", icon: FiLayers, href: "#mediation" },
-  { label: "ডুপ্লিকেট রিভিউ", icon: FiLayers, href: "#duplicate" },
   { label: "অফলাইন ও সিঙ্ক", icon: FiRepeat, href: "#offline-sync" },
   { label: "নিরাপত্তা ও গোপনীয়তা", icon: FiShield, href: "#safety-privacy" },
   { label: "অডিট ট্রেইল", icon: FiActivity, href: "#audit-trail" },
