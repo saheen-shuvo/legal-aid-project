@@ -13,7 +13,7 @@ export default function Banner() {
         <p className="text-sm font-medium tracking-[0.1em] text-white/80">
           ন্যায়বিচারের পথে ডিজিটাল সহায়তা
         </p>
-
+{/* Title */}
         <h1 className="mt-4 text-6xl font-bold tracking-wide text-white md:text-8xl">
           সমাধান
         </h1>
