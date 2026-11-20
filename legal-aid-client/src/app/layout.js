@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "সমাধান",
+  title: "JurisConnect",
   description: "বাংলাদেশের জন্য একটি ওপেন সোর্স লিগ্যাল এইড প্ল্যাটফর্ম।",
 };
 

@@ -15,7 +15,7 @@ export default function Banner() {
         </p>
 {/* Title */}
         <h1 className="mt-4 text-6xl font-bold tracking-wide text-white md:text-8xl">
-          সমাধান
+          JurisConnect
         </h1>
 
         <div className="mx-auto my-6 h-px w-20 bg-white/50"></div>
